@@ -381,8 +381,8 @@ function pokemonLabel (name, rarity, types, disappearTime, id, latitude, longitu
         IV: ${iv.toFixed(1)}% (${atk}/${def}/${sta})
       </div>`
     if (moves != null) {
-        move1 = i8ln(moves[move1])
-        move2 = i8ln(moves[move2])
+        move1 = i8ln(moves[move1]['name'])
+        move2 = i8ln(moves[move2]['name'])
         
         details += `
           <div>
