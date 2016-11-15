@@ -191,7 +191,7 @@ def main():
     create_tables(db)
     
     
-    if not args.no_server:
+    if not args.no_server and False:#skip spawnpoints
         try:
             log.info('First Spawnpoint cache initialization')
             cache = Pokemon.get_allspawnpoints()

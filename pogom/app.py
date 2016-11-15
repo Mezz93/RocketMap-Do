@@ -199,7 +199,7 @@ class Pogom(Flask):
                                                                                 request.args.get('spawnpoint_id'),
                                                                                 selected_duration)
 
-        if request.args.get('spawnpoints', 'false') == 'true':
+        if request.args.get('spawnpoints', 'false') == 'true' and False:#skip spawnpoints
             if lastspawns != 'true':
                 d['spawnpoints'] = Pokemon.get_spawnpoints(swLat=swLat, swLng=swLng, neLat=neLat, neLng=neLng)
             else:
