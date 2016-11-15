@@ -191,12 +191,13 @@ def main():
     create_tables(db)
     
     
-    if not args.no_server and False:#skip spawnpoints
-        try:
-            log.info('First Spawnpoint cache initialization')
-            cache = Pokemon.get_allspawnpoints()
-        except Exception as e:
-            log.error('Error while %s', e)
+    if not args.no_server:
+        #skip spawnpoints
+    #    try:
+    #        log.info('First Spawnpoint cache initialization')
+    #        cache = Pokemon.get_allspawnpoints()
+    #    except Exception as e:
+    #        log.error('Error while %s', e)
 
         app.set_current_location(position)
 

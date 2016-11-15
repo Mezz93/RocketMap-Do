@@ -198,14 +198,15 @@ class Pogom(Flask):
             d['appearancesTimes'] = Pokemon.get_appearances_times_by_spawnpoint(request.args.get('pokemonid'),
                                                                                 request.args.get('spawnpoint_id'),
                                                                                 selected_duration)
-
-        if request.args.get('spawnpoints', 'false') == 'true' and False:#skip spawnpoints
-            if lastspawns != 'true':
-                d['spawnpoints'] = Pokemon.get_spawnpoints(swLat=swLat, swLng=swLng, neLat=neLat, neLng=neLng)
-            else:
-                d['spawnpoints'] = Pokemon.get_spawnpoints(swLat=swLat, swLng=swLng, neLat=neLat, neLng=neLng, timestamp=timestamp)
-                if newArea:
-                    d['spawnpoints'] = d['spawnpoints'] + (Pokemon.get_spawnpoints(swLat, swLng, neLat, neLng, oSwLat=oSwLat, oSwLng=oSwLng, oNeLat=oNeLat, oNeLng=oNeLng))
+                                                                                
+        #skip spawnpoints
+        #if request.args.get('spawnpoints', 'false') == 'true':
+        #    if lastspawns != 'true':
+        #        d['spawnpoints'] = Pokemon.get_spawnpoints(swLat=swLat, swLng=swLng, neLat=neLat, neLng=neLng)
+        #    else:
+        #        d['spawnpoints'] = Pokemon.get_spawnpoints(swLat=swLat, swLng=swLng, neLat=neLat, neLng=neLng, timestamp=timestamp)
+        #        if newArea:
+        #            d['spawnpoints'] = d['spawnpoints'] + (Pokemon.get_spawnpoints(swLat, swLng, neLat, neLng, oSwLat=oSwLat, oSwLng=oSwLng, oNeLat=oNeLat, oNeLng=oNeLng))
 
         if request.args.get('status', 'false') == 'true':
             args = get_args()
