@@ -8,10 +8,10 @@ https://pgm.readthedocs.io/en/develop/
 
 
 1. Windows Vorraussetzungen
-siehe https://pgm.readthedocs.io/en/develop/basic-install/windows.html f¸r den kompletten Guide
+siehe https://pgm.readthedocs.io/en/develop/basic-install/windows.html f√ºr den kompletten Guide
 -> git installieren(https://git-for-windows.github.io/)
 -> Python 2.7 installieren(https://www.python.org/downloads/release/python-2712/)
----> WICHTIG: Beim Installieren wo man ausw‰hlen kann, was installiert w‰hlt, folgendes ausw‰hlen: "Python.exe zum Pfad hinzuf¸gen*"
+---> WICHTIG: Beim Installieren wo man ausw√§hlen kann, was installiert w√§hlt, folgendes ausw√§hlen: "Python.exe zum Pfad hinzuf√ºgen*"
 -> Visual C++ Compiler installieren(https://www.microsoft.com/en-us/download/details.aspx?id=44266)
 
 Du kannst verifizieren, ob die Installationen geklappt haben, indem du folgende Befehle (einzeln) in eine Eingabeaufforderung eingibst:
@@ -20,25 +20,25 @@ python --version
 pip --version
 
 1.1 kleiner Tipp
-Du kannst eine Eingabeaufforderung in deinem Wunschordner ˆffnen, indem du SHIFT(das ist die ganz linke Taste mit dem Pfeil nach oben) gedr¸ckt h‰lst und dann in dem Ordner Rechtsklick dr¸ckst
-Jetzt sollte es in dem Kontextmen¸ einen Punkt geben, der "Eingabeaufforderung hier ˆffnen" heiﬂt - darauf klicken
+Du kannst eine Eingabeaufforderung in deinem Wunschordner √∂ffnen, indem du SHIFT(das ist die ganz linke Taste mit dem Pfeil nach oben) gedr√ºckt h√§lst und dann in dem Ordner Rechtsklick dr√ºckst
+Jetzt sollte es in dem Kontextmen√º einen Punkt geben, der "Eingabeaufforderung hier √∂ffnen" hei√üt - darauf klicken
 
 
 2. Project downloaden
-÷ffne eine Eingabeaufforderung(siehe 1.1) in dem Oberordner, wo das Projekt rein soll(der nachfolgende Befehl erstellt einen Ordner hier, der "PokemonGo-Map-1" heiﬂt)
+√ñffne eine Eingabeaufforderung(siehe 1.1) in dem Oberordner, wo das Projekt rein soll(der nachfolgende Befehl erstellt einen Ordner hier, der "PokemonGo-Map-1" hei√üt)
 
-In der Eingabeaufforderung das hier ausf¸hren:
+In der Eingabeaufforderung das hier ausf√ºhren:
 git clone --recursive https://github.com/JapuDCret/PokemonGo-Map-1.git
 
-Gehe jetzt mit der Console in das Verzeichnis, f¸hre dazu
+Gehe jetzt mit der Console in das Verzeichnis, f√ºhre dazu
 cd PokemonGo-Map-1
 aus.
 
 
 3. Projekt bauen
-siehe https://pgm.readthedocs.io/en/develop/basic-install/index.html f¸r den kompletten Guide
-folgenden Befehl ausf¸hren um die Bibliotheken runterzuladen
-pip install -r requirements.txt
+siehe https://pgm.readthedocs.io/en/develop/basic-install/index.html f√ºr den kompletten Guide
+folgenden Befehl ausf√ºhren um die Bibliotheken runterzuladen
+pip install -r requirements.txt --upgrade
 (unter Linux "sudo -H pip install -r requirements.txt" benutzen)
 
 wenn alles ohne Fehler funktioniert hat, dann ist alles ok.
@@ -46,79 +46,79 @@ wenn alles ohne Fehler funktioniert hat, dann ist alles ok.
 
 4. Projekt personalisieren
 (Falls du noch keine Accounts hast, siehe Punkt 4.1 und 4.2)
-Gehe ins Verzeichnis "config" und kopiere die Datei "acc.csv.example" und ‰ndere den Namen der Kopie in "acc.csv"
-÷ffne die Datei entweder mit dem Editor oder Excel.
-F¸ge hier deine Accounts ein, jeweils mit einem Semikolon separiert und eine neue Zeile pro Account....
-wenn du einen PTC Account "PeterZwegat" mit Passwort "abcdef" hinzuf¸gen willst, dann w¸rde die Zeile so aussehen:
+Gehe ins Verzeichnis "config" und kopiere die Datei "acc.csv.example" und √§ndere den Namen der Kopie in "acc.csv"
+√ñffne die Datei entweder mit dem Editor oder Excel.
+F√ºge hier deine Accounts ein, jeweils mit einem Semikolon separiert und eine neue Zeile pro Account....
+wenn du einen PTC Account "PeterZwegat" mit Passwort "abcdef" hinzuf√ºgen willst, dann w√ºrde die Zeile so aussehen:
 PeterZwegat;abcdef;ptc;
-Die letzte Spalte "suspended" ist dazu da gebannte Accounts zu markieren(mit X), damit diese nicht starten. Ein gebannter Account w¸rde wie folgt aussehen:
+Die letzte Spalte "suspended" ist dazu da gebannte Accounts zu markieren(mit X), damit diese nicht starten. Ein gebannter Account w√ºrde wie folgt aussehen:
 PeterZwegat;abcdef;ptc;X
 
-Gehe ins Verzeichnis "config" und kopiere die Datei "places.csv.example" und ‰ndere den Namen der Kopie in "places.csv"
-÷ffne die Datei entweder mit dem Editor oder Notepad++. NICHT mit Excel, da sonst die Locations falsch interpretiert werden.
-Jetzt geht es ans eingemachte, hier werden die zu scannenden Locations hinzugef¸gt, sowie die jeweilige Scanweite
-Die Location "51.5107383,7.4650364"(Dortmund Stadtgarten: ) mit Scanweite 5 w¸rde wie folgt aussehen:
+Gehe ins Verzeichnis "config" und kopiere die Datei "places.csv.example" und √§ndere den Namen der Kopie in "places.csv"
+√ñffne die Datei entweder mit dem Editor oder Notepad++. NICHT mit Excel, da sonst die Locations falsch interpretiert werden.
+Jetzt geht es ans eingemachte, hier werden die zu scannenden Locations hinzugef√ºgt, sowie die jeweilige Scanweite
+Die Location "51.5107383,7.4650364"(Dortmund Stadtgarten: ) mit Scanweite 5 w√ºrde wie folgt aussehen:
 51.5107383;7.4650364;5;Dortmund Stadtgarten
 
 4.1 Accounts erstellen
 Neue PTC Accounts kannst du hier erstellen:
 https://club.pokemon.com/us/pokemon-trainer-club/sign-up/
-F¸r die E-Mail Adressen empfehle ich https://dropmail.me/en/
-Die E-Mails M‹SSEN best‰tigt werden, also ihr kriegt einen Link, da muss drauf geklickt werden...da kommt sowas wie "Account is not activated!"
+F√ºr die E-Mail Adressen empfehle ich https://dropmail.me/en/
+Die E-Mails M√úSSEN best√§tigt werden, also ihr kriegt einen Link, da muss drauf geklickt werden...da kommt sowas wie "Account is not activated!"
 
 4.2 Accounts freischalten
-Neue Accounts funktionieren noch nicht, da erstmal die Nutzungsbedingungen(ToS: Terms of Service) aktiviert werden m¸ssen
-Hierf¸r gehe ins Verzeichnis "scripts/" und ˆffne die Datei "accept-tos.py"
+Neue Accounts funktionieren noch nicht, da erstmal die Nutzungsbedingungen(ToS: Terms of Service) aktiviert werden m√ºssen
+Hierf√ºr gehe ins Verzeichnis "scripts/" und √∂ffne die Datei "accept-tos.py"
 In der gaaaaanz letzten Zeile editierst du die Werte so, dass die von seinem Account sind...also statt Name schreibst du PeterZwegat rein, oder wie auch immer dein Accountname ist
 
-Danach ˆffnest du in diesem Ordner eine Console und f¸hrst aus: 'python accept-tos.py'
-Als Ergebnis sollte als letzte Zahl eine 1 kommen, wenn erfolgreich, eine 2 wenn Server ¸berlastet und eine 3,. Wenn du wirklich gebannt bist
+Danach √∂ffnest du in diesem Ordner eine Console und f√ºhrst aus: 'python accept-tos.py'
+Als Ergebnis sollte als letzte Zahl eine 1 kommen, wenn erfolgreich, eine 2 wenn Server √ºberlastet und eine 3,. Wenn du wirklich gebannt bist
 
-F¸r jeden weiteren Account kannst du die letzte Zeile kopieren und hinten anf¸gen als neue Zeile
+F√ºr jeden weiteren Account kannst du die letzte Zeile kopieren und hinten anf√ºgen als neue Zeile
 
 Bei einem Account namens "PeterZwegat" und Passwort "alligator3", sieht der Aufruf in der letzten Zeile so aus:
 accept_tos('PeterZwegat', 'alligator3', 'ptc')
 
 
 5. Richtig konfigurieren
-Standardm‰ﬂig hat das Projekt noch keine Datenbank Verbindung zu meinem Server eingebunden, daher bitte ich dich die notwendigen Daten bei mir abzufragen.
+Standardm√§√üig hat das Projekt noch keine Datenbank Verbindung zu meinem Server eingebunden, daher bitte ich dich die notwendigen Daten bei mir abzufragen.
 Meine Kontaktdaten findest du hier: http://pokemap-nrw.de/index.php/hilfe/
 
-Ich werde dir 3 Sachen nennen: den Namen der Datenbank, den Accountnamen und das zugehˆrige Passwort.
-Wenn du die Informationen hast ˆffne die Datei unter "config/config.ini" und ˆffne sie mit Notepad++ NICHT mit dem normalen Editor.
-in Zeile 10-12 findest du folgende Eintr‰ge
+Ich werde dir 3 Sachen nennen: den Namen der Datenbank, den Accountnamen und das zugeh√∂rige Passwort.
+Wenn du die Informationen hast √∂ffne die Datei unter "config/config.ini" und √∂ffne sie mit Notepad++ NICHT mit dem normalen Editor.
+in Zeile 10-12 findest du folgende Eintr√§ge
 >>> db-name:DB-NAME
 >>> db-user:ACC-NAME
 >>> db-pass:PASSWORT
-dort f¸gst du dann die von mir ¸bermittelten Informationen ein und speicherst die Datei....
+dort f√ºgst du dann die von mir √ºbermittelten Informationen ein und speicherst die Datei....
 Ein Beispiel:
-Sei der Namen der Datenbank "pokemon", der Accountnamen "test" und das zugehˆrige Passwort "123", dann sieht das wie folgt aus:
+Sei der Namen der Datenbank "pokemon", der Accountnamen "test" und das zugeh√∂rige Passwort "123", dann sieht das wie folgt aus:
 >>> db-name:pokemon
 >>> db-user:test
 >>> db-pass:123
 
 6. Projekt starten
 Wenn die Map dort noch nie bekannt ist und somit keine Spawns bekannt sind(sind auf der Map unter Options->Spawn Points einsehbar), dann solltest du einfach in einer Spirale suchen
-f¸hre dazu einfach die Batchdatei "start-spiral.bat" aus
-Jedes gefundene PokÈmon ist ein Spawnpunkt, also wenn man die Spiralsuche lange genug laufen l‰sst, kann man nach einiger Zeit mit der deutlich effizienteren Spawnsuche weitermachen.
+f√ºhre dazu einfach die Batchdatei "start-spiral.bat" aus
+Jedes gefundene Pok√©mon ist ein Spawnpunkt, also wenn man die Spiralsuche lange genug laufen l√§sst, kann man nach einiger Zeit mit der deutlich effizienteren Spawnsuche weitermachen.
 nach 12h hat man so ca. 90% aller Spawns
 nach 24h hat man so ca. 95% aller Spawns
 (es gibt Spawnpunkte die nur an einem bestimmten Wochentag aktiv werden, also erreicht man nur 100%, wenn man eine ganze Woche sucht)
 
-sind Spawns in der Datenbank bekannt, dann f¸hre die Batchdatei "get-spawns.bat" aus. Das dauert jetzt etwas.
+sind Spawns in der Datenbank bekannt, dann f√ºhre die Batchdatei "get-spawns.bat" aus. Das dauert jetzt etwas.
 Jetzt sollte im obersten Verzeichnis ein Ordner namens "spawns" erstellt worden sein, mit der selben Anzahl an Dateien, wie du Locations angegeben hast.
-Als n‰chstes wollen wir das ganze etwas kompakter machen und Spawns direkt nebeneinander zusammenfassen, hierzu f¸hre die Batchdatei "compress-spawns.bat" aus.
+Als n√§chstes wollen wir das ganze etwas kompakter machen und Spawns direkt nebeneinander zusammenfassen, hierzu f√ºhre die Batchdatei "compress-spawns.bat" aus.
 Der Ordner sollte nun doppelt so viele Dateien enthalten.
-Danach f¸hre die Batchdatei "start-spawns.bat" aus und es sollte f¸r jede Location nun ein eigenes Fenster geˆffnet werden.
+Danach f√ºhre die Batchdatei "start-spawns.bat" aus und es sollte f√ºr jede Location nun ein eigenes Fenster ge√∂ffnet werden.
 
 
 
 Fehlerbehebung
 >> "Der Befehl "git" ist entweder falsch geschrieben oder konnte nicht gefunden werden."
--> git der Umgebungsvariable anf¸gen NICHT ersetzen
+-> git der Umgebungsvariable anf√ºgen NICHT ersetzen
 
 >> "Der Befehl "python" ist entweder falsch geschrieben oder konnte nicht gefunden werden."
--> Python der Umgebungsvariable anf¸gen NICHT ersetzen("C:\Python27" und "C:\Python27\Scripts")
+-> Python der Umgebungsvariable anf√ºgen NICHT ersetzen("C:\Python27" und "C:\Python27\Scripts")
 
 >> "Der Befehl "pip" ist entweder falsch geschrieben oder konnte nicht gefunden werden."
--> Python-Scripts der Umgebungsvariable anf¸gen NICHT ersetzen("C:\Python27\Scripts")
+-> Python-Scripts der Umgebungsvariable anf√ºgen NICHT ersetzen("C:\Python27\Scripts")
