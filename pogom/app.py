@@ -92,10 +92,10 @@ class Pogom(Flask):
             self.search_control.clear()
         d = {}
 
-        # Request time of this request
+        # Request time of this request.
         d['timestamp'] = datetime.utcnow()
 
-        # Request time of previous request
+        # Request time of previous request.
         if request.args.get('timestamp'):
             timestamp = int(request.args.get('timestamp'))
             timestamp -= 1000  # Overlap, for rounding errors.
@@ -112,7 +112,7 @@ class Pogom(Flask):
         oNeLat = request.args.get('oNeLat')
         oNeLng = request.args.get('oNeLng')
 
-        # Previous switch settings
+        # Previous switch settings.
         lastgyms = request.args.get('lastgyms')
         lastpokestops = request.args.get('lastpokestops')
         lastpokemon = request.args.get('lastpokemon')
@@ -124,7 +124,7 @@ class Pogom(Flask):
         else:
             luredonly = False
 
-        # Current switch settings saved for next request
+        # Current switch settings saved for next request.
         if request.args.get('gyms', 'true') == 'true':
             d['lastgyms'] = request.args.get('gyms', 'true')
 
@@ -142,7 +142,7 @@ class Pogom(Flask):
 
         # If old coords are not equal to current coords we have moved/zoomed!
         if oSwLng < swLng and oSwLat < swLat and oNeLat > neLat and oNeLng > neLng:
-            newArea = False  # We zoomed in no new area uncovered
+            newArea = False  # We zoomed in no new area uncovered.
         elif not (oSwLat == swLat and oSwLng == swLng and oNeLat == neLat and oNeLng == neLng):
             newArea = True
         else:
@@ -182,7 +182,7 @@ class Pogom(Flask):
 
         selected_duration = None
 
-        # for stats and changed nest points etc, limit pokemon queried
+        # for stats and changed nest points etc, limit pokemon queried.
         for duration in self.get_valid_stat_input()["duration"]["items"].values():
             if duration["selected"] == "SELECTED":
                 selected_duration = duration["value"]
@@ -229,11 +229,11 @@ class Pogom(Flask):
         args = get_args()
         if args.fixed_location:
             return 'Location changes are turned off', 403
-        # part of query string
+        # Part of query string.
         if request.args:
             lat = request.args.get('lat', type=float)
             lon = request.args.get('lon', type=float)
-        # from post requests
+        # From post requests.
         if request.form:
             lat = request.form.get('lat', type=float)
             lon = request.form.get('lon', type=float)
@@ -248,11 +248,11 @@ class Pogom(Flask):
             return self.loc()
 
     def list_pokemon(self):
-        # todo: check if client is android/iOS/Desktop for geolink, currently
-        # only supports android
+        # todo: Check if client is Android/iOS/Desktop for geolink, currently
+        # only supports Android.
         pokemon_list = []
 
-        # Allow client to specify location
+        # Allow client to specify location.
         lat = request.args.get('lat', self.current_location[0], type=float)
         lon = request.args.get('lon', self.current_location[1], type=float)
         origin_point = LatLng.from_degrees(lat, lon)

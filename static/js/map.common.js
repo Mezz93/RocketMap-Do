@@ -595,6 +595,199 @@ var pGoStyleNoLabels = [{
     'visibility': 'off'
   }]
 }]
+var pGoStyleDay = [{
+  'featureType': 'landscape.man_made',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#99f291'
+  }]
+}, {
+  'featureType': 'landscape.natural.landcover',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#00af8f'
+  }]
+}, {
+  'featureType': 'landscape.natural.terrain',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#00af8f'
+  }]
+}, {
+  'featureType': 'landscape.natural',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#00af8f'
+  }]
+}, {
+  'featureType': 'poi.attraction',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'visibility': 'on'
+  }]
+}, {
+  'featureType': 'poi.business',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#e4dfd9'
+  }]
+}, {
+  'featureType': 'poi.business',
+  'elementType': 'labels.icon',
+  'stylers': [{
+    'visibility': 'off'
+  }]
+}, {
+  'featureType': 'poi.park',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#00af8f'
+  }]
+}, {
+  'featureType': 'road',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#7eb2a4'
+  }]
+}, {
+  'featureType': 'road',
+  'elementType': 'geometry.stroke',
+  'stylers': [{
+    'color': '#ffff92'
+  }, {
+    'weight': '2'
+  }]
+}, {
+  'featureType': 'road.highway',
+  'elementType': 'labels.icon',
+  'stylers': [{
+    'visibility': 'off'
+  }]
+}, {
+  'featureType': 'water',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#1688da'
+  }]
+}, {
+  'featureType': 'poi.attraction',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#e4fdee'
+  }]
+}, {
+  'featureType': 'poi.sports_complex',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#d4ffbc'
+  }]
+}]
+var pGoStyleNight = [{
+  'featureType': 'landscape.man_made',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#12a085'
+  }]
+}, {
+  'featureType': 'landscape.natural.landcover',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#02706a'
+  }]
+}, {
+  'featureType': 'landscape.natural.terrain',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#02706a'
+  }]
+}, {
+  'featureType': 'landscape.natural',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#02706a'
+  }]
+}, {
+  'featureType': 'poi',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#6da298'
+  }]
+}, {
+  'featureType': 'poi.medical',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#6da298'
+  }]
+}, {
+  'featureType': 'poi.attraction',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'visibility': 'on'
+  }]
+}, {
+  'featureType': 'poi.business',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#1fba9c'
+  }]
+}, {
+  'featureType': 'poi.business',
+  'elementType': 'labels.icon',
+  'stylers': [{
+    'visibility': 'off'
+  }]
+}, {
+  'featureType': 'poi.park',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#02706a'
+  }]
+}, {
+  'featureType': 'transit',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#428290'
+  }]
+}, {
+  'featureType': 'road',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#316589'
+  }]
+}, {
+  'featureType': 'road',
+  'elementType': 'geometry.stroke',
+  'stylers': [{
+    'color': '#7f8b60'
+  }, {
+    'weight': '2'
+  }]
+}, {
+  'featureType': 'road.highway',
+  'elementType': 'labels.icon',
+  'stylers': [{
+    'visibility': 'off'
+  }]
+}, {
+  'featureType': 'water',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#1e4fbc'
+  }]
+}, {
+  'featureType': 'poi.attraction',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#1fba9c'
+  }]
+}, {
+  'featureType': 'poi.sports_complex',
+  'elementType': 'geometry.fill',
+  'stylers': [{
+    'color': '#1fba9c'
+  }]
+}]
+
 var pokemonSprites = {
   normal: {
     columns: 12,
@@ -679,6 +872,7 @@ var StoreTypes = {
   }
 }
 
+// set the default parameters for you map here
 var StoreOptions = {
   'lastLat': {
     default: null,
@@ -689,7 +883,7 @@ var StoreOptions = {
     type: StoreTypes.Float
   },
   'map_style': {
-    default: 'style_pgo',
+    default: 'style_pgo', // roadmap, satellite, hybrid, nolabels_style, dark_style, style_light2, style_pgo, dark_style_nl, style_pgo_day, style_pgo_night, style_pgo_dynamic
     type: StoreTypes.String
   },
   'remember_select_exclude': {
@@ -701,7 +895,7 @@ var StoreOptions = {
     type: StoreTypes.JSON
   },
   'remember_select_rarity_notify': {
-    default: [],
+    default: [], // Common, Uncommon, Rare, Very Rare, Ultra Rare
     type: StoreTypes.JSON
   },
   'remember_text_perfection_notify': {
