@@ -188,7 +188,7 @@ def main():
     if args.encounter:
         log.info('Encountering pokemon enabled.')
         
-    if args.speedlimit > 0:
+    if args.speed_limit > 0:
         print("Speed limit set to {}km/h with a max delay of {}" % (args.speed_limit, args.max_speed_limit_delay))
 
     config['LOCALE'] = args.locale
