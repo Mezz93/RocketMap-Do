@@ -35,7 +35,7 @@ pokestop_cache = TTLCache(maxsize=2500, ttl=2 * 60)
 gym_cache = TTLCache(maxsize=2500, ttl=60)
 scanned_cache = TTLCache(maxsize=2500, ttl=30)
 
-db_schema_version = 9
+db_schema_version = 10
 
 
 class MyRetryDB(RetryOperationalError, PooledMySQLDatabase):
