@@ -137,7 +137,7 @@ def main(args):
 
     print 'Completed in {:.2f} seconds.'.format(end_time - start_time)
     print len(clusters), 'clusters found.'
-    if len(spawnpoints) = 0:
+    if len(spawnpoints) == 0:
         print 'No compression achieved.')
     else:
         print '{:.2f}% compression achieved.'.format(100.0 * (len(spawnpoints) - len(clusters)) / len(spawnpoints))
