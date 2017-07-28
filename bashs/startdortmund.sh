@@ -1,6 +1,6 @@
 #!/bin/sh
 cd /root/RocketMap/
-/usr/bin/screen -AmdS D0 /opt/python/bin/python /root/RocketMap/runserver.py -ns -speed -sn Dortmund00 -l "51.52426646049366,7.4731889192371455" -st 30 -w 135 -ac /root/RocketMap/config/Setup_New/Initial/accounts_0.csv -cf /root/RocketMap/config/config-ivwp.ini --disable-clean --db-threads 2
+/usr/bin/screen -AmdS D0 /opt/python/bin/python /root/RocketMap/runserver.py -ns -speed -sn Dortmund00 -l "51.52426646049366,7.4731889192371455" -st 30 -w 130 -ac /root/RocketMap/config/Setup_New/Initial/accounts_0.csv -cf /root/RocketMap/config/config-ivwp.ini --disable-clean --db-threads 2
 sleep 60
 /usr/bin/screen -AmdS D1 /opt/python/bin/python /root/RocketMap/runserver.py -ns -speed -sn Dortmund01 -l "51.57991708908199,7.4740652549910465" -st 30 -w 115 -ac /root/RocketMap/config/Setup_New/Initial/accounts_1.csv -cf /root/RocketMap/config/config-ivwp.ini --disable-clean --db-threads 2
 sleep 60
