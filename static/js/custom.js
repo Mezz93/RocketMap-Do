@@ -2,17 +2,27 @@ $(function () {
     'use strict'
 
 
-    /* Settings. */
+    /* Settings For Analytics
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-103616467-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+	*/
 
     // Google Analytics property ID. Leave empty to disable.
     // Looks like 'UA-XXXXX-Y'.
-    const analyticsKey = ''
+    const analyticsKey = 'UA-103616467-1'
 
     // MOTD.
     const motdEnabled = true
     const motdTitle = 'Update!'
     const motd = '<span style="font-weight:bold;">Legendary Raids sind nun verfügbar auf der Map!</span><br/><br/>' +
-					'<span>Level 4 Raids werden während des Bonievents auch angezeigt!</span><br/><br/>' +
 					'<span style="color:red;">Besucht unseren Discordserver und tauscht euch über Raidtreffen und Chats aus (Menü unter Discord)</span>'
 
     // Only show every unique MOTD message once. If disabled, the MOTD will be
