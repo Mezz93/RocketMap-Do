@@ -979,15 +979,15 @@ var StoreOptions = {
         type: StoreTypes.Number
     },
     'searchMarkerStyle': {
-        default: 'pokesition',
+        default: 'none',
         type: StoreTypes.String
     },
     'locationMarkerStyle': {
-        default: 'mobile',
+        default: 'none',
         type: StoreTypes.String
     },
     'zoomLevel': {
-        default: 16,
+        default: 15,
         type: StoreTypes.Number
     },
     'maxClusterZoomLevel': {
