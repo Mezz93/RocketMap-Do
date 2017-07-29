@@ -12,7 +12,6 @@ $(function () {
     const motdEnabled = true
     const motdTitle = 'Update!'
     const motd = '<span style="font-weight:bold;">Legendary Raids sind nun verfügbar auf der Map!</span><br/><br/>' +
-					'<span>Level 4 Raids werden während des Bonievents auch angezeigt!</span><br/><br/>' +
 					'<span style="color:red;">Besucht unseren Discordserver und tauscht euch über Raidtreffen und Chats aus (Menü unter Discord)</span>'
 
     // Only show every unique MOTD message once. If disabled, the MOTD will be
