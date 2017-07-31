@@ -82,7 +82,7 @@ const unownForm = ['unset', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K
  <def> - defense as number
  <sta> - stamnia as number
  */
-var notifyIvTitle = '<pkm> <prc>% (<atk>/<def>/<sta>)'
+var notifyIvTitle = '<pkm>'
 var notifyNoIvTitle = '<pkm>'
 
 /*
