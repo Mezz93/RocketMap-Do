@@ -512,7 +512,10 @@ function pokemonLabel(item) {
       <div class='pokemon container content-right'>
         <div>
           <div class='pokemon disappear'>
-            <span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> left
+            <span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> verbleibend
+          </div>
+		  <div class='pokemon'>
+            IV/WP: Supporter Only (siehe Menü)
           </div>
           <div class='pokemon'>
             <span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Alle ${name} ausblenden</a></span>
@@ -576,7 +579,7 @@ function gymLabel(gym, includeMembers = true) {
     }
     const lastScannedStr = getDateStr(gym.last_scanned)
     const lastModifiedStr = getDateStr(gym.last_modified)
-    const slotsString = gym.slots_available ? (gym.slots_available === 1 ? '1 Free Slot' : `${gym.slots_available} Free Slots`) : 'No Free Slots'
+    const slotsString = gym.slots_available ? (gym.slots_available === 1 ? '1 freier Platz' : `${gym.slots_available} freie Plätze`) : 'Kein freier Platz'
     const teamColor = ['85,85,85,1', '0,134,255,1', '255,26,26,1', '255,159,25,1']
     const teamName = gymTypes[gym.team_id]
     const isUpcomingRaid = raid != null && Date.now() < raid.start
@@ -601,7 +604,7 @@ function gymLabel(gym, includeMembers = true) {
         <div>
             <img class='gym info strength' src='static/images/gym/Strength.png'>
             <span class='gym info strength'>
-              Strength: ${gymPoints} (${slotsString})
+              Insg. Motivation: ${gymPoints} (${slotsString})
             </span>
         </div>`
     }
@@ -613,17 +616,19 @@ function gymLabel(gym, includeMembers = true) {
         if (isRaidStarted) {
             // Set default image.
             image = `
+				${levelStr}<br>
                 <img class='gym sprite' src='static/images/raid/${gymTypes[gym.team_id]}_${raid.level}_unknown.png'>
                 <div class='raid'>
                 <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
-                ${levelStr}
                 </span>
-                <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span> left
+				Verbleibende Zeit:<br>
+                <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span>
                 </div>
             `
             // Use Pokémon-specific image if we have one.
             if (raid.pokemon_id !== null && pokemonWithImages.indexOf(raid.pokemon_id) !== -1) {
                 image = `
+					${levelStr}<br>
                     <div class='raid container'>
                     <div class='raid container content-left'>
                         <div>
@@ -633,7 +638,7 @@ function gymLabel(gym, includeMembers = true) {
                     <div class='raid container content-right'>
                         <div>
                         <div class='raid pokemon'>
-                            ${raid['pokemon_name']} <a href='http://pokemon.gameinfo.io/en/pokemon/${raid['pokemon_id']}' target='_blank' title='View in Pokédex'>#${raid['pokemon_id']}</a> | CP: ${raid['cp']}
+                            ${raid['pokemon_name']} <a href='http://pokemon.gameinfo.io/en/pokemon/${raid['pokemon_id']}' target='_blank' title='View in Pokédex'>#${raid['pokemon_id']}</a> | WP: ${raid['cp']}
                     </div>
                         ${raidStr}
                     </div>
@@ -641,9 +646,9 @@ function gymLabel(gym, includeMembers = true) {
                 </div>
                     <div class='raid'>
                     <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
-                    ${levelStr}
                     </span>
-                    <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span> left
+					Verbleibende Zeit:<br>
+                    <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span>
                     </div>
                 `
             }
@@ -653,9 +658,9 @@ function gymLabel(gym, includeMembers = true) {
 
         if (isUpcomingRaid) {
             imageLbl = `
+				${levelStr}<br>
                 <div class='raid'>
                   <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
-                  ${levelStr}
                   </span>
                   Raid in <span class='raid countdown label-countdown' disappears-at='${raid.start}'></span>
                 </div>`
@@ -669,16 +674,16 @@ function gymLabel(gym, includeMembers = true) {
             <div class='gym container'>
                 <div>
                   <span class='gym info navigate'>
-                    <a href='javascript:void(0);' onclick='javascript:openMapDirections(${gym.latitude},${gym.longitude});' title='Open in Google Maps'>
-                      ${gym.latitude.toFixed(6)}, ${gym.longitude.toFixed(7)}
+                    <a href='javascript:void(0);' onclick='javascript:openMapDirections(${gym.latitude},${gym.longitude});' title='Google Maps'>
+                      Route - Wegbeschreibung
                     </a>
                   </span>
                 </div>
                 <div class='gym info last-scanned'>
-                    Last Scanned: ${lastScannedStr}
+                    Letzter Scan: ${lastScannedStr}
                 </div>
                 <div class='gym info last-modified'>
-                    Last Modified: ${lastModifiedStr}
+                    Letzte Änderung: ${lastModifiedStr}
                 </div>
             </div>
         </div>`
@@ -733,7 +738,7 @@ function pokestopLabel(expireTime, latitude, longitude) {
                 Lured Pokéstop
               </div>
               <div class='pokestop-expire'>
-                  <span class='label-countdown' disappears-at='${expireTime}'>00m00s</span> left
+                  <span class='label-countdown' disappears-at='${expireTime}'>00m00s</span> verbleibend
               </div>
               <div>
                 <img class='pokestop sprite' src='static/images/pokestop//PokestopLured.png'>
@@ -782,7 +787,7 @@ function spawnpointLabel(item) {
     } else {
         str += `
             <div>
-                Every hour from ${formatSpawnTime(item.appear_time)} to ${formatSpawnTime(item.disappear_time)}
+                Stündlich von ${formatSpawnTime(item.appear_time)} bis ${formatSpawnTime(item.disappear_time)}
             </div>`
     }
     return str
@@ -1813,11 +1818,11 @@ var updateLabelDiffTime = function () {
         } else {
             timestring = ''
             if (hours > 0) {
-                timestring = hours + 'hour '
+                timestring = hours + 'Std '
             }
 
-            timestring += lpad(minutes, 2, 0) + 'min '
-            timestring += lpad(seconds, 2, 0) + 'sec '
+            timestring += lpad(minutes, 2, 0) + 'Min '
+            timestring += lpad(seconds, 2, 0) + 'Sek '
             timestring += ''
         }
 
