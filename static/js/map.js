@@ -515,9 +515,6 @@ function pokemonLabel(item) {
             <span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> verbleibend
           </div>
 		  <div class='pokemon'>
-            IV/WP: Supporter Only (siehe Menü)
-          </div>
-          <div class='pokemon'>
             <span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Alle ${name} ausblenden</a></span>
           </div>
           <div class='pokemon'>
@@ -683,7 +680,7 @@ function gymLabel(gym, includeMembers = true) {
                     Letzter Scan: ${lastScannedStr}
                 </div>
                 <div class='gym info last-modified'>
-                    Letzte Änderung: ${lastModifiedStr}
+                    Letzte Änderung: ${lastModifiedStr}<br>
                 </div>
             </div>
         </div>`

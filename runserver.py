@@ -258,7 +258,9 @@ def main():
 
     app = None
     if not args.no_server and not args.clear_db:
-        app = Pogom(__name__, root_path=os.path.dirname(__file__))
+        app = Pogom(__name__,
+                    root_path=os.path.dirname(
+                              os.path.abspath(__file__)).decode('utf8'))
         app.before_request(app.validate_request)
         app.set_current_location(position)
 
@@ -418,7 +420,7 @@ def main():
         # No more stale JS.
         init_cache_busting(app)
 
-        app.set_search_control(control_flags['search_control'])
+        app.set_control_flags(control_flags)
         app.set_heartbeat_control(heartbeat)
         app.set_location_queue(new_location_queue)
         ssl_context = None
