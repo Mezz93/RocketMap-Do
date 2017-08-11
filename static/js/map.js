@@ -676,6 +676,11 @@ function gymLabel(gym, includeMembers = true) {
                     </a>
                   </span>
                 </div>
+                <div class='gym info meeting'>
+				  <a href='http://raid.pokemap-nrw.de/get_gym?gym_id=${gym.gym_id}' title='Raid Anmeldung'>
+				    Für Raid anmelden
+				  </a>
+                </div>
                 <div class='gym info last-scanned'>
                     Letzter Scan: ${lastScannedStr}
                 </div>
