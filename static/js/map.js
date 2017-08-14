@@ -236,9 +236,8 @@ function initMap() { // eslint-disable-line no-unused-vars
             redrawPokemon(mapData.pokemons)
             redrawPokemon(mapData.lurePokemons)
 
-            // We're done processing the list. Redraw.
-            markerCluster.resetViewport()
-            markerCluster.redraw()
+            // We're done processing the list. Repaint.
+            markerCluster.repaint()
         }, 500)
     })
 
@@ -1910,7 +1909,7 @@ function updateMap() {
         clearStaleMarkers()
 
         // We're done processing. Redraw.
-        markerCluster.repaint()
+        markerCluster.redraw()
 
         updateScanned()
         updateSpawnPoints()
@@ -2406,9 +2405,8 @@ $(function () {
         redrawPokemon(mapData.pokemons)
         redrawPokemon(mapData.lurePokemons)
 
-        // We're done processing the list. Redraw.
-        markerCluster.resetViewport()
-        markerCluster.redraw()
+        // We're done processing the list. Repaint.
+        markerCluster.repaint()
     })
 
     $switchOpenGymsOnly = $('#open-gyms-only-switch')
@@ -2751,7 +2749,8 @@ $(function () {
                             }
                         }
                     })
-                    if (dType === 'pokemons') {
+                    // If the type was "pokemons".
+                    if (oldPokeMarkers.length > 0) {
                         markerCluster.removeMarkers(oldPokeMarkers)
                     }
                     if (storageKey !== 'showRanges') data[dType] = {}
@@ -2801,6 +2800,7 @@ $(function () {
     })
     $('#pokemon-switch').change(function () {
         buildSwitchChangeListener(mapData, ['pokemons'], 'showPokemon').bind(this)()
+        markerCluster.repaint()
     })
     $('#scanned-switch').change(function () {
         buildSwitchChangeListener(mapData, ['scanned'], 'showScanned').bind(this)()
