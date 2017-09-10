@@ -671,7 +671,7 @@ function gymLabel(gym, includeMembers = true) {
                 <div class='raid'>
                   <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
                   </span>
-                  Raidstart in <span class='raid countdown label-countdown' disappears-at='${raid.start}'> (um ${moment(raid.start).format('HH:mm')})</span>
+                  Raidstart in <span class='raid countdown label-countdown' disappears-at='${raid.start}'>00m00s</span>(um ${moment(raid.start).format('HH:mm')})
                 </div>`
         }
     } else {
