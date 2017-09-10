@@ -851,7 +851,7 @@ var StoreOptions = {
         type: StoreTypes.String
     },
     'remember_select_exclude': {
-        default: [10, 11, 13, 14, 16, 17, 19, 21, 22, 29, 32, 41, 43, 46, 48, 54, 69, 72, 90, 92, 96, 98, 116, 118, 120, 122, 124, 161, 162, 163, 165, 166, 167, 168, 177, 178, 183, 187, 190, 194, 198, 215, 220, 221],
+        default: [10, 11, 13, 14, 16, 17, 19, 21, 22, 29, 32, 41, 43, 46, 48, 54, 69, 72, 90, 92, 96, 98, 116, 118, 120, 122, 124, 161, 162, 163, 165, 166, 167, 168, 177, 178, 183, 187, 190, 194, 198, 215, 220],
         type: StoreTypes.JSON
     },
     'remember_select_notify': {
@@ -1090,29 +1090,32 @@ function setupPokemonMarkerDetails(item, map, scaleByRarity = true) {
         sprite: sprite
     }
     var iconSize = (map.getZoom() - 3) * (map.getZoom() - 3) * 0.2 + Store.get('iconSizeModifier')
-    scaleByRarity = scaleByRarity && Store.get('scaleByRarity')
+    scaleByRarity = true //scaleByRarity && Store.get('scaleByRarity')
     rarityValue = 2
 
     if (Store.get('upscalePokemon')) {
         const upscaledPokemon = Store.get('upscaledPokemon')
         var rarityValue = isNotifyPoke(item) || (upscaledPokemon.indexOf(item['pokemon_id']) !== -1) ? 29 : 2
     }
+	
+	if (scaleByRarity) {
+		const rarityValues = {
+			'sehr selten': 5,
+			'ultra selten': 10,
+			'legendär': 15
+		}
 
-    if (scaleByRarity) {
-        const rarityValues = {
-            'very rare': 30,
-            'ultra rare': 40,
-            'legendary': 50
-        }
+		if (item.hasOwnProperty('pokemon_rarity')) {
+			const pokemonRarity = item['pokemon_rarity'].toLowerCase()
 
-        if (item.hasOwnProperty('pokemon_rarity')) {
-            const pokemonRarity = item['pokemon_rarity'].toLowerCase()
-
-            if (rarityValues.hasOwnProperty(pokemonRarity)) {
-                rarityValue = rarityValues[pokemonRarity]
-            }
-        }
-    }
+			if (rarityValues.hasOwnProperty(pokemonRarity)) {
+				rarityValue = rarityValues[pokemonRarity]
+			}
+		}
+	}
+	if (isNotifyPoke(item)) {
+		rarityValue = 50
+	}
 
     iconSize += rarityValue
     markerDetails.rarityValue = rarityValue
