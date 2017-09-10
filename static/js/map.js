@@ -630,12 +630,8 @@ function gymLabel(gym, includeMembers = true) {
                 <div class='raid'>
                 <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
                 </span>
-<<<<<<< HEAD
 				Verbleibende Zeit:<br>
-                <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span>
-=======
                 <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span> left (${moment(raid.end).format('HH:mm')})
->>>>>>> 19bfaefc243eb88457388196a74e4f645a313947
                 </div>
             `
             // Use Pokémon-specific image if we have one.
@@ -660,12 +656,8 @@ function gymLabel(gym, includeMembers = true) {
                     <div class='raid'>
                     <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
                     </span>
-<<<<<<< HEAD
 					Verbleibende Zeit:<br>
-                    <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span>
-=======
                     <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span> left (${moment(raid.end).format('HH:mm')})
->>>>>>> 19bfaefc243eb88457388196a74e4f645a313947
                     </div>
                 `
             }
@@ -906,11 +898,7 @@ function pokestopLabel(expireTime, latitude, longitude) {
                 Lured Pokéstop
               </div>
               <div class='pokestop-expire'>
-<<<<<<< HEAD
-                  <span class='label-countdown' disappears-at='${expireTime}'>00m00s</span> verbleibend
-=======
-                  <span class='label-countdown' disappears-at='${expireTime}'>00m00s</span> left (${moment(expireTime).format('HH:mm')})
->>>>>>> 19bfaefc243eb88457388196a74e4f645a313947
+                  <span class='label-countdown' disappears-at='${expireTime}'>00m00s</span> verbleibend (${moment(expireTime).format('HH:mm')})
               </div>
               <div>
                 <img class='pokestop sprite' src='static/images/pokestop//PokestopLured.png'>
@@ -1988,18 +1976,7 @@ var updateLabelDiffTime = function () {
         if (disappearsAt.ttime < disappearsAt.now) {
             timestring = '(expired)'
         } else {
-<<<<<<< HEAD
-            timestring = ''
-            if (hours > 0) {
-                timestring = hours + 'Std '
-            }
-
-            timestring += lpad(minutes, 2, 0) + 'Min '
-            timestring += lpad(seconds, 2, 0) + 'Sek '
-            timestring += ''
-=======
             timestring = lpad(hours, 2, 0) + ':' + lpad(minutes, 2, 0) + ':' + lpad(seconds, 2, 0)
->>>>>>> 19bfaefc243eb88457388196a74e4f645a313947
         }
 
         $(element).text(timestring)
