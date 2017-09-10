@@ -117,6 +117,15 @@ function removePokemonMarker(encounterId) { // eslint-disable-line no-unused-var
     mapData.pokemons[encounterId].hidden = true
 }
 
+function createServiceWorkerReceiver() {
+    navigator.serviceWorker.addEventListener('message', function (event) {
+        const data = JSON.parse(event.data)
+        if (data.action === 'centerMap' && data.lat && data.lon) {
+            centerMap(data.lat, data.lon, 20)
+        }
+    })
+}
+
 function initMap() { // eslint-disable-line no-unused-vars
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -255,6 +264,10 @@ function initMap() { // eslint-disable-line no-unused-vars
             searchControl('on')
         }
     })
+
+    if (Push._agents.chrome.isSupported()) {
+        createServiceWorkerReceiver()
+    }
 }
 
 function updateLocationMarker(style) {
@@ -497,8 +510,8 @@ function pokemonLabel(item) {
     <div class='pokemon name'>
       ${name} <span class='pokemon name pokedex'><a href='http://pokemon.gameinfo.io/en/pokemon/${id}' target='_blank' title='View in Pokédex'>#${id}</a></span> ${formString} <span class='pokemon gender rarity'>${genderType[gender - 1]} ${rarityDisplay}</span> ${typesDisplay}
     </div>`
-
-        contentstring += `
+	
+	contentstring += `
       <div class='pokemon container'>
         <div class='pokemon container content-left'>
           <div>
@@ -511,7 +524,7 @@ function pokemonLabel(item) {
       <div class='pokemon container content-right'>
         <div>
           <div class='pokemon disappear'>
-            <span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> verbleibend
+            <span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> verbleibend (${moment(disappearTime).format('HH:mm')})
           </div>
 		  <div class='pokemon'>
             <span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Alle ${name} ausblenden</a></span>
@@ -554,7 +567,7 @@ function isGymSatisfiesRaidMinMaxFilter(raid) {
 function gymLabel(gym, includeMembers = true) {
     const pokemonWithImages = [
         3, 6, 9, 59, 65, 68, 89, 94, 103, 110, 112, 125, 126, 129, 131, 134,
-        135, 136, 143, 144, 145, 146, 153, 156, 159, 248, 249
+        135, 136, 143, 144, 145, 146, 153, 156, 159, 243, 244, 245, 248, 249
     ]
 
     const raid = gym.raid
@@ -617,8 +630,12 @@ function gymLabel(gym, includeMembers = true) {
                 <div class='raid'>
                 <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
                 </span>
+<<<<<<< HEAD
 				Verbleibende Zeit:<br>
                 <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span>
+=======
+                <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span> left (${moment(raid.end).format('HH:mm')})
+>>>>>>> 19bfaefc243eb88457388196a74e4f645a313947
                 </div>
             `
             // Use Pokémon-specific image if we have one.
@@ -643,8 +660,12 @@ function gymLabel(gym, includeMembers = true) {
                     <div class='raid'>
                     <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
                     </span>
+<<<<<<< HEAD
 					Verbleibende Zeit:<br>
                     <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span>
+=======
+                    <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span> left (${moment(raid.end).format('HH:mm')})
+>>>>>>> 19bfaefc243eb88457388196a74e4f645a313947
                     </div>
                 `
             }
@@ -658,7 +679,7 @@ function gymLabel(gym, includeMembers = true) {
                 <div class='raid'>
                   <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
                   </span>
-                  Raid in <span class='raid countdown label-countdown' disappears-at='${raid.start}'></span>
+                  Raid in <span class='raid countdown label-countdown' disappears-at='${raid.start}'> (${moment(raid.start).format('HH:mm')})</span>
                 </div>`
         }
     } else {
@@ -885,7 +906,11 @@ function pokestopLabel(expireTime, latitude, longitude) {
                 Lured Pokéstop
               </div>
               <div class='pokestop-expire'>
+<<<<<<< HEAD
                   <span class='label-countdown' disappears-at='${expireTime}'>00m00s</span> verbleibend
+=======
+                  <span class='label-countdown' disappears-at='${expireTime}'>00m00s</span> left (${moment(expireTime).format('HH:mm')})
+>>>>>>> 19bfaefc243eb88457388196a74e4f645a313947
               </div>
               <div>
                 <img class='pokestop sprite' src='static/images/pokestop//PokestopLured.png'>
@@ -1197,7 +1222,7 @@ function updateGymMarker(item, marker) {
     let raidLevel = getRaidLevel(item.raid)
     const pokemonWithImages = [
         3, 6, 9, 59, 65, 68, 89, 94, 103, 110, 112, 125, 126, 129, 131, 134,
-        135, 136, 143, 144, 145, 146, 153, 156, 159, 248, 249
+        135, 136, 143, 144, 145, 146, 153, 156, 159, 243, 244, 245, 248, 249
     ]
     if (item.raid !== null && isOngoingRaid(item.raid) && Store.get('showRaids') && raidLevel >= Store.get('showRaidMinLevel') && raidLevel <= Store.get('showRaidMaxLevel')) {
         let markerImage = 'static/images/raid/' + gymTypes[item.team_id] + '_' + item.raid.level + '_unknown.png'
@@ -1963,6 +1988,7 @@ var updateLabelDiffTime = function () {
         if (disappearsAt.ttime < disappearsAt.now) {
             timestring = '(expired)'
         } else {
+<<<<<<< HEAD
             timestring = ''
             if (hours > 0) {
                 timestring = hours + 'Std '
@@ -1971,6 +1997,9 @@ var updateLabelDiffTime = function () {
             timestring += lpad(minutes, 2, 0) + 'Min '
             timestring += lpad(seconds, 2, 0) + 'Sek '
             timestring += ''
+=======
+            timestring = lpad(hours, 2, 0) + ':' + lpad(minutes, 2, 0) + ':' + lpad(seconds, 2, 0)
+>>>>>>> 19bfaefc243eb88457388196a74e4f645a313947
         }
 
         $(element).text(timestring)
@@ -1981,27 +2010,62 @@ function getPointDistance(pointA, pointB) {
     return google.maps.geometry.spherical.computeDistanceBetween(pointA, pointB)
 }
 
-function sendNotification(title, text, icon, lat, lng) {
-    if (!('Notification' in window)) {
-        return false // Notifications are not present in browser
-    }
-
-    if (Notification.permission !== 'granted') {
-        Notification.requestPermission()
-    } else {
-        var notification = new Notification(title, {
-            icon: icon,
-            body: text,
-            sound: 'sounds/ding.mp3'
-        })
-
-        notification.onclick = function () {
-            window.focus()
-            notification.close()
-
-            centerMap(lat, lng, 20)
+function sendNotification(title, text, icon, lat, lon) {
+    var notificationDetails = {
+        icon: icon,
+        body: text,
+        data: {
+            lat: lat,
+            lon: lon
         }
     }
+
+    if (Push._agents.desktop.isSupported()) {
+        /* This will only run in browsers which support the old
+         * Notifications API. Browsers supporting the newer Push API
+         * are handled by serviceWorker.js. */
+        notificationDetails.onClick = function (event) {
+            if (Push._agents.desktop.isSupported()) {
+                window.focus()
+                event.currentTarget.close()
+                centerMap(lat, lon, 20)
+            }
+        }
+    }
+
+    /* Push.js requests the Notification permission automatically if
+     * necessary. */
+    Push.create(title, notificationDetails).catch(function () {
+        /* Push.js doesn't fall back automatically if the user denies the
+         * Notifications permission. */
+        sendToastrPokemonNotification(title, text, icon, lat, lon)
+    })
+}
+
+function sendToastrPokemonNotification(title, text, icon, lat, lon) {
+    var notification = toastr.info(text, title, {
+        closeButton: true,
+        positionClass: 'toast-top-right',
+        preventDuplicates: true,
+        onclick: function () {
+            centerMap(lat, lon, 20)
+        },
+        showDuration: '300',
+        hideDuration: '500',
+        timeOut: '6000',
+        extendedTimeOut: '1500',
+        showEasing: 'swing',
+        hideEasing: 'linear',
+        showMethod: 'fadeIn',
+        hideMethod: 'fadeOut'
+    })
+    notification.removeClass('toast-info')
+    notification.css({
+        'padding-left': '74px',
+        'background-image': `url('./${icon}')`,
+        'background-size': '48px',
+        'background-color': '#0c5952'
+    })
 }
 
 function createMyLocationButton() {
@@ -2350,14 +2414,19 @@ function getParameterByName(name, url) {
 //
 
 $(function () {
-    if (!Notification) {
-        console.log('could not load notifications')
-        return
-    }
-
-    if (Notification.permission !== 'granted') {
-        Notification.requestPermission()
-    }
+    /* If push.js is unsupported or disabled, fall back to toastr
+     * notifications. */
+    Push.config({
+        fallback: function (notification) {
+            sendToastrPokemonNotification(
+                notification.title,
+                notification.body,
+                notification.icon,
+                notification.data.lat,
+                notification.data.lon
+            )
+        }
+    })
 })
 
 $(function () {
