@@ -524,7 +524,7 @@ function pokemonLabel(item) {
       <div class='pokemon container content-right'>
         <div>
           <div class='pokemon disappear'>
-            <span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> verbleibend (${moment(disappearTime).format('HH:mm')})
+            <span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> übrig(bis ${moment(disappearTime).format('HH:mm')})
           </div>
 		  <div class='pokemon'>
             <span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Alle ${name} ausblenden</a></span>
@@ -631,7 +631,7 @@ function gymLabel(gym, includeMembers = true) {
                 <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
                 </span>
 				Verbleibende Zeit:<br>
-                <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span> left (${moment(raid.end).format('HH:mm')})
+                <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span> übrig(bis ${moment(raid.end).format('HH:mm')})
                 </div>
             `
             // Use Pokémon-specific image if we have one.
@@ -657,7 +657,7 @@ function gymLabel(gym, includeMembers = true) {
                     <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
                     </span>
 					Verbleibende Zeit:<br>
-                    <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span> left (${moment(raid.end).format('HH:mm')})
+                    <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span> übrig(bis ${moment(raid.end).format('HH:mm')})
                     </div>
                 `
             }
@@ -671,7 +671,7 @@ function gymLabel(gym, includeMembers = true) {
                 <div class='raid'>
                   <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
                   </span>
-                  Raid in <span class='raid countdown label-countdown' disappears-at='${raid.start}'> (${moment(raid.start).format('HH:mm')})</span>
+                  Raidstart in <span class='raid countdown label-countdown' disappears-at='${raid.start}'> (um ${moment(raid.start).format('HH:mm')})</span>
                 </div>`
         }
     } else {
@@ -898,7 +898,7 @@ function pokestopLabel(expireTime, latitude, longitude) {
                 Lured Pokéstop
               </div>
               <div class='pokestop-expire'>
-                  <span class='label-countdown' disappears-at='${expireTime}'>00m00s</span> verbleibend (${moment(expireTime).format('HH:mm')})
+                  <span class='label-countdown' disappears-at='${expireTime}'>00m00s</span> übrig(bis ${moment(expireTime).format('HH:mm')})
               </div>
               <div>
                 <img class='pokestop sprite' src='static/images/pokestop//PokestopLured.png'>
@@ -2041,7 +2041,7 @@ function sendToastrPokemonNotification(title, text, icon, lat, lon) {
         'padding-left': '74px',
         'background-image': `url('./${icon}')`,
         'background-size': '48px',
-        'background-color': '#0c5952'
+        'background-color': '#283747'
     })
 }
 
