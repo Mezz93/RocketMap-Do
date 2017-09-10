@@ -21,9 +21,10 @@ $(function () {
 
     // MOTD.
     const motdEnabled = true
-    const motdTitle = 'Update!'
-    const motd = '<span style="font-weight:bold;">Legendary Raids sind nun verfügbar auf der Map!</span><br/><br/>' +
-					'<span style="color:red;">Besucht unseren Discordserver und tauscht euch über Raidtreffen und Chats aus (Menü unter Discord)</span>'
+    const motdTitle = 'eingeschränkter Betrieb'
+    const motd = '<span style="font-weight:bold;">Die neue Version wird von Niantic erzwungen und deshalb können wir nicht garantieren, dass die Map läuft.</span><br/>' +
+					'<strong>Raids werden dennoch gescannt!</strong><br/>' +
+					'<span style="color:red;">Besucht unseren Discord für mehr Infos: <a href="https://discord.gg/zwsGCUS">https://discord.gg/zwsGCUS</a></span>'
 
     // Only show every unique MOTD message once. If disabled, the MOTD will be
     // shown on every visit. Requires support for localStorage.
