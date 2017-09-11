@@ -284,4 +284,53 @@ $(function () {
 	};
 	
 	pokemonLabel = new_func;
+	
+	sendToastrPokemonNotification = function(title, text, icon, lat, lon) {
+		var notification = toastr.info(text, title, {
+			closeButton: true,
+			positionClass: 'toast-top-right',
+			preventDuplicates: false,
+			onclick: function () {
+				centerMap(lat, lon, 20)
+			},
+			showDuration: '300',
+			hideDuration: '500',
+			timeOut: '6000',
+			extendedTimeOut: '1500',
+			showEasing: 'swing',
+			hideEasing: 'linear',
+			showMethod: 'fadeIn',
+			hideMethod: 'fadeOut'
+		})
+		notification.removeClass('toast-info')
+		notification.css({
+			'padding-left': '36px',
+			'background-image': `url('./${icon}')`,
+			'background-size': '36px',
+			'background-position': 'left top',
+			'background-color': '#283747',
+			'height': '40px'
+		})
+		notification.find('.toast-title').css('font-size', 'smaller')
+	};
+	
+	getNotifyText = function(item) {
+		var iv = getIv(item['individual_attack'], item['individual_defense'], item['individual_stamina'])
+		var find = ['<prc>', '<pkm>', '<atk>', '<def>', '<sta>']
+		var replace = [((iv) ? iv.toFixed(1) : ''), item['pokemon_name'], item['individual_attack'],
+			item['individual_defense'], item['individual_stamina']]
+		var ntitle = repArray(((iv) ? notifyIvTitle : notifyNoIvTitle), find, replace)
+		var dist = moment(item['disappear_time']).format('HH:mm')
+		var until = getTimeUntil(item['disappear_time'])
+		var udist = (until.hour > 0) ? until.hour + ':' : ''
+		udist += lpad(until.min, 2, 0) + 'm' + lpad(until.sec, 2, 0) + 's'
+		find = ['<dist>', '<udist>']
+		replace = [dist, udist]
+		var ntext = repArray(notifyText, find, replace)
+		
+		return {
+			'fav_title': ntitle + '[' + ntext + ']',
+			'fav_text': ''
+		}
+	}
 })
