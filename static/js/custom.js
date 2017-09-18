@@ -159,7 +159,7 @@ $(function () {
 			var topRightPos = [ 51.520998,7.476238 ];
 			
 			var inBounds = ( ( item['latitude'] >= bottomLeftPos[0] ) && ( item['longitude'] >= bottomLeftPos[1] ) ) &&
-							( ( item['latitude'] <= topRightPos[0] ) && ( item['longitude'] <= topRightPos[0] ) );
+							( ( item['latitude'] <= topRightPos[0] ) && ( item['longitude'] <= topRightPos[1] ) );
 			
 			if(!inBounds) {
 				return old_func(item);
