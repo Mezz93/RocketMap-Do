@@ -76,7 +76,7 @@
                 <span class="switch-handle"></span>
                 </label>
               </div>
-            </div>            
+            </div>
             <div id="raids-filter-wrapper" style="display:none">
               <div class="form-control switch-container" id="raid-active-gym-wrapper">
                 <h3>Nur aktive Raids</h3>
@@ -189,7 +189,7 @@
                 </select>
               </div>
             </div>
-              {% endif %}			  
+              {% endif %}
               {% if show.pokestops %}
             <div class="form-control switch-container">
               <h3>Pokéstops</h3>
@@ -384,6 +384,13 @@
             <div class="form-control switch-container">
               <h3>Map Style</h3>
               <select id="map-style"></select>
+            </div>
+            <div class="form-control switch-container">
+              <h3>Kartendienst</h3>
+              <select name="map-service-provider" id="map-service-provider">
+                <option value="googlemaps">Google Maps</option>
+                <option value="applemaps">Apple Maps</option>
+              </select>
             </div>
             <div class="form-control switch-container">
               <h3>Icon Größe</h3>
