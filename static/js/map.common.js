@@ -1015,12 +1015,16 @@ var StoreOptions = {
         type: StoreTypes.Number
     },
     'processPokemonChunkSize': {
-        default: 100,
+        default: 250,
         type: StoreTypes.Number
     },
     'processPokemonIntervalMs': {
         default: 100,
         type: StoreTypes.Number
+    },
+    'mapServiceProvider': {
+        default: 'googlemaps',
+        type: StoreTypes.String
     }
 }
 

@@ -122,6 +122,15 @@ $(function () {
         }
     }
 	
+	//fix user errors
+	Store.set('showActiveRaidsOnly', false)
+	Store.set('showOpenGymsOnly', false)
+	Store.set('showTeamGymsOnly', 0)
+	Store.set('showLastUpdatedGymsOnly', 0)
+	Store.set('showScanned', false)
+	Store.set('showRanges', false)
+	Store.set('processPokemonChunkSize', 250)
+	
 	
 	// i don't know =)
 	var excluded = Store.get('remember_select_exclude')

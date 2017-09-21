@@ -76,7 +76,7 @@
                 <span class="switch-handle"></span>
                 </label>
               </div>
-            </div>            
+            </div>
             <div id="raids-filter-wrapper" style="display:none">
               <div class="form-control switch-container" id="raid-active-gym-wrapper">
                 <h3>Nur aktive Raids</h3>
@@ -189,7 +189,7 @@
                 </select>
               </div>
             </div>
-              {% endif %}			  
+              {% endif %}
               {% if show.pokestops %}
             <div class="form-control switch-container">
               <h3>Pokéstops</h3>
@@ -247,7 +247,7 @@
               </div>
               </label>
 			  <br>
-			  Zur Optimierung der Leistung sind häufige Pokémon ausgeblendet. Du kannst sie jederzeit wieder einblenden.
+			  Damit dein Datenvolumen geschont wird, sind häufige Pokémon ausgeblendet.
             </div>
               {% endif %}
           </div>
@@ -284,7 +284,7 @@
             </div>
               {% endif %}
             <div class="form-control switch-container" >
-              <h3>Map an meiner Location starten</h3>
+              <h3>Bei mir starten</h3>
               <div class="onoffswitch">
                 <input id="start-at-user-location-switch" type="checkbox" name="start-at-user-location-switch" class="onoffswitch-checkbox" checked/>
                 <label class="onoffswitch-label" for="start-at-user-location-switch">
@@ -306,7 +306,7 @@
             </div>
               {% endif %}
             <div class="form-control switch-container">
-              <h3>Meiner Location folgen</h3>
+              <h3>Mir folgen</h3>
               <div class="onoffswitch">
                 <input id="follow-my-location-switch" type="checkbox" name="follow-my-location-switch" class="onoffswitch-checkbox" checked/>
                 <label class="onoffswitch-label" for="follow-my-location-switch">
@@ -330,11 +330,12 @@
           </div>
 
             {% if show.pokemons %}
-          <h3><i class="fa fa-bullhorn fa-fw"></i>Web-Notifications </h3>
+          <h3><i class="fa fa-bullhorn fa-fw"></i>Benachrichtigungen</h3>
           <div>
+			Filtere hier, wann die Karte dich benachrichtigen soll:
             <div class="form-control">
               <label for="notify-pokemon">
-                <h3>Web-Notify of Pokémon</h3>
+                <h3>ÜBer Pokémon</h3>
                 <div style="max-height:165px;overflow-y:auto">
                   <select id="notify-pokemon" multiple="multiple"></select>
                 </div>
@@ -352,13 +353,13 @@
               {% if show.encounter %}
             <div class="form-control">
               <label for="notify-perfection">
-                <h3>Notify of Perfection</h3>
-                <input id="notify-perfection" type="text" name="notify-perfection" placeholder="Minimum perfection %"/>
+                <h3>Nach IVs</h3>
+                <input id="notify-perfection" type="text" name="notify-perfection" placeholder="Minimum IV %"/>
               </label>
             </div>
               {% endif %}
             <div class="form-control switch-container">
-              <h3>Sound</h3>
+              <h3>Ton abspielen</h3>
               <div class="onoffswitch">
                 <input id="sound-switch" type="checkbox" name="sound-switch" class="onoffswitch-checkbox" checked>
                 <label class="onoffswitch-label" for="sound-switch">
@@ -367,16 +368,18 @@
                 </label>
               </div>
             </div>
-              <div class="form-control switch-container">
+			<!--
+            <div class="form-control switch-container">
               <h3>Pokémon cries</h3>
-                <div class="onoffswitch">
-                <input id="cries-switch" type="checkbox" name="cries-switch" class="onoffswitch-checkbox" checked>
-                  <label class="onoffswitch-label" for="cries-switch">
-                    <span class="switch-label" data-on="On" data-off="Off"></span>
-                    <span class="switch-handle"></span>
-                  </label>
-                </div>
+              <div class="onoffswitch">
+              <input id="cries-switch" type="checkbox" name="cries-switch" class="onoffswitch-checkbox" checked>
+                <label class="onoffswitch-label" for="cries-switch">
+                  <span class="switch-label" data-on="On" data-off="Off"></span>
+                  <span class="switch-handle"></span>
+                </label>
               </div>
+            </div>
+			-->
           </div>
             {% endif %}
           <h3><i class="fa fa-map-o fa-fw"></i>Style Settings</h3>
@@ -384,6 +387,13 @@
             <div class="form-control switch-container">
               <h3>Map Style</h3>
               <select id="map-style"></select>
+            </div>
+            <div class="form-control switch-container">
+              <h3>Kartendienst</h3>
+              <select name="map-service-provider" id="map-service-provider">
+                <option value="googlemaps">Google Maps</option>
+                <option value="applemaps">Apple Maps</option>
+              </select>
             </div>
             <div class="form-control switch-container">
               <h3>Icon Größe</h3>
