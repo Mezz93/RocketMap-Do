@@ -142,7 +142,7 @@ $(function () {
 	var excluded = Store.get('remember_select_exclude')
 	var notified = Store.get('remember_select_notify')
 	
-	var mon = 122
+	var mon = 233
 	
 	var inExcluded = $.inArray( mon, excluded )
 	var inNotified = $.inArray( mon, notified )
@@ -173,6 +173,8 @@ $(function () {
 		
 		return false;
 	};
+	
+	
 	
 	var old_func = pokemonLabel;
 	
@@ -241,6 +243,7 @@ $(function () {
 					<span class='pokemon'>Level: </span><span class='pokemon'>${pokemonLevel}</span>
 					<span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Exclude</a></span>
 					<span class='pokemon links notify'><a href='javascript:notifyAboutPokemon(${id})'>Notify</a></span>
+					<span class='pokemon links stop'><a href='javascript:removeNotifyAboutPokemon(${id})'>StopNotify</a></span>
 					<span class='pokemon links remove'><a href='javascript:removePokemonMarker("${encounterId}")'>Remove</a></span>
 				  </div>
 			  </div>
