@@ -82,7 +82,7 @@ const unownForm = ['unset', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K
  <def> - defense as number
  <sta> - stamnia as number
  */
-var notifyIvTitle = '<pkm>'
+var notifyIvTitle = '<pkm> <prc>'
 var notifyNoIvTitle = '<pkm>'
 
 /*
@@ -90,7 +90,7 @@ var notifyNoIvTitle = '<pkm>'
  <dist>  - disappear time
  <udist> - time until disappear
  */
-var notifyText = 'noch <udist> bis <dist>'
+var notifyText = '<udist> bis <dist>'
 
 //
 // Functions
