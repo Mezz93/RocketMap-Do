@@ -41,8 +41,8 @@ $(function () {
 
     // Clustering! Different zoom levels for desktop vs mobile.
     const disableClusters = false // Default: false
-    const maxClusterZoomLevel = 11 // Default: 14
-    const maxClusterZoomLevelMobile = 12 // Default: same as desktop
+    const maxClusterZoomLevel = 12 // Default: 14
+    const maxClusterZoomLevelMobile = 13 // Default: same as desktop
     const clusterZoomOnClick = false // Default: false
     const clusterZoomOnClickMobile = false // Default: same as desktop
     const clusterGridSize = 60 // Default: 60
