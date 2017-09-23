@@ -305,6 +305,9 @@ $(function () {
 	};
 	
 	sendToastrPokemonNotification = function(title, text, icon, lat, lon) {
+		if(!Store.get('doPush')) {
+			return
+		}
 		var notification = toastr.info(text, title, {
 			closeButton: true,
 			positionClass: 'toast-top-right',
