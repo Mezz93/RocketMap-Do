@@ -863,7 +863,7 @@ var StoreOptions = {
         type: StoreTypes.JSON
     },
     'remember_text_perfection_notify': {
-        default: '',
+        default: '100',
         type: StoreTypes.Number
     },
     'showRaids': {

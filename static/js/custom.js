@@ -132,6 +132,12 @@ $(function () {
 	Store.set('processPokemonChunkSize', 250)
 	
 	
+	//TODO: remove
+	if(!Store.get('remember_text_perfection_notify')) {
+		Store.set('remember_text_perfection_notify', '100')
+	}
+	
+	
 	// i don't know =)
 	var excluded = Store.get('remember_select_exclude')
 	var notified = Store.get('remember_select_notify')
@@ -141,38 +147,44 @@ $(function () {
 	var inExcluded = $.inArray( mon, excluded )
 	var inNotified = $.inArray( mon, notified )
 	
-	var old_func = pokemonLabel;
-	
 	var is_debug = false;
 	
 	if( ( inExcluded >= 0 ) && ( inNotified >= 0 ) ) {
 		is_debug = true;
 	} else {
-		$('#notify-perfection').parent().parent().remove();
-		Store.set('remember_text_perfection_notify', '');
+		//$('#notify-perfection').parent().parent().remove();
+		//Store.set('remember_text_perfection_notify', '');
 	}
 	
-	var new_func = function(item) {
-		if (item['cp'] === null || item['cp_multiplier'] === null) {
-			return old_func(item);
+	var get_show_iv = function(item) {
+		if(is_debug) {
+			return true;
 		}
 		
-		if(!is_debug) {
-			/*
-				51.520998,7.452378
-				51.507148,7.452378
-				51.507148,7.476238
-				51.520998,7.476238
-			*/
+		if(item) {
 			var bottomLeftPos = [ 51.507148, 7.452378 ];
 			var topRightPos = [ 51.520998,7.476238 ];
 			
 			var inBounds = ( ( item['latitude'] >= bottomLeftPos[0] ) && ( item['longitude'] >= bottomLeftPos[1] ) ) &&
 							( ( item['latitude'] <= topRightPos[0] ) && ( item['longitude'] <= topRightPos[1] ) );
 			
-			if(!inBounds) {
-				return old_func(item);
-			}
+			return inBounds;
+		}
+		
+		return false;
+	};
+	
+	var old_func = pokemonLabel;
+	
+	pokemonLabel = function(item) {
+		if (item['cp'] === null || item['cp_multiplier'] === null) {
+			return old_func(item);
+		}
+		
+		var show_iv = get_show_iv(item)
+		
+		if(!show_iv) {
+			return old_func(item);
 		}
 		
 		var name = item['pokemon_name']
@@ -292,8 +304,6 @@ $(function () {
 		return contentstring
 	};
 	
-	pokemonLabel = new_func;
-	
 	sendToastrPokemonNotification = function(title, text, icon, lat, lon) {
 		var notification = toastr.info(text, title, {
 			closeButton: true,
@@ -324,11 +334,12 @@ $(function () {
 	};
 	
 	getNotifyText = function(item) {
+		var show_iv = get_show_iv(item)
 		var iv = getIv(item['individual_attack'], item['individual_defense'], item['individual_stamina'])
 		var find = ['<prc>', '<pkm>', '<atk>', '<def>', '<sta>']
 		var replace = [((iv) ? iv.toFixed(1) : ''), item['pokemon_name'], item['individual_attack'],
 			item['individual_defense'], item['individual_stamina']]
-		var ntitle = repArray(((iv) ? notifyIvTitle : notifyNoIvTitle), find, replace)
+		var ntitle = repArray(((iv && show_iv) ? notifyIvTitle : notifyNoIvTitle), find, replace)
 		var dist = moment(item['disappear_time']).format('HH:mm')
 		var until = getTimeUntil(item['disappear_time'])
 		var udist = (until.hour > 0) ? until.hour + ':' : ''
@@ -341,5 +352,18 @@ $(function () {
 			'fav_title': ntitle + '[' + ntext + ']',
 			'fav_text': ''
 		}
-	}
+	};
+	
+	isNotifyPoke = function(poke) {
+		var show_iv = get_show_iv(poke)
+		const isOnNotifyList = notifiedPokemon.indexOf(poke['pokemon_id']) > -1 || notifiedRarity.indexOf(poke['pokemon_rarity']) > -1
+		var hasHighIV = false
+
+		if (show_iv && poke['individual_attack'] != null) {
+			const perfection = getIv(poke['individual_attack'], poke['individual_defense'], poke['individual_stamina'])
+			hasHighIV = notifiedMinPerfection > 0 && perfection >= notifiedMinPerfection
+		}
+
+		return isOnNotifyList || hasHighIV
+	};
 })

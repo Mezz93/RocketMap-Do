@@ -82,7 +82,7 @@ const unownForm = ['unset', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K
  <def> - defense as number
  <sta> - stamnia as number
  */
-var notifyIvTitle = '<pkm>'
+var notifyIvTitle = '<pkm> <prc>'
 var notifyNoIvTitle = '<pkm>'
 
 /*
@@ -90,7 +90,7 @@ var notifyNoIvTitle = '<pkm>'
  <dist>  - disappear time
  <udist> - time until disappear
  */
-var notifyText = 'noch <udist> bis <dist>'
+var notifyText = '<udist> bis <dist>'
 
 //
 // Functions
@@ -575,7 +575,7 @@ function isGymSatisfiesRaidMinMaxFilter(raid) {
 function gymLabel(gym, includeMembers = true) {
     const pokemonWithImages = [
         3, 6, 9, 59, 65, 68, 89, 94, 103, 110, 112, 125, 126, 129, 131, 134,
-        135, 136, 143, 144, 145, 146, 153, 156, 159, 243, 244, 245, 248, 249
+        135, 136, 143, 144, 145, 146, 150, 153, 156, 159, 243, 244, 245, 248, 249
     ]
 
     const raid = gym.raid
@@ -1218,7 +1218,7 @@ function updateGymMarker(item, marker) {
     let raidLevel = getRaidLevel(item.raid)
     const pokemonWithImages = [
         3, 6, 9, 59, 65, 68, 89, 94, 103, 110, 112, 125, 126, 129, 131, 134,
-        135, 136, 143, 144, 145, 146, 153, 156, 159, 243, 244, 245, 248, 249
+        135, 136, 143, 144, 145, 146, 150, 153, 156, 159, 243, 244, 245, 248, 249
     ]
     if (item.raid !== null && isOngoingRaid(item.raid) && Store.get('showRaids') && raidLevel >= Store.get('showRaidMinLevel') && raidLevel <= Store.get('showRaidMaxLevel')) {
         let markerImage = 'static/images/raid/' + gymTypes[item.team_id] + '_' + item.raid.level + '_unknown.png'
@@ -2833,11 +2833,29 @@ $(function () {
             }
         }
     }
+
+    function resetGymFilter() {
+        Store.set('showTeamGymsOnly', 0)
+        Store.set('minGymLevel', 0)
+        Store.set('maxGymLevel', 6)
+        Store.set('showOpenGymsOnly', false)
+
+        $('#team-gyms-only-switch').val(Store.get('showTeamGymsOnly'))
+        $('#open-gyms-only-switch').prop('checked', Store.get('showOpenGymsOnly'))
+        $('#min-level-gyms-filter-switch').val(Store.get('minGymLevel'))
+        $('#max-level-gyms-filter-switch').val(Store.get('maxGymLevel'))
+
+        $('#team-gyms-only-switch').trigger('change')
+        $('#min-level-gyms-filter-switch').trigger('change')
+        $('#max-level-gyms-filter-switch').trigger('change')
+    }
+
     // Setup UI element interactions
     $('#gyms-switch').change(function () {
         var options = {
             'duration': 500
         }
+        resetGymFilter()
         var wrapper = $('#gym-sidebar-wrapper')
         if (this.checked) {
             lastgyms = false
