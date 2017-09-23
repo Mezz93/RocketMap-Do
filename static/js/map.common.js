@@ -934,6 +934,10 @@ var StoreOptions = {
         default: false,
         type: StoreTypes.Boolean
     },
+    'doPush': {
+        default: !isTouchDevice(),
+        type: StoreTypes.Boolean
+    },
     'playSound': {
         default: false,
         type: StoreTypes.Boolean

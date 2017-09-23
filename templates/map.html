@@ -2,7 +2,7 @@
 <html lang="{{lang}}">
   <head>
     <meta charset="utf-8">
-    <title>RocketMap</title>
+    <title>RocketMap-Do</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -45,7 +45,7 @@
       <!-- Header -->
       <header id="header">
         <a href="#nav"><span class="label">Menü</span></a>
-        <h1><a href="./">RocketMap<img class='rocket icon' src='static/images/rocket.png'></a></h1>
+        <h1><a href="./">RocketMap-Do<img class='rocket icon' src='static/images/rocket.png'></a></h1>
         <a href="#stats" id="statsToggle" class="statsNav" style="float: right;"><span class="label">Stats</span></a>
 		<a href="https://www.patreon.com/rocketmapdo" style="float: right;">Support Us</a>
       </header>
@@ -358,6 +358,16 @@
               </label>
             </div>
               {% endif %}
+            <div class="form-control switch-container">
+              <h3>Push-Benachrichtigung</h3>
+              <div class="onoffswitch">
+                <input id="push-switch" type="checkbox" name="push-switch" class="onoffswitch-checkbox" checked>
+                <label class="onoffswitch-label" for="push-switch">
+                  <span class="switch-label" data-on="On" data-off="Off"></span>
+                  <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
             <div class="form-control switch-container">
               <h3>Ton abspielen</h3>
               <div class="onoffswitch">
