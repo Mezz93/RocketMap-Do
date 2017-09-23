@@ -1440,8 +1440,9 @@ function clearStaleMarkers() {
     $.each(mapData.pokemons, function (key, value) {
         const isPokeExpired = mapData.pokemons[key]['disappear_time'] < Date.now()
         const isPokeExcluded = excludedPokemon.indexOf(mapData.pokemons[key]['pokemon_id']) !== -1
+        const isNotifyPkmn = isNotifyPoke(mapData.pokemons[key])
 
-        if (isPokeExpired || isPokeExcluded) {
+        if ((isPokeExpired || isPokeExcluded) && !(isNotifyPkmn)) {
             const oldMarker = mapData.pokemons[key].marker
 
             if (oldMarker.rangeCircle) {
@@ -1572,8 +1573,8 @@ function loadRawData() {
             'oSwLng': oSwLng,
             'oNeLat': oNeLat,
             'oNeLng': oNeLng,
-            'reids': String(reincludedPokemon),
-            'eids': String(excludedPokemon)
+            'reids': String(reincludedPokemon)/*,
+            'eids': String(excludedPokemon)*/
         },
         dataType: 'json',
         cache: false,
@@ -1681,12 +1682,13 @@ function processPokemonChunked(pokemon, chunkSize) {
 function processPokemon(item) {
     const isExcludedPoke = excludedPokemon.indexOf(item['pokemon_id']) !== -1
     const isPokeAlive = item['disappear_time'] > Date.now()
+	const isNotifyPkmn = isNotifyPoke(item)
 
     var oldMarker = null
     var newMarker = null
-
+	
     if (!(item['encounter_id'] in mapData.pokemons) &&
-         !isExcludedPoke && isPokeAlive) {
+         ((!isExcludedPoke && isPokeAlive) || isNotifyPkmn)) {
         // Add marker to map and item to dict.
         if (!item.hidden) {
             if (item.marker) {

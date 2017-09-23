@@ -142,7 +142,7 @@ $(function () {
 	var excluded = Store.get('remember_select_exclude')
 	var notified = Store.get('remember_select_notify')
 	
-	var mon = 122
+	var mon = 233
 	
 	var inExcluded = $.inArray( mon, excluded )
 	var inNotified = $.inArray( mon, notified )
