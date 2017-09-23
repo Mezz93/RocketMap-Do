@@ -108,6 +108,19 @@ function notifyAboutPokemon(id) { // eslint-disable-line no-unused-vars
     ).trigger('change')
 }
 
+
+function removeNotifyAboutPokemon (id) { // eslint-disable-line no-unused-vars
+	var arr = $selectPokemonNotify.val()
+	var index = arr.indexOf(id.toString())
+	if(index && index >= 0) {
+		arr.splice(index, 1)
+		
+		$selectPokemonNotify.val(
+			arr
+		).trigger('change')
+	}
+}
+
 function removePokemonMarker(encounterId) { // eslint-disable-line no-unused-vars
     if (mapData.pokemons[encounterId].marker.rangeCircle) {
         mapData.pokemons[encounterId].marker.rangeCircle.setMap(null)
@@ -540,6 +553,9 @@ function pokemonLabel(item) {
           </div>
           <div class='pokemon'>
             <span class='pokemon links notify'><a href='javascript:notifyAboutPokemon(${id})'>Alle ${name} hüpfen</a></span>
+          </div>
+          <div class='pokemon'>
+            <span class='pokemon links stop'><a href='javascript:removeNotifyAboutPokemon(${id})'>Hüpfen von ${name} stoppen</a></span>
           </div>
           <div class='pokemon'>
             <span class='pokemon links remove'><a href='javascript:removePokemonMarker("${encounterId}")'>Dieses ${name} ausblenden</a></span>

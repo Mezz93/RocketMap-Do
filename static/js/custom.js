@@ -174,6 +174,8 @@ $(function () {
 		return false;
 	};
 	
+	
+	
 	var old_func = pokemonLabel;
 	
 	pokemonLabel = function(item) {
@@ -241,6 +243,7 @@ $(function () {
 					<span class='pokemon'>Level: </span><span class='pokemon'>${pokemonLevel}</span>
 					<span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Exclude</a></span>
 					<span class='pokemon links notify'><a href='javascript:notifyAboutPokemon(${id})'>Notify</a></span>
+					<span class='pokemon links stop'><a href='javascript:removeNotifyAboutPokemon(${id})'>StopNotify</a></span>
 					<span class='pokemon links remove'><a href='javascript:removePokemonMarker("${encounterId}")'>Remove</a></span>
 				  </div>
 			  </div>

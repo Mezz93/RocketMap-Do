@@ -69,6 +69,13 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    &.stop:before {
+      content: '\f071';
+      font-family: FontAwesome;
+      margin-right: 3px;
+      -webkit-font-smoothing: antialiased;
+    }
+
     &.remove:before {
       content: '\f057';
       font-family: FontAwesome;
