@@ -1458,7 +1458,7 @@ function clearStaleMarkers() {
         const isPokeExcluded = excludedPokemon.indexOf(mapData.pokemons[key]['pokemon_id']) !== -1
         const isNotifyPkmn = isNotifyPoke(mapData.pokemons[key])
 
-        if ((isPokeExpired || isPokeExcluded) && !(isNotifyPkmn)) {
+        if (isPokeExpired || (isPokeExcluded && !(isNotifyPkmn))) {
             const oldMarker = mapData.pokemons[key].marker
 
             if (oldMarker.rangeCircle) {
@@ -1704,7 +1704,7 @@ function processPokemon(item) {
     var newMarker = null
 	
     if (!(item['encounter_id'] in mapData.pokemons) &&
-         ((!isExcludedPoke && isPokeAlive) || isNotifyPkmn)) {
+         ((!(isExcludedPoke && !(isNotifyPkmn)) && isPokeAlive))) {
         // Add marker to map and item to dict.
         if (!item.hidden) {
             if (item.marker) {

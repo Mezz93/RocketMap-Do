@@ -90,9 +90,15 @@ def install_thread_excepthook():
             raise
         except:
             exc_type, exc_value, exc_trace = sys.exc_info()
-            log.critical('Unhandled patched exception (%s): "%s".',
-                         exc_type, exc_value)
-            sys.excepthook(exc_type, exc_value, exc_trace)
+
+            # Handle Flask's broken pipe when a client prematurely ends
+            # the connection.
+            if str(exc_value) == '[Errno 32] Broken pipe':
+                pass
+            else:
+                log.critical('Unhandled patched exception (%s): "%s".',
+                             exc_type, exc_value)
+                sys.excepthook(exc_type, exc_value, exc_trace)
     Thread.run = run
 
 
@@ -161,7 +167,7 @@ def can_start_scanning(args):
     api_version_error = (
         'The installed pgoapi is out of date. Please refer to ' +
         'http://rocketmap.readthedocs.io/en/develop/common-issues/' +
-        'faq.html#i-get-an-error-about-pgooapi-version'
+        'faq.html#i-get-an-error-about-pgoapi-version'
     )
 
     # Assert pgoapi >= pgoapi_version.
