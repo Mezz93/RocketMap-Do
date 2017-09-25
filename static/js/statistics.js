@@ -489,6 +489,11 @@ function updateDetails() {
     })
 }
 
+/* fix ReferenceError, described here: https://github.com/RocketMap/RocketMap/issues/2307 */
+function isNotifyPoke(poke) {
+    return false
+}
+
 if (location.href.match(/overlay_[0-9]+/g)) {
     showOverlay(location.href.replace(/^.*overlay_([0-9]+).*$/, '$1'))
 }
