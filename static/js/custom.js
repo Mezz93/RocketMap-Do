@@ -42,15 +42,17 @@ $(function () {
     // Clustering! Different zoom levels for desktop vs mobile.
     const disableClusters = false // Default: false
     const maxClusterZoomLevel = 12 // Default: 14
-    const maxClusterZoomLevelMobile = 13 // Default: same as desktop
+    const maxClusterZoomLevelMobile = 12 // Default: same as desktop
     const clusterZoomOnClick = false // Default: false
     const clusterZoomOnClickMobile = false // Default: same as desktop
-    const clusterGridSize = 60 // Default: 60
+    const clusterGridSize = 90 // Default: 60
     const clusterGridSizeMobile = 60 // Default: same as desktop
 
     // Process Pokémon in chunks to improve responsiveness.
-    const processPokemonChunkSize = 100 // Default: 100
-    const processPokemonIntervalMs = 100 // Default: 100ms
+    const processPokemonChunkSize = 250 // Default: 100
+    const processPokemonChunkSizeMobile = 150 // Default: 100
+    const processPokemonIntervalMs = 50 // Default: 100ms
+    const processPokemonIntervalMsMobile = 100 // Default: 100ms
 
 
     /* Feature detection. */
@@ -83,6 +85,8 @@ $(function () {
         Store.set('maxClusterZoomLevel', maxClusterZoomLevelMobile)
         Store.set('clusterZoomOnClick', clusterZoomOnClickMobile)
         Store.set('clusterGridSize', clusterGridSizeMobile)
+		Store.set('processPokemonChunkSize', processPokemonChunkSizeMobile)
+		Store.set('processPokemonIntervalMs', processPokemonIntervalMsMobile)
     }
 
     if (disableClusters) {
@@ -156,14 +160,21 @@ $(function () {
 		//Store.set('remember_text_perfection_notify', '');
 	}
 	
-	var get_show_iv = function(item) {
+	window.get_show_iv = function(item) {
 		if(is_debug) {
 			return true;
 		}
 		
+		/*
+			51.523,7.448
+			51.507,7.448
+			51.507,7.479
+			51.523,7.479
+		*/
+		
 		if(item) {
-			var bottomLeftPos = [ 51.507148, 7.452378 ];
-			var topRightPos = [ 51.520998,7.476238 ];
+			var bottomLeftPos = [ 51.507, 7.448 ];
+			var topRightPos = [ 51.523, 7.479 ];
 			
 			var inBounds = ( ( item['latitude'] >= bottomLeftPos[0] ) && ( item['longitude'] >= bottomLeftPos[1] ) ) &&
 							( ( item['latitude'] <= topRightPos[0] ) && ( item['longitude'] <= topRightPos[1] ) );
@@ -175,201 +186,211 @@ $(function () {
 	};
 	
 	
-	
-	var old_func = pokemonLabel;
-	
-	pokemonLabel = function(item) {
-		if (item['cp'] === null || item['cp_multiplier'] === null) {
-			return old_func(item);
+	//check if we're on the map
+	if(window.excludePokemon) {
+		if(window.pokemonLabel) {
+			var old_func = pokemonLabel;
+			
+			window.pokemonLabel = function(item) {
+				if (item['cp'] === null || item['cp_multiplier'] === null) {
+					return old_func(item);
+				}
+				
+				var show_iv = get_show_iv(item)
+				
+				if(!show_iv) {
+					return old_func(item);
+				}
+				
+				var name = item['pokemon_name']
+				var rarityDisplay = item['pokemon_rarity'] ? '(' + item['pokemon_rarity'] + ')' : ''
+				var types = item['pokemon_types']
+				var typesDisplay = ''
+				var encounterId = item['encounter_id']
+				var id = item['pokemon_id']
+				var latitude = item['latitude']
+				var longitude = item['longitude']
+				var disappearTime = item['disappear_time']
+				var atk = item['individual_attack']
+				var def = item['individual_defense']
+				var sta = item['individual_stamina']
+				var pMove1 = (moves[item['move_1']] !== undefined) ? i8ln(moves[item['move_1']]['name']) : 'gen/unknown'
+				var pMove2 = (moves[item['move_2']] !== undefined) ? i8ln(moves[item['move_2']]['name']) : 'gen/unknown'
+				var weight = item['weight']
+				var height = item['height']
+				var gender = item['gender']
+				var form = item['form']
+				var cp = item['cp']
+				var cpMultiplier = item['cp_multiplier']
+
+				$.each(types, function (index, type) {
+					typesDisplay += getTypeSpan(type)
+				})
+				
+				var details = ''
+
+				var contentstring = ''
+				var formString = ''
+
+				if (id === 201 && form !== null && form > 0) {
+					formString += `(${unownForm[item['form']]})`
+				}
+
+				contentstring += `
+				<div class='pokemon name'>
+				  ${name} <span class='pokemon name pokedex'><a href='http://pokemon.gameinfo.io/en/pokemon/${id}' target='_blank' title='View in Pokédex'>#${id}</a></span> ${formString} <span class='pokemon gender rarity'>${genderType[gender - 1]} ${rarityDisplay}</span> ${typesDisplay}
+				</div>`
+
+				if (cp !== null && cpMultiplier !== null) {
+					var pokemonLevel = getPokemonLevel(cpMultiplier)
+
+					if (atk !== null && def !== null && sta !== null) {
+						var iv = getIv(atk, def, sta)
+					}
+
+					contentstring += `
+					  <div class='pokemon container'>
+						<div class='pokemon container content-left'>
+						  <div>
+							<img class='pokemon sprite' src='static/icons/${id}.png'>
+							<span class='pokemon'>Level: </span><span class='pokemon'>${pokemonLevel}</span>
+							<span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Exclude</a></span>
+							<span class='pokemon links notify'><a href='javascript:notifyAboutPokemon(${id})'>Notify</a></span>
+							<span class='pokemon links stop'><a href='javascript:removeNotifyAboutPokemon(${id})'>StopNotify</a></span>
+							<span class='pokemon links remove'><a href='javascript:removePokemonMarker("${encounterId}")'>Remove</a></span>
+						  </div>
+					  </div>
+					  <div class='pokemon container content-right'>
+						<div>
+						  <div class='pokemon disappear'>
+							<span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> übrig(bis ${moment(disappearTime).format('HH:mm')})
+						  </div>
+						  <div class='pokemon'>
+							CP: <span class='pokemon encounter'>${cp}/${iv.toFixed(1)}%</span> (A${atk}/D${def}/S${sta})
+						  </div>
+						  <div class='pokemon'>
+							Moveset: <span class='pokemon encounter'>${pMove1}/${pMove2}</span>
+						  </div>
+						  <div class='pokemon'>
+							Weight: ${weight.toFixed(2)}kg | Height: ${height.toFixed(2)}m
+						  </div>
+						  <div>
+							<span class='pokemon navigate'><a href='javascript:void(0);' onclick='javascript:openMapDirections(${latitude},${longitude});' title='Open in Google Maps'>${latitude.toFixed(6)}, ${longitude.toFixed(7)}</a></span>
+						  </div>
+					  </div>
+					</div>
+				  </div>`
+				} else {
+					contentstring += `
+				  <div class='pokemon container'>
+					<div class='pokemon container content-left'>
+					  <div>
+						<img class='pokemon sprite' src='static/icons/${id}.png'>
+						<span class='pokemon'>Level: </span><span class='pokemon no-encounter'>n/a</span>
+						<span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Exclude</a></span>
+						<span class='pokemon links notify'><a href='javascript:notifyAboutPokemon(${id})'>Notify</a></span>
+						<span class='pokemon links remove'><a href='javascript:removePokemonMarker("${encounterId}")'>Remove</a></span>
+					  </div>
+				  </div>
+				  <div class='pokemon container content-right'>
+					<div>
+					  <div class='pokemon disappear'>
+							<span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> übrig(bis ${moment(disappearTime).format('HH:mm')})
+					  </div>
+					  <div class='pokemon'>
+						CP: <span class='pokemon no-encounter'>No information</span>
+					  </div>
+					  <div class='pokemon'>
+						Moveset: <span class='pokemon no-encounter'>No information</span>
+					  </div>
+					  <div class='pokemon'>
+						Weight: <span class='pokemon no-encounter'>n/a</span> | Height: <span class='pokemon no-encounter'>n/a</span>
+					  </div>
+					  <div>
+						<span class='pokemon navigate'><a href='javascript:void(0);' onclick='javascript:openMapDirections(${latitude},${longitude});' title='Open in Google Maps'>${latitude.toFixed(6)}, ${longitude.toFixed(7)}</a></span>
+					  </div>
+				  </div>
+				</div>
+			  </div>`
+				}
+
+				contentstring += `
+				  ${details}`
+
+				return contentstring
+			};
 		}
 		
-		var show_iv = get_show_iv(item)
-		
-		if(!show_iv) {
-			return old_func(item);
+		if(window.sendToastrPokemonNotification) {
+			window.sendToastrPokemonNotification = function(title, text, icon, lat, lon) {
+				if(!Store.get('doPush')) {
+					return
+				}
+				var notification = toastr.info(text, title, {
+					closeButton: true,
+					positionClass: 'toast-top-right',
+					preventDuplicates: false,
+					onclick: function () {
+						centerMap(lat, lon, 20)
+					},
+					showDuration: '300',
+					hideDuration: '500',
+					timeOut: '6000',
+					extendedTimeOut: '1500',
+					showEasing: 'swing',
+					hideEasing: 'linear',
+					showMethod: 'fadeIn',
+					hideMethod: 'fadeOut'
+				})
+				notification.removeClass('toast-info')
+				notification.css({
+					'padding-left': '36px',
+					'background-image': `url('./${icon}')`,
+					'background-size': '36px',
+					'background-position': 'left top',
+					'background-color': '#283747',
+					'height': '40px'
+				})
+				notification.find('.toast-title').css('font-size', 'smaller')
+			};
 		}
 		
-		var name = item['pokemon_name']
-		var rarityDisplay = item['pokemon_rarity'] ? '(' + item['pokemon_rarity'] + ')' : ''
-		var types = item['pokemon_types']
-		var typesDisplay = ''
-		var encounterId = item['encounter_id']
-		var id = item['pokemon_id']
-		var latitude = item['latitude']
-		var longitude = item['longitude']
-		var disappearTime = item['disappear_time']
-		var atk = item['individual_attack']
-		var def = item['individual_defense']
-		var sta = item['individual_stamina']
-		var pMove1 = (moves[item['move_1']] !== undefined) ? i8ln(moves[item['move_1']]['name']) : 'gen/unknown'
-		var pMove2 = (moves[item['move_2']] !== undefined) ? i8ln(moves[item['move_2']]['name']) : 'gen/unknown'
-		var weight = item['weight']
-		var height = item['height']
-		var gender = item['gender']
-		var form = item['form']
-		var cp = item['cp']
-		var cpMultiplier = item['cp_multiplier']
-
-		$.each(types, function (index, type) {
-			typesDisplay += getTypeSpan(type)
-		})
+		if(window.getNotifyText) {
+			window.getNotifyText = function(item) {
+				var show_iv = get_show_iv(item)
+				var iv = getIv(item['individual_attack'], item['individual_defense'], item['individual_stamina'])
+				var find = ['<prc>', '<pkm>', '<atk>', '<def>', '<sta>']
+				var replace = [((iv) ? iv.toFixed(1) : ''), item['pokemon_name'], item['individual_attack'],
+					item['individual_defense'], item['individual_stamina']]
+				var ntitle = repArray(((iv && show_iv) ? notifyIvTitle : notifyNoIvTitle), find, replace)
+				var dist = moment(item['disappear_time']).format('HH:mm')
+				var until = getTimeUntil(item['disappear_time'])
+				var udist = (until.hour > 0) ? until.hour + ':' : ''
+				udist += lpad(until.min, 2, 0) + 'm' + lpad(until.sec, 2, 0) + 's'
+				find = ['<dist>', '<udist>']
+				replace = [dist, udist]
+				var ntext = repArray(notifyText, find, replace)
+				
+				return {
+					'fav_title': ntitle + '[' + ntext + ']',
+					'fav_text': ''
+				}
+			};
+		}
 		
-		var details = ''
+		if(window.isNotifyPoke) {
+			window.isNotifyPoke = function(poke) {
+				var show_iv = get_show_iv(poke)
+				const isOnNotifyList = notifiedPokemon.indexOf(poke['pokemon_id']) > -1 || notifiedRarity.indexOf(poke['pokemon_rarity']) > -1
+				var hasHighIV = false
 
-		var contentstring = ''
-		var formString = ''
+				if (show_iv && poke['individual_attack'] != null) {
+					const perfection = getIv(poke['individual_attack'], poke['individual_defense'], poke['individual_stamina'])
+					hasHighIV = notifiedMinPerfection > 0 && perfection >= notifiedMinPerfection
+				}
 
-		if (id === 201 && form !== null && form > 0) {
-			formString += `(${unownForm[item['form']]})`
+				return isOnNotifyList || hasHighIV
+			};
 		}
-
-		contentstring += `
-		<div class='pokemon name'>
-		  ${name} <span class='pokemon name pokedex'><a href='http://pokemon.gameinfo.io/en/pokemon/${id}' target='_blank' title='View in Pokédex'>#${id}</a></span> ${formString} <span class='pokemon gender rarity'>${genderType[gender - 1]} ${rarityDisplay}</span> ${typesDisplay}
-		</div>`
-
-		if (cp !== null && cpMultiplier !== null) {
-			var pokemonLevel = getPokemonLevel(cpMultiplier)
-
-			if (atk !== null && def !== null && sta !== null) {
-				var iv = getIv(atk, def, sta)
-			}
-
-			contentstring += `
-			  <div class='pokemon container'>
-				<div class='pokemon container content-left'>
-				  <div>
-					<img class='pokemon sprite' src='static/icons/${id}.png'>
-					<span class='pokemon'>Level: </span><span class='pokemon'>${pokemonLevel}</span>
-					<span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Exclude</a></span>
-					<span class='pokemon links notify'><a href='javascript:notifyAboutPokemon(${id})'>Notify</a></span>
-					<span class='pokemon links stop'><a href='javascript:removeNotifyAboutPokemon(${id})'>StopNotify</a></span>
-					<span class='pokemon links remove'><a href='javascript:removePokemonMarker("${encounterId}")'>Remove</a></span>
-				  </div>
-			  </div>
-			  <div class='pokemon container content-right'>
-				<div>
-				  <div class='pokemon disappear'>
-					<span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> übrig(bis ${moment(disappearTime).format('HH:mm')})
-				  </div>
-				  <div class='pokemon'>
-					CP: <span class='pokemon encounter'>${cp}/${iv.toFixed(1)}%</span> (A${atk}/D${def}/S${sta})
-				  </div>
-				  <div class='pokemon'>
-					Moveset: <span class='pokemon encounter'>${pMove1}/${pMove2}</span>
-				  </div>
-				  <div class='pokemon'>
-					Weight: ${weight.toFixed(2)}kg | Height: ${height.toFixed(2)}m
-				  </div>
-				  <div>
-					<span class='pokemon navigate'><a href='javascript:void(0);' onclick='javascript:openMapDirections(${latitude},${longitude});' title='Open in Google Maps'>${latitude.toFixed(6)}, ${longitude.toFixed(7)}</a></span>
-				  </div>
-			  </div>
-			</div>
-		  </div>`
-		} else {
-			contentstring += `
-		  <div class='pokemon container'>
-			<div class='pokemon container content-left'>
-			  <div>
-				<img class='pokemon sprite' src='static/icons/${id}.png'>
-				<span class='pokemon'>Level: </span><span class='pokemon no-encounter'>n/a</span>
-				<span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Exclude</a></span>
-				<span class='pokemon links notify'><a href='javascript:notifyAboutPokemon(${id})'>Notify</a></span>
-				<span class='pokemon links remove'><a href='javascript:removePokemonMarker("${encounterId}")'>Remove</a></span>
-			  </div>
-		  </div>
-		  <div class='pokemon container content-right'>
-			<div>
-			  <div class='pokemon disappear'>
-					<span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> übrig(bis ${moment(disappearTime).format('HH:mm')})
-			  </div>
-			  <div class='pokemon'>
-				CP: <span class='pokemon no-encounter'>No information</span>
-			  </div>
-			  <div class='pokemon'>
-				Moveset: <span class='pokemon no-encounter'>No information</span>
-			  </div>
-			  <div class='pokemon'>
-				Weight: <span class='pokemon no-encounter'>n/a</span> | Height: <span class='pokemon no-encounter'>n/a</span>
-			  </div>
-			  <div>
-				<span class='pokemon navigate'><a href='javascript:void(0);' onclick='javascript:openMapDirections(${latitude},${longitude});' title='Open in Google Maps'>${latitude.toFixed(6)}, ${longitude.toFixed(7)}</a></span>
-			  </div>
-		  </div>
-		</div>
-	  </div>`
-		}
-
-		contentstring += `
-		  ${details}`
-
-		return contentstring
-	};
-	
-	sendToastrPokemonNotification = function(title, text, icon, lat, lon) {
-		if(!Store.get('doPush')) {
-			return
-		}
-		var notification = toastr.info(text, title, {
-			closeButton: true,
-			positionClass: 'toast-top-right',
-			preventDuplicates: false,
-			onclick: function () {
-				centerMap(lat, lon, 20)
-			},
-			showDuration: '300',
-			hideDuration: '500',
-			timeOut: '6000',
-			extendedTimeOut: '1500',
-			showEasing: 'swing',
-			hideEasing: 'linear',
-			showMethod: 'fadeIn',
-			hideMethod: 'fadeOut'
-		})
-		notification.removeClass('toast-info')
-		notification.css({
-			'padding-left': '36px',
-			'background-image': `url('./${icon}')`,
-			'background-size': '36px',
-			'background-position': 'left top',
-			'background-color': '#283747',
-			'height': '40px'
-		})
-		notification.find('.toast-title').css('font-size', 'smaller')
-	};
-	
-	getNotifyText = function(item) {
-		var show_iv = get_show_iv(item)
-		var iv = getIv(item['individual_attack'], item['individual_defense'], item['individual_stamina'])
-		var find = ['<prc>', '<pkm>', '<atk>', '<def>', '<sta>']
-		var replace = [((iv) ? iv.toFixed(1) : ''), item['pokemon_name'], item['individual_attack'],
-			item['individual_defense'], item['individual_stamina']]
-		var ntitle = repArray(((iv && show_iv) ? notifyIvTitle : notifyNoIvTitle), find, replace)
-		var dist = moment(item['disappear_time']).format('HH:mm')
-		var until = getTimeUntil(item['disappear_time'])
-		var udist = (until.hour > 0) ? until.hour + ':' : ''
-		udist += lpad(until.min, 2, 0) + 'm' + lpad(until.sec, 2, 0) + 's'
-		find = ['<dist>', '<udist>']
-		replace = [dist, udist]
-		var ntext = repArray(notifyText, find, replace)
-		
-		return {
-			'fav_title': ntitle + '[' + ntext + ']',
-			'fav_text': ''
-		}
-	};
-	
-	isNotifyPoke = function(poke) {
-		var show_iv = get_show_iv(poke)
-		const isOnNotifyList = notifiedPokemon.indexOf(poke['pokemon_id']) > -1 || notifiedRarity.indexOf(poke['pokemon_rarity']) > -1
-		var hasHighIV = false
-
-		if (show_iv && poke['individual_attack'] != null) {
-			const perfection = getIv(poke['individual_attack'], poke['individual_defense'], poke['individual_stamina'])
-			hasHighIV = notifiedMinPerfection > 0 && perfection >= notifiedMinPerfection
-		}
-
-		return isOnNotifyList || hasHighIV
-	};
+	}
 })
