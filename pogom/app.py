@@ -306,17 +306,18 @@ class Pogom(Flask):
                                            oSwLat=oSwLat, oSwLng=oSwLng,
                                            oNeLat=oNeLat, oNeLng=oNeLng))
 
-            for x in d['pokemons']:
-				if not ( ( ( x['latitude'] >= 51.507 ) and ( x['longitude'] >= 7.448 ) ) and ( ( x['latitude'] <= 51.523 ) and ( x['longitude'] <= 7.479 ) ) ):
-					x['individual_attack'] = None
-					x['individual_defense'] = None
-					x['individual_stamina'] = None
-					x['move_1'] = None
-					x['move_2'] = None
-					x['cp'] = None
-					x['cp_multiplier'] = None
-					x['weight'] = None
-					x['height'] = None
+            if not args.show_iv:
+                for x in d['pokemons']:
+                    if not ( ( ( x['latitude'] >= 51.507 ) and ( x['longitude'] >= 7.448 ) ) and ( ( x['latitude'] <= 51.523 ) and ( x['longitude'] <= 7.479 ) ) ):
+                        x['individual_attack'] = None
+                        x['individual_defense'] = None
+                        x['individual_stamina'] = None
+                        x['move_1'] = None
+                        x['move_2'] = None
+                        x['cp'] = None
+                        x['cp_multiplier'] = None
+                        x['weight'] = None
+                        x['height'] = None
 
             if request.args.get('eids'):
                 # Exclude id's of pokemon that are hidden.
