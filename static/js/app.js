@@ -92,8 +92,8 @@
         $statsClose.tabIndex = 0
         $stats.appendChild($statsClose)
     }
-	
-    if ($gymSidebarClose) {
+
+    if ($gymSidebar) {
         $gymSidebarClose = document.createElement('a')
         $gymSidebarClose.href = '#'
         $gymSidebarClose.className = 'close'

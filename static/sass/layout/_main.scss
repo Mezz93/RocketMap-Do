@@ -22,7 +22,7 @@ html, body {
 }
 
 #header {
-  height: 3.5em;
+  /* height: 3.5em; */
   width: 100%;
 }
 
@@ -30,6 +30,30 @@ html, body {
   top: 3.5em;
   bottom: 0px;
   width: 100%;
+}
+
+@include breakpoint(small) {
+  #main {
+    margin-top: 2.8em;
+  }
+  #map {
+    top: 2.8em;
+  }
+  #nav {
+    top: 2.8em;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  #main {
+    margin-top: 2.4em;
+  }
+  #map {
+    top: 2.4em;
+  }
+  #nav {
+    top: 2.4em;
+  }
 }
 
 .fab {
