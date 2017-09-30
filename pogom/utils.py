@@ -484,8 +484,8 @@ def get_args():
                                'and pgoapi.'),
                          type=int, dest='verbose')
     parser.add_argument('-siv', '--show-iv',
-                        help=('Shows IVs.'),
-                        action='store_true', default=False)
+                         choices=(None, 'silber', 'gold', 'smaragd'),
+                         default=None)
     parser.set_defaults(DEBUG=False)
 
     args = parser.parse_args()

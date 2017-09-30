@@ -305,19 +305,28 @@ class Pogom(Flask):
                         Pokemon.get_active(swLat, swLng, neLat, neLng,
                                            oSwLat=oSwLat, oSwLng=oSwLng,
                                            oNeLat=oNeLat, oNeLng=oNeLng))
-
-            if not args.show_iv:
+            
+            if args.show_iv == 'smaragd':
+                pass
+            elif args.show_iv == 'gold':
+                pass
+            elif args.show_iv == 'silber':
                 for x in d['pokemons']:
                     if not ( ( ( x['latitude'] >= 51.507 ) and ( x['longitude'] >= 7.448 ) ) and ( ( x['latitude'] <= 51.523 ) and ( x['longitude'] <= 7.479 ) ) ):
-                        x['individual_attack'] = None
-                        x['individual_defense'] = None
-                        x['individual_stamina'] = None
-                        x['move_1'] = None
-                        x['move_2'] = None
-                        x['cp'] = None
-                        x['cp_multiplier'] = None
-                        x['weight'] = None
-                        x['height'] = None
+                        x.pop('cp', None)
+                        x.pop('cp_multiplier', None)
+            else:
+                for x in d['pokemons']:
+                    if not ( ( ( x['latitude'] >= 51.507 ) and ( x['longitude'] >= 7.448 ) ) and ( ( x['latitude'] <= 51.523 ) and ( x['longitude'] <= 7.479 ) ) ):
+                        x.pop('individual_attack', None)
+                        x.pop('individual_defense', None)
+                        x.pop('individual_stamina', None)
+                        x.pop('move_1', None)
+                        x.pop('move_2', None)
+                        x.pop('cp', None)
+                        x.pop('cp_multiplier', None)
+                        x.pop('weight', None)
+                        x.pop('height', None)
 
             if request.args.get('eids'):
                 # Exclude id's of pokemon that are hidden.
