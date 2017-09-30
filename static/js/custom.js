@@ -21,10 +21,12 @@ $(function () {
 
     // MOTD.
     const motdEnabled = true
-    const motdTitle = 'eingeschränkter Betrieb'
-    const motd = '<span style="font-weight:bold;">Die neue Version wird von Niantic erzwungen und deshalb können wir nicht garantieren, dass die Map läuft.</span><br/>' +
-					'<strong>Raids werden dennoch gescannt!</strong><br/>' +
-					'<span style="color:red;">Besucht unseren Discord für mehr Infos: <a href="https://discord.gg/zwsGCUS">https://discord.gg/zwsGCUS</a></span>'
+    const motdTitle = 'News!'
+    const motd = '<span>Solange es Niantic erlaubt, scannen wir für Supporter der Map die <strong>gesamte Map mit IV.</strong><br/>' +
+					'<span style="font-size:smaller;">(Für nicht Supporter sind dafür IVs in der Innenstadt sichtbar)</span><br/>' +
+					'<h4 style="margin:0;line-height:1.1;">Die derzeitige Scanzeit ist 7:00 Uhr - 4:00 Uhr</h4>' +
+					'<span style="color:red;">Besuche unseren <a href="https://discord.gg/zwsGCUS">Discord</a> für mehr Infos</span><br/>' +
+					'<span style="color:red;">oder schau dir auf <a href="https://www.patreon.com/rocketmapdo">Patreon</a> alle Belohnungen an</span>'
 
     // Only show every unique MOTD message once. If disabled, the MOTD will be
     // shown on every visit. Requires support for localStorage.
@@ -120,7 +122,7 @@ $(function () {
 
             swal({
                 title: motdTitle,
-                text: '<div style="overflow-y: scroll; max-height: 175px;">' + motd + '</div>',
+                text: '<div style="overflow-y: scroll; max-height: 200px;">' + motd + '</div>',
 				html: true
             })
         }
@@ -133,7 +135,6 @@ $(function () {
 	Store.set('showLastUpdatedGymsOnly', 0)
 	Store.set('showScanned', false)
 	Store.set('showRanges', false)
-	Store.set('processPokemonChunkSize', 250)
 	
 	
 	//TODO: remove
