@@ -146,10 +146,6 @@ $(function () {
 		var old_func = pokemonLabel;
 		
 		window.pokemonLabel = function(item) {
-			if (item['cp'] === null || item['cp_multiplier'] === null) {
-				return old_func(item);
-			}
-			
 			var name = item['pokemon_name']
 			var rarityDisplay = item['pokemon_rarity'] ? '(' + item['pokemon_rarity'] + ')' : ''
 			var types = item['pokemon_types']
@@ -189,10 +185,10 @@ $(function () {
 			  ${name} <span class='pokemon name pokedex'><a href='http://pokemon.gameinfo.io/en/pokemon/${id}' target='_blank' title='View in Pokédex'>#${id}</a></span> ${formString} <span class='pokemon gender rarity'>${genderType[gender - 1]} ${rarityDisplay}</span> ${typesDisplay}
 			</div>`
 
-			if (cp !== null && cpMultiplier !== null) {
+			if (cp != null && cpMultiplier != null) {
 				var pokemonLevel = getPokemonLevel(cpMultiplier)
 
-				if (atk !== null && def !== null && sta !== null) {
+				if (atk != null && def != null && sta != null) {
 					var iv = getIv(atk, def, sta)
 				}
 
@@ -228,38 +224,43 @@ $(function () {
 				  </div>
 				</div>
 			  </div>`
-			} else {
+			} else if (atk != null && def != null && sta != null) {
+				var iv = getIv(atk, def, sta)
+
 				contentstring += `
-			  <div class='pokemon container'>
-				<div class='pokemon container content-left'>
-				  <div>
-					<img class='pokemon sprite' src='static/icons/${id}.png'>
-					<span class='pokemon'>Level: </span><span class='pokemon no-encounter'>n/a</span>
-					<span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Exclude</a></span>
-					<span class='pokemon links notify'><a href='javascript:notifyAboutPokemon(${id})'>Notify</a></span>
-					<span class='pokemon links remove'><a href='javascript:removePokemonMarker("${encounterId}")'>Remove</a></span>
+				  <div class='pokemon container'>
+					<div class='pokemon container content-left'>
+					  <div>
+						<img class='pokemon sprite' src='static/icons/${id}.png'>
+						<span class='pokemon'>Level: </span><span class='pokemon no-encounter'>n/a</span>
+						<span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Exclude</a></span>
+						<span class='pokemon links notify'><a href='javascript:notifyAboutPokemon(${id})'>Notify</a></span>
+						<span class='pokemon links stop'><a href='javascript:removeNotifyAboutPokemon(${id})'>StopNotify</a></span>
+						<span class='pokemon links remove'><a href='javascript:removePokemonMarker("${encounterId}")'>Remove</a></span>
+					  </div>
 				  </div>
-			  </div>
-			  <div class='pokemon container content-right'>
-				<div>
-				  <div class='pokemon disappear'>
+				  <div class='pokemon container content-right'>
+					<div>
+					  <div class='pokemon disappear'>
 						<span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> übrig(bis ${moment(disappearTime).format('HH:mm')})
+					  </div>
+					  <div class='pokemon'>
+						CP: <span class='pokemon no-encounter'>n/a</span>/<span class='pokemon encounter'>${iv.toFixed(1)}%</span> (A${atk}/D${def}/S${sta})
+					  </div>
+					  <div class='pokemon'>
+						Moveset: <span class='pokemon encounter'>${pMove1}/${pMove2}</span>
+					  </div>
+					  <div class='pokemon'>
+						Weight: ${weight.toFixed(2)}kg | Height: ${height.toFixed(2)}m
+					  </div>
+					  <div>
+						<span class='pokemon navigate'><a href='javascript:void(0);' onclick='javascript:openMapDirections(${latitude},${longitude});' title='Open in Google Maps'>${latitude.toFixed(6)}, ${longitude.toFixed(7)}</a></span>
+					  </div>
 				  </div>
-				  <div class='pokemon'>
-					CP: <span class='pokemon no-encounter'>No information</span>
-				  </div>
-				  <div class='pokemon'>
-					Moveset: <span class='pokemon no-encounter'>No information</span>
-				  </div>
-				  <div class='pokemon'>
-					Weight: <span class='pokemon no-encounter'>n/a</span> | Height: <span class='pokemon no-encounter'>n/a</span>
-				  </div>
-				  <div>
-					<span class='pokemon navigate'><a href='javascript:void(0);' onclick='javascript:openMapDirections(${latitude},${longitude});' title='Open in Google Maps'>${latitude.toFixed(6)}, ${longitude.toFixed(7)}</a></span>
-				  </div>
-			  </div>
-			</div>
-		  </div>`
+				</div>
+			  </div>`
+			} else {
+				return old_func(item);
 			}
 
 			contentstring += `

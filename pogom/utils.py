@@ -55,6 +55,8 @@ def get_args():
         auto_env_var_prefix='POGOMAP_')
     parser.add_argument('-cf', '--config',
                         is_config_file=True, help='Set configuration file')
+    parser.add_argument('-scf', '--shared-config',
+                        is_config_file=True, help='Set a shared config')
     parser.add_argument('-a', '--auth-service', type=str.lower,
                         action='append', default=[],
                         help=('Auth Services, either one for all accounts ' +
@@ -484,8 +486,8 @@ def get_args():
                                'and pgoapi.'),
                          type=int, dest='verbose')
     parser.add_argument('-siv', '--show-iv',
-                        help=('Shows IVs.'),
-                        action='store_true', default=False)
+                         choices=(None, 'silber', 'gold', 'smaragd'),
+                         default=None)
     parser.set_defaults(DEBUG=False)
 
     args = parser.parse_args()
