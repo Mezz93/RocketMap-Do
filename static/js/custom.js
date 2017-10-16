@@ -202,11 +202,11 @@ $(function () {
 					else if(iv >= 75 && iv < 90){
 						ivString = `<font color ='#3FC380'>${iv.toFixed(1)}</font>`
 					}
-					else if(iv >= 90 && iv < 97){
+					else if(iv >= 90 && iv < 99){
 						ivString = `<font color ='green'>${iv.toFixed(1)}</font>`
 					}
 					else{
-						ivString = `<font color ='#E9D460'> ${iv.toFixed(1)}</font>`
+						ivString = `<font color ='#9A12B3' size ='5' style='background-color: #C5EFF7'>&nbsp;${iv.toFixed(1)}&nbsp;</font>`
 					}
 				}
 
