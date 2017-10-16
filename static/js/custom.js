@@ -257,6 +257,22 @@ $(function () {
       </div>`
 			} else if (atk != null && def != null && sta != null) {
 				var iv = getIv(atk, def, sta)
+				var ivString = ''
+				if(iv < 50){
+				ivString = `<font color ='#96281B'> ${iv.toFixed(1)}</font>`
+				}
+				else if(iv >= 50 && iv < 75){
+					ivString = `<font color ='#E67E22'>${iv.toFixed(1)}</font>`
+				}
+				else if(iv >= 75 && iv < 90){
+					ivString = `<font color ='#3FC380'>${iv.toFixed(1)}</font>`
+				}
+				else if(iv >= 90 && iv < 97){
+					ivString = `<font color ='green'>${iv.toFixed(1)}</font>`
+				}
+				else{
+					ivString = `<font color ='#E9D460'> ${iv.toFixed(1)}</font>`
+				}
 
 				contentstring += `
           <div class='pokemon container'>
