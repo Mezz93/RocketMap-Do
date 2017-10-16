@@ -176,6 +176,7 @@ $(function () {
 
 			var contentstring = ''
 			var formString = ''
+			
 
 			if (id === 201 && form !== null && form > 0) {
 				formString += `(${unownForm[item['form']]})`
@@ -191,6 +192,22 @@ $(function () {
 
 				if (atk != null && def != null && sta != null) {
 					var iv = getIv(atk, def, sta)
+					var ivString = ''
+					if(iv < 50){
+					ivString = `<font color ='#96281B'> ${iv.toFixed(1)}</font>`
+					}
+					else if(iv >= 50 && iv < 75){
+						ivString = `<font color ='#E67E22'>${iv.toFixed(1)}</font>`
+					}
+					else if(iv >= 75 && iv < 90){
+						ivString = `<font color ='#3FC380'>${iv.toFixed(1)}</font>`
+					}
+					else if(iv >= 90 && iv < 97){
+						ivString = `<font color ='green'>${iv.toFixed(1)}</font>`
+					}
+					else{
+						ivString = `<font color ='#E9D460'> ${iv.toFixed(1)}</font>`
+					}
 				}
 
 				contentstring += `
@@ -219,7 +236,7 @@ $(function () {
                 <span class='label-countdown' disappears-at='${disappearTime}'style='background-color: #fffaaa'>00m00s</span> übrig<br><font size='1'>  (Despawn um ${moment(disappearTime).format('HH:mm')})</font>
               </div>
 			<div class='pokemon'>
-				<font size='4'>IV: <span class='pokemon encounter'><font color='orange' size='4'>${iv.toFixed(1)}%</font></font></span> (${atk}/${def}/${sta})<br>
+				<font size='4'>IV: <span class='pokemon encounter'><font size='4'>${ivString}%</font></font></span> (${atk}/${def}/${sta})<br>
 				<font size='4'>WP: <span class='pokemon encounter'><font size='4'>${cp}</font></font></span>
 			</div>
 			<div class='pokemon'>
@@ -267,7 +284,7 @@ $(function () {
                 <span class='label-countdown' disappears-at='${disappearTime}'style='background-color: #fffaaa'>00m00s</span> übrig<br><font size='1'>  (Despawn um ${moment(disappearTime).format('HH:mm')})</font>
               </div>
 			<div class='pokemon'>
-				<font size='4'>IV: <span class='pokemon encounter'><font color='orange' size='4'>${iv.toFixed(1)}%</font></font></span> (${atk}/${def}/${sta})<br>
+				<font size='4'>IV: <span class='pokemon encounter'><font size='4'>${ivString}%</font></span> (${atk}/${def}/${sta})<br>
 				<font size='4'>WP: <span class='pokemon no-encounter'><font size='3'>Gold-Only</font></font></span>
 			</div>
 			<div class='pokemon'>
