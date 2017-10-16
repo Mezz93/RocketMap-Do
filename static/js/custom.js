@@ -300,7 +300,7 @@ $(function () {
                 <span class='label-countdown' disappears-at='${disappearTime}'style='background-color: #fffaaa'>00m00s</span> übrig<br><font size='1'>  (Despawn um ${moment(disappearTime).format('HH:mm')})</font>
               </div>
 			<div class='pokemon'>
-				<font size='4'>IV: <span class='pokemon encounter'><font size='4'>${ivString}%</font></span> (${atk}/${def}/${sta})<br>
+				<font size='4'>IV: <span class='pokemon encounter'><font size='4'>${ivString}%</font></font></span> (${atk}/${def}/${sta})<br>
 				<font size='4'>WP: <span class='pokemon no-encounter'><font size='3'>Gold-Only</font></font></span>
 			</div>
 			<div class='pokemon'>
