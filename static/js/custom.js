@@ -1,6 +1,72 @@
 $(function () {
     'use strict'
 
+	if(window.map) {
+    var dFullPolygon;
+
+    var updateGeofences = function() {
+        if(!Store.get('showGeofence')) {
+            if(dFullPolygon) {
+                console.log('geofence > setting dFUllPolygons map to null')
+                dFullPolygon.setMap(null);
+            }
+        } else {
+            if(dFullPolygon == null) {
+                console.log('geofence > initialising dFullPolygons')
+				var dFullCoords = [
+                        {lat: 51.6112472862376, lng: 7.4363577738404},
+                        {lat: 51.6079431697555, lng: 7.4703591316938},
+                        {lat: 51.5923223479276, lng: 7.4686431884766},
+                        {lat: 51.5889912324582, lng: 7.5203980877995},
+                        {lat: 51.5832191092124, lng: 7.5257628411055},
+                        {lat: 51.5832207758761, lng: 7.5817385315895},
+                        {lat: 51.5520693264831, lng: 7.6108860969543},
+                        {lat: 51.5520703688619, lng: 7.6215525716543},
+                        {lat: 51.5350707910454, lng: 7.6380729675293},
+                        {lat: 51.5020109647478, lng: 7.640133574605},
+                        {lat: 51.4905541201246, lng: 7.6253566145897},
+                        {lat: 51.4905474398825, lng: 7.6088288426399},
+                        {lat: 51.4605466253082, lng: 7.5808949768543},
+                        {lat: 51.4604246305084, lng: 7.5806408375502},
+                        {lat: 51.4603841047664, lng: 7.5230813026428},
+                        {lat: 51.4302129454995, lng: 7.4951011687517},
+                        {lat: 51.4302382385746, lng: 7.4424202367663},
+                        {lat: 51.4369027894199, lng: 7.4320008605719},
+                        {lat: 51.4613199477731, lng: 7.4093777686358},
+                        {lat: 51.4613195299903, lng: 7.3533296585083},
+                        {lat: 51.4923719446408, lng: 7.3245441913605},
+                        {lat: 51.4923667259097, lng: 7.2741679474711},
+                        {lat: 51.494650594259, lng: 7.2722867131233},
+                        {lat: 51.5238362883248, lng: 7.2949621081352},
+                        {lat: 51.5473487735285, lng: 7.3317425698042},
+                        {lat: 51.5565969860703, lng: 7.3286788165569},
+                        {lat: 51.58538967857, lng: 7.3560326546431},
+                        {lat: 51.585496548152, lng: 7.4092483520508},
+                        {lat: 51.6112472862376, lng: 7.4363577738404}
+					];
+                //construct the polygon.
+                dFullPolygon = new google.maps.Polygon({
+                    paths: dFullCoords,
+                    strokeColor: '#111111',
+                    strokeOpacity: 0.7,
+                    strokeWeight: 2,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.05
+                });
+            }
+            console.log('geofence > setting wolfsburgPolygons map')
+            dFullPolygon.setMap(map);
+        }
+    }
+    $('#geofence-switch').change(function () {
+        console.log('geofence > showGeofence changed! new state:' + Store.get('showGeofence'))
+        Store.set('showGeofence', this.checked)
+		updateGeofences()
+    })
+	console.log('geofence > yes, we have a map!')
+    $('#geofence-switch').prop('checked', Store.get('showGeofence'))
+	updateGeofences()
+}
 
     /* Settings For Analytics
 	<script>
@@ -256,23 +322,23 @@ $(function () {
         </div>
       </div>`
 			} else if (atk != null && def != null && sta != null) {
-				var iv = getIv(atk, def, sta)
-				var ivString = ''
-				if(iv < 50){
-				ivString = `<font color ='#96281B'> ${iv.toFixed(1)}</font>`
-				}
-				else if(iv >= 50 && iv < 75){
-					ivString = `<font color ='#E67E22'>${iv.toFixed(1)}</font>`
-				}
-				else if(iv >= 75 && iv < 90){
-					ivString = `<font color ='#3FC380'>${iv.toFixed(1)}</font>`
-				}
-				else if(iv >= 90 && iv < 97){
-					ivString = `<font color ='green'>${iv.toFixed(1)}</font>`
-				}
-				else{
-					ivString = `<font color ='#E9D460'> ${iv.toFixed(1)}</font>`
-				}
+					var iv = getIv(atk, def, sta)
+					var ivString = ''
+					if(iv < 50){
+					ivString = `<font color ='#96281B'> ${iv.toFixed(1)}</font>`
+					}
+					else if(iv >= 50 && iv < 75){
+						ivString = `<font color ='#E67E22'>${iv.toFixed(1)}</font>`
+					}
+					else if(iv >= 75 && iv < 90){
+						ivString = `<font color ='#3FC380'>${iv.toFixed(1)}</font>`
+					}
+					else if(iv >= 90 && iv < 99){
+						ivString = `<font color ='green'>${iv.toFixed(1)}</font>`
+					}
+					else{
+						ivString = `<font color ='#9A12B3' size ='5' style='background-color: #C5EFF7'>&nbsp;${iv.toFixed(1)}&nbsp;</font>`
+					}
 
 				contentstring += `
           <div class='pokemon container'>
