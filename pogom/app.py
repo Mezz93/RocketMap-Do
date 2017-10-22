@@ -303,6 +303,19 @@ class Pogom(Flask):
                         Pokemon.get_active(swLat, swLng, neLat, neLng,
                                            oSwLat=oSwLat, oSwLng=oSwLng,
                                            oNeLat=oNeLat, oNeLng=oNeLng))
+
+            if request.args.get('eids'):
+                # Exclude id's of pokemon that are hidden.
+                eids = [int(x) for x in request.args.get('eids').split(',')]
+                d['pokemons'] = [
+                    x for x in d['pokemons'] if x['pokemon_id'] not in eids]
+
+            if request.args.get('reids'):
+                reids = [int(x) for x in request.args.get('reids').split(',')]
+                d['pokemons'] = d['pokemons'] + (
+                    Pokemon.get_active_by_id(reids, swLat, swLng,
+                                             neLat, neLng))
+                d['reids'] = reids
             
             if args.show_iv == 'smaragd':
                 pass
@@ -325,19 +338,6 @@ class Pogom(Flask):
                         x.pop('cp_multiplier', None)
                         x.pop('weight', None)
                         x.pop('height', None)
-
-            if request.args.get('eids'):
-                # Exclude id's of pokemon that are hidden.
-                eids = [int(x) for x in request.args.get('eids').split(',')]
-                d['pokemons'] = [
-                    x for x in d['pokemons'] if x['pokemon_id'] not in eids]
-
-            if request.args.get('reids'):
-                reids = [int(x) for x in request.args.get('reids').split(',')]
-                d['pokemons'] = d['pokemons'] + (
-                    Pokemon.get_active_by_id(reids, swLat, swLng,
-                                             neLat, neLng))
-                d['reids'] = reids
 
         if (request.args.get('pokestops', 'true') == 'true' and
                 not args.no_pokestops):
