@@ -1128,7 +1128,7 @@ function setupPokemonMarkerDetails(item, map, scaleByRarity = true, isNotifyPkmn
 			}
 		}
 	}
-	if (isNotifyPoke(item)) {
+	if (isNotifyPkmn) {
 		rarityValue = 50
 	}
 
