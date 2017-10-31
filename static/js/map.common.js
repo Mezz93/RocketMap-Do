@@ -851,7 +851,7 @@ var StoreOptions = {
         type: StoreTypes.String
     },
     'remember_select_exclude': {
-        default: [10, 11, 13, 14, 16, 17, 19, 21, 22, 29, 32, 41, 43, 46, 48, 54, 69, 72, 90, 92, 96, 98, 116, 118, 120, 122, 124, 161, 162, 163, 165, 166, 167, 168, 177, 178, 183, 187, 190, 194, 198, 215, 220],
+        default: [10, 11, 13, 14, 16, 17, 19, 21, 22, 29, 32, 41, 43, 46, 48, 54, 69, 72, 90, 92, 96, 98, 116, 118, 120, 122, 124, 161, 162, 163, 165, 166, 167, 168, 177, 178, 183, 187, 190, 194, 198, 215, 220, 353, 355, 200, 104, 302],
         type: StoreTypes.JSON
     },
     'remember_select_notify': {
@@ -926,6 +926,10 @@ var StoreOptions = {
         default: 0,
         type: StoreTypes.Number
     },
+	'showGeofenceIV': {
+		default: false,
+		type: StoreTypes.Boolean
+	},
     'showScanned': {
         default: false,
         type: StoreTypes.Boolean

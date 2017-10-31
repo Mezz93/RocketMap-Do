@@ -14,36 +14,33 @@ $(function () {
             if(dFullPolygon == null) {
                 console.log('geofence > initialising dFullPolygons')
 				var dFullCoords = [
-                        {lat: 51.6112472862376, lng: 7.4363577738404},
-                        {lat: 51.6079431697555, lng: 7.4703591316938},
-                        {lat: 51.5923223479276, lng: 7.4686431884766},
-                        {lat: 51.5889912324582, lng: 7.5203980877995},
-                        {lat: 51.5832191092124, lng: 7.5257628411055},
-                        {lat: 51.5832207758761, lng: 7.5817385315895},
-                        {lat: 51.5520693264831, lng: 7.6108860969543},
-                        {lat: 51.5520703688619, lng: 7.6215525716543},
-                        {lat: 51.5350707910454, lng: 7.6380729675293},
-                        {lat: 51.5020109647478, lng: 7.640133574605},
-                        {lat: 51.4905541201246, lng: 7.6253566145897},
-                        {lat: 51.4905474398825, lng: 7.6088288426399},
-                        {lat: 51.4605466253082, lng: 7.5808949768543},
-                        {lat: 51.4604246305084, lng: 7.5806408375502},
-                        {lat: 51.4603841047664, lng: 7.5230813026428},
-                        {lat: 51.4302129454995, lng: 7.4951011687517},
-                        {lat: 51.4302382385746, lng: 7.4424202367663},
-                        {lat: 51.4369027894199, lng: 7.4320008605719},
-                        {lat: 51.4613199477731, lng: 7.4093777686358},
-                        {lat: 51.4613195299903, lng: 7.3533296585083},
-                        {lat: 51.4923719446408, lng: 7.3245441913605},
-                        {lat: 51.4923667259097, lng: 7.2741679474711},
-                        {lat: 51.494650594259, lng: 7.2722867131233},
-                        {lat: 51.5238362883248, lng: 7.2949621081352},
-                        {lat: 51.5473487735285, lng: 7.3317425698042},
-                        {lat: 51.5565969860703, lng: 7.3286788165569},
-                        {lat: 51.58538967857, lng: 7.3560326546431},
-                        {lat: 51.585496548152, lng: 7.4092483520508},
-                        {lat: 51.6112472862376, lng: 7.4363577738404}
+                        {lat: 51.6116210116669, lng: 7.4325084686279},
+                        {lat: 51.5755759798729, lng: 7.3223876953125},
+                        {lat: 51.5473491905233, lng: 7.3317432403564},
+                        {lat: 51.5238312818017, lng: 7.2949647903442},
+                        {lat: 51.494650594259, lng: 7.2722840309143},
+                        {lat: 51.4809753175707, lng: 7.2835600376129},
+                        {lat: 51.4753924614099, lng: 7.3216420412064},
+                        {lat: 51.4553289674135, lng: 7.3369923233986},
+                        {lat: 51.4472405860867, lng: 7.3744869232178},
+                        {lat: 51.4555980540434, lng: 7.4027681350708},
+                        {lat: 51.4171945605445, lng: 7.4628067016602},
+                        {lat: 51.4164719284182, lng: 7.4933195114136},
+                        {lat: 51.4311230693204, lng: 7.5113654136658},
+                        {lat: 51.4421217173487, lng: 7.5181728601456},
+                        {lat: 51.4392360407416, lng: 7.5367391109467},
+                        {lat: 51.4679058179424, lng: 7.5961473584175},
+                        {lat: 51.4905568144017, lng: 7.6253621571232},
+                        {lat: 51.4905685845844, lng: 7.6492389421855},
+                        {lat: 51.4932304513727, lng: 7.6509941664983},
+                        {lat: 51.5020109647478, lng: 7.6401329040527},
+                        {lat: 51.5350712081528, lng: 7.6380729675293},
+                        {lat: 51.5845099219525, lng: 7.5900077819824},
+                        {lat: 51.5923223479277, lng: 7.4686431884766},
+                        {lat: 51.6079431697554, lng: 7.4703598022461},
+                        {lat: 51.6116210116669, lng: 7.4325084686279}
 					];
+
                 //construct the polygon.
                 dFullPolygon = new google.maps.Polygon({
                     paths: dFullCoords,
@@ -67,7 +64,92 @@ $(function () {
     $('#geofence-switch').prop('checked', Store.get('showGeofence'))
 	updateGeofences()
 }
-
+	if(window.map) {
+    var dIVPolygon;
+    var updateGeofencesIV = function() {
+        if(!Store.get('showGeofenceIV')) {
+            if(dIVPolygon) {
+                console.log('geofenceIV > setting dIVPolygon map to null')
+                dIVPolygon.setMap(null);
+            }
+        } else {
+            if(dIVPolygon == null) {
+                console.log('geofenceIV > initialising dIVPolygon')
+				var dIVCoords = [
+                        {lat: 51.5417794674626, lng: 7.4346944689751},
+                        {lat: 51.5391107130232, lng: 7.4342539161444},
+                        {lat: 51.5345215616995, lng: 7.4346782080829},
+                        {lat: 51.5337892108361, lng: 7.4386222288013},
+                        {lat: 51.525249357471, lng: 7.4417359381914},
+                        {lat: 51.5180948006387, lng: 7.4447706900537},
+                        {lat: 51.5171485430058, lng: 7.4459600821137},
+                        {lat: 51.5151473692105, lng: 7.4473533220589},
+                        {lat: 51.5130744869215, lng: 7.4411318544298},
+                        {lat: 51.5100372772118, lng: 7.4377177166753},
+                        {lat: 51.5095373703672, lng: 7.4400756927207},
+                        {lat: 51.5054957890383, lng: 7.4364714324474},
+                        {lat: 51.5049703067866, lng: 7.4344852566719},
+                        {lat: 51.4989036574862, lng: 7.4354588985443},
+                        {lat: 51.4973181979787, lng: 7.4393400549889},
+                        {lat: 51.4971800207749, lng: 7.4471385776997},
+                        {lat: 51.4946929682144, lng: 7.4460703879595},
+                        {lat: 51.4915377750954, lng: 7.4479204416275},
+                        {lat: 51.4908063507385, lng: 7.4513737438247},
+                        {lat: 51.490742940939, lng: 7.4555566068739},
+                        {lat: 51.4920055882743, lng: 7.4589656107128},
+                        {lat: 51.4928741925158, lng: 7.4592175707221},
+                        {lat: 51.4932223810616, lng: 7.4710615351796},
+                        {lat: 51.4927800475541, lng: 7.4714046902955},
+                        {lat: 51.4920003695013, lng: 7.472407668829},
+                        {lat: 51.4909933438972, lng: 7.4800774455071},
+                        {lat: 51.4931693597161, lng: 7.4846304953098},
+                        {lat: 51.4918116582709, lng: 7.4880194664001},
+                        {lat: 51.4919661278127, lng: 7.491348242329},
+                        {lat: 51.4936341554652, lng: 7.4998088751454},
+                        {lat: 51.5038753413268, lng: 7.501218135003},
+                        {lat: 51.5039872808004, lng: 7.514605113538},
+                        {lat: 51.5075677771403, lng: 7.513789088116},
+                        {lat: 51.5101042694768, lng: 7.5159346968576},
+                        {lat: 51.5104392423655, lng: 7.5173520858516},
+                        {lat: 51.5172358993643, lng: 7.5165154134447},
+                        {lat: 51.5184906305841, lng: 7.5124598737966},
+                        {lat: 51.516795290335, lng: 7.5105078565684},
+                        {lat: 51.5197653628659, lng: 7.5090584380632},
+                        {lat: 51.5226029826816, lng: 7.5066662230893},
+                        {lat: 51.5178230574041, lng: 7.4948735162616},
+                        {lat: 51.5247057461573, lng: 7.4917815998197},
+                        {lat: 51.5264546244893, lng: 7.4975634366274},
+                        {lat: 51.5294382427646, lng: 7.4955444037914},
+                        {lat: 51.5303826807378, lng: 7.4914332479239},
+                        {lat: 51.5327687176656, lng: 7.4885237216949},
+                        {lat: 51.5328313911633, lng: 7.4629694782197},
+                        {lat: 51.5372987151425, lng: 7.4596024677157},
+                        {lat: 51.5367834013847, lng: 7.4560441821814},
+                        {lat: 51.5417794674626, lng: 7.4346944689751}
+					];
+                //construct the polygon.
+                dIVPolygon = new google.maps.Polygon({
+                    paths: dIVCoords,
+                    strokeColor: '#111111',
+                    strokeOpacity: 0.7,
+                    strokeWeight: 2,
+                    fillColor: '#0000FF',
+                    fillOpacity: 0.05
+                });
+            }
+            console.log('geofenceIV > setting wolfsburgPolygons map')
+			dIVPolygon.setMap(map);
+        }
+    }
+    $('#geofence-switchIV').change(function () {
+        console.log('geofenceIV > showGeofenceIV changed! new state:' + Store.get('showGeofenceIV'))
+        Store.set('showGeofenceIV', this.checked)
+		updateGeofencesIV()
+    })
+	console.log('geofenceIV > yes, we have a map!')
+    $('#geofence-switchIV').prop('checked', Store.get('showGeofenceIV'))
+	updateGeofencesIV()
+}
     /* Settings For Analytics
 	<script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -88,11 +170,10 @@ $(function () {
     // MOTD.
     const motdEnabled = true
     const motdTitle = 'News!'
-    const motd = '<span>Solange es Niantic erlaubt, scannen wir für Supporter der Map die <strong>gesamte Map mit IV.</strong><br/>' +
-					'<span style="font-size:smaller;">(Für nicht Supporter sind dafür IVs in der Innenstadt sichtbar)</span><br/>' +
-					'<h4 style="margin:0;line-height:1.1;">Die derzeitige Scanzeit ist 7:00 Uhr - 4:00 Uhr</h4>' +
+    const motd = '<h4 style="margin:0;line-height:1.1;">Die derzeitige Scanzeit ist 7:00 Uhr - 6:00 Uhr<br>(23 Std Betrieb)</h4><br>' +
+					'<span style="font-size:smaller;">(Für nicht Supporter sind IVs in der Innenstadt sichtbar)</span><br>' +
 					'<span style="color:red;">Besuche unseren <a href="https://discord.gg/zwsGCUS">Discord</a> für mehr Infos</span><br/>' +
-					'<span style="color:red;">oder schau dir auf <a href="https://www.patreon.com/rocketmapdo">Patreon</a> alle Belohnungen an</span>'
+					'<span style="color:red;">oder schau dir auf <a href="https://www.patreon.com/rocketmapdo">Patreon</a> alle Belohnungen für Spender an</span>'
 
     // Only show every unique MOTD message once. If disabled, the MOTD will be
     // shown on every visit. Requires support for localStorage.
