@@ -190,16 +190,6 @@
               </div>
             </div>
               {% endif %}
-            <div class="form-control switch-container">
-              <h3>Scangebiet</h3>
-              <div class="onoffswitch">
-                <input id="geofence-switch" type="checkbox" name="geofence-switch" class="onoffswitch-checkbox" checked>
-                <label class="onoffswitch-label" for="geofence-switch">
-                <span class="switch-label" data-on="On" data-off="Off"></span>
-                <span class="switch-handle"></span>
-                </label>
-              </div>
-            </div>
               {% if show.pokestops %}
             <div class="form-control switch-container">
               <h3>Pokéstops</h3>
@@ -260,6 +250,30 @@
 			  Damit dein Datenvolumen geschont wird, sind häufige Pokémon ausgeblendet.
             </div>
               {% endif %}
+			<h3><u> Anzeigen der Scanbereiche:</u></h3>
+            <div class="form-control switch-container">
+              <h3>Scangebiet</h3>
+              <div class="onoffswitch">
+                <input id="geofence-switch" type="checkbox" name="geofence-switch" class="onoffswitch-checkbox" checked>
+                <label class="onoffswitch-label" for="geofence-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-control switch-container">
+              <h3>IV-Only-Gebiet</h3>
+              <div class="onoffswitch">
+                <input id="geofence-switchIV" type="checkbox" name="geofence-switch" class="onoffswitch-checkbox" >
+                <label class="onoffswitch-label" for="geofence-switchIV">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+			<br>
+			Das IV-Only-Gebiet ist ledeglich für Spender relevant. In diesem Gebiet sind alle Pokemon für Spendermaps mit IV gescannt.
+			<br>
           </div>
 
           <h3><i class="fa fa-location-arrow fa-fw"></i>Location</h3>
@@ -450,9 +464,9 @@
 		  </div>
 			<h3><i class="fa fa-clock-o fa-fw"></i>Scanzeiten</h3>
 			<div>
-					<center>Die Map scannt montags bis sonntags von 8:00&nbsp;Uhr morgens bis 2:00&nbsp;Uhr nachts.<br>
+					<center>Die Map scannt montags bis sonntags von 7:00&nbsp;Uhr morgens bis 6:00&nbsp;Uhr nachts/morgens.<br>
 					<br>
-					Somit scannt die Map von 2:00 bis 8:00&nbsp;Uhr <i><u>nicht</u></i>.</center>
+					Somit scannt die Map von 6:00 bis 7:00&nbsp;Uhr <i><u>nicht</u></i>.</center>
 			</div>
 		  <h3><i class="fa fa-refresh fa-fw"></i>Zurücksetzen</h3>
 			<div>
