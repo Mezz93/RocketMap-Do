@@ -170,7 +170,8 @@ $(function () {
     // MOTD.
     const motdEnabled = true
     const motdTitle = 'News!'
-    const motd = '<h4 style="margin:0;line-height:1.1;">Die derzeitige Scanzeit ist 7:00 Uhr - 6:00 Uhr<br>(23 Std Betrieb)</h4><br>' +
+    const motd = '<h3 style="margin:0;line-height:1.1;">Das System der Silber/GoldMap-Zugänge wurde geändert. Bitte wendet euch an einen Admin in Discord, wenn ihr einen Zugang hattet oder als Silber/Goldspender einen Zugang bekommen möchtet.</h3><br>' +
+					'<h4 style="margin:0;line-height:1.1;">Die derzeitige Scanzeit ist 7:00 Uhr - 6:00 Uhr<br>(23 Std Betrieb)</h4><br>' +
 					'<span style="font-size:smaller;">(Für nicht Supporter sind IVs in der Innenstadt sichtbar)</span><br>' +
 					'<span style="color:red;">Besuche unseren <a href="https://discord.gg/zwsGCUS">Discord</a> für mehr Infos</span><br/>' +
 					'<span style="color:red;">oder schau dir auf <a href="https://www.patreon.com/rocketmapdo">Patreon</a> alle Belohnungen für Spender an</span>'
