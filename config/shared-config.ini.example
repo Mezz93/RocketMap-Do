@@ -8,7 +8,7 @@
 ###################
 
 #gmaps-key:                     # Your Google Maps API key
-#captcha-key:                   # 2Captcha API key.
+captcha-key: 232aab14753fc45f87f7df7549fc6bee                  # 2Captcha API key.
 #hash-key:                      # Key for hash server (default=None)
 
 # Other shared settings 
