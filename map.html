@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="{{lang}}">
+  <head>
+    <meta charset="utf-8">
+    <title>RocketMap-Do</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="PokeMap">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#3b3b3b">
+	<meta http-equiv="expires" content="21600">
+    <!-- Fav- & Apple-Touch-Icons -->
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/appicons/favicon.ico').lstrip('/') }}" type="image/x-icon">
+    <!-- non-retina iPhone pre iOS 7 -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/appicons/114x114.png').lstrip('/') }}" sizes="57x57">
+    <!-- non-retina iPad pre iOS 7 -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/appicons/144x144.png').lstrip('/') }}" sizes="72x72">
+    <!-- non-retina iPad iOS 7 -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/appicons/152x152.png').lstrip('/') }}" sizes="76x76">
+    <!-- retina iPhone pre iOS 7 -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/appicons/114x114.png').lstrip('/') }}" sizes="114x114">
+    <!-- retina iPhone iOS 7 -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/appicons/120x120.png').lstrip('/') }}" sizes="120x120">
+    <!-- retina iPad pre iOS 7 -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/appicons/144x144.png').lstrip('/') }}" sizes="144x144">
+    <!-- retina iPad iOS 7 -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/appicons/152x152.png').lstrip('/') }}" sizes="152x152">
+    <!-- retina iPhone 6 iOS 7 -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/appicons/180x180.png').lstrip('/') }}" sizes="180x180">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/app.min.css').lstrip('/') }}">
+    <!-- CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <!-- Custom CSS code-->
+      {% if show.custom_css %}
+    <link rel="stylesheet" type="text/css" href="static/css/custom.css">
+      {% endif %}
+  </head>
+  <body id="top" class="mapPage">
+    <div class="wrapper">
+      <!-- Header -->
+      <header id="header">
+        <a href="#nav"><span class="label">Menü</span></a>
+        <h1><a href="./">RocketMap-Do<img class='rocket icon' src='static/images/rocket.png'></a></h1>
+        <a href="#stats" id="statsToggle" class="statsNav" style="float: right;"><span class="label">Stats</span></a>
+		<a href="https://www.patreon.com/rocketmapdo" style="float: right;">Support Us</a>
+      </header>
+      <!-- NAV -->
+      <nav id="nav">
+        <div id="nav-accordion">
+          <h3><i class="fa fa-map-marker fa-fw"></i>Anzeige</h3>
+          <div>
+              {% if show.pokemons %}
+            <div class="form-control switch-container">
+              <h3>Pokémon</h3>
+              <div class="onoffswitch">
+                <input id="pokemon-switch" type="checkbox" name="pokemon-switch" class="onoffswitch-checkbox" checked>
+                <label class="onoffswitch-label" for="pokemon-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+              {% endif %}
+              {% if show.raids %}
+            <div class="form-control switch-container">
+              <h3>Raids</h3>
+              <div class="onoffswitch">
+                <input id="raids-switch" type="checkbox" name="raids-switch" class="onoffswitch-checkbox" checked>
+                <label class="onoffswitch-label" for="raids-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+            <div id="raids-filter-wrapper" style="display:none">
+              <div class="form-control switch-container" id="raid-active-gym-wrapper">
+                <h3>Nur aktive Raids</h3>
+                <div class="onoffswitch">
+                  <input id="raid-active-gym-switch" type="checkbox" name="raid-active-gym-switch" class="onoffswitch-checkbox" checked>
+                  <label class="onoffswitch-label" for="raid-active-gym-switch">
+                  <span class="switch-label" data-on="On" data-off="Off"></span>
+                  <span class="switch-handle"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-control switch-container" id="min-raid-level-only-wrapper">
+                <h3>Min. Raid Level</h3>
+                <select name="raid-min-level-only-switch" id="raid-min-level-only-switch">
+                  <option value="1">Level 1</option>
+                  <option value="2">Level 2</option>
+                  <option value="3">Level 3</option>
+                  <option value="4">Level 4</option>
+                  <option value="5">Level 5</option>
+                </select>
+              </div>
+              <div class="form-control switch-container" id="max-raid-level-only-wrapper">
+                <h3>Max. Raid Level</h3>
+                <select name="raid-max-level-only-switch" id="raid-max-level-only-switch">
+                  <option value="1">Level 1</option>
+                  <option value="2">Level 2</option>
+                  <option value="3">Level 3</option>
+                  <option value="4">Level 4</option>
+                  <option value="5">Level 5</option>
+                </select>
+              </div>
+            </div>
+              {% endif %}
+              {% if show.gyms %}
+            <div class="form-control switch-container">
+              <h3>Gyms</h3>
+              <div class="onoffswitch">
+                <input id="gyms-switch" type="checkbox" name="gyms-switch" class="onoffswitch-checkbox" checked>
+                <label class="onoffswitch-label" for="gyms-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+              {% if show.gym_info %}
+            <div class="form-control switch-container" id="gym-sidebar-wrapper" style="display:none">
+              <h3>Gym Sidebar</h3>
+              <div class="onoffswitch">
+                <input id="gym-sidebar-switch" type="checkbox" name="gym-sidebar-switch" class="onoffswitch-checkbox" checked>
+                <label class="onoffswitch-label" for="gym-sidebar-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+              {% endif %}
+            <div id="gyms-filter-wrapper" style="display:none">
+              <div class="form-control switch-container" id="team-gyms-only-wrapper">
+                <h3>Team</h3>
+                <select name="team-gyms-filter-switch" id="team-gyms-only-switch">
+                  <option value="0">All</option>
+                  <option value="1">Mystic</option>
+                  <option value="2">Valor</option>
+                  <option value="3">Instinct</option>
+                </select>
+              </div>
+              <div class="form-control switch-container" id="open-gyms-only-wrapper">
+                <h3>Freier Platz</h3>
+                <div class="onoffswitch">
+                  <input id="open-gyms-only-switch" type="checkbox" name="open-gyms-only-switch" class="onoffswitch-checkbox" checked>
+                  <label class="onoffswitch-label" for="open-gyms-only-switch">
+                  <span class="switch-label" data-on="On" data-off="Off"></span>
+                  <span class="switch-handle"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-control switch-container" id="min-level-gyms-filter-wrapper">
+                <h3>Min. Level</h3>
+                <select name="min-level-gyms-filter-switch" id="min-level-gyms-filter-switch">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+              </div>
+              <div class="form-control switch-container" id="max-level-gyms-filter-wrapper">
+                <h3>Max. Level</h3>
+                <select name="max-level-gyms-filter-switch" id="max-level-gyms-filter-switch">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+              </div>
+               <div class="form-control switch-container" id="last-update-gyms-wrapper">
+                 <h3>Letzter Scan</h3>
+                <select name="last-update-gyms-switch" id="last-update-gyms-switch">
+                  <option value="0">All</option>
+                  <option value="1">Last Hour</option>
+                  <option value="6">Last 6 Hours</option>
+                  <option value="12">Last 12 Hours</option>
+                  <option value="24">Last 24 Hours</option>
+                  <option value="168">Last Week</option>
+                </select>
+              </div>
+            </div>
+              {% endif %}
+              {% if show.pokestops %}
+            <div class="form-control switch-container">
+              <h3>Pokéstops</h3>
+              <div class="onoffswitch">
+                <input id="pokestops-switch" type="checkbox" name="pokestops-switch" class="onoffswitch-checkbox" checked>
+                <label class="onoffswitch-label" for="pokestops-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-control switch-container" id="lured-pokestops-only-wrapper" style="display:none">
+              <select name="lured-pokestops-only-switch" id="lured-pokestops-only-switch">
+                <option value="0">All</option>
+                <option value="1">Only Lured</option>
+              </select>
+            </div>
+              {% endif %}
+            <div class="form-control switch-container">
+              <h3>Gescannte Bereiche</h3>
+              <div class="onoffswitch">
+                <input id="scanned-switch" type="checkbox" name="scanned-switch" class="onoffswitch-checkbox">
+                <label class="onoffswitch-label" for="scanned-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-control switch-container">
+              <h3>Spawnpunkte</h3>
+              <div class="onoffswitch">
+                <input id="spawnpoints-switch" type="checkbox" name="spawnpoints-switch" class="onoffswitch-checkbox">
+                <label class="onoffswitch-label" for="spawnpoints-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-control switch-container">
+              <h3>Ranges</h3>
+              <div class="onoffswitch">
+                <input id="ranges-switch" type="checkbox" name="ranges-switch" class="onoffswitch-checkbox">
+                <label class="onoffswitch-label" for="ranges-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+              {% if show.pokemons %}
+            <div class="form-control">
+              <label for="exclude-pokemon">
+              <h3>Pokémon ausblenden:</h3>
+              <div style="max-height:165px;overflow-y:auto">
+                <select id="exclude-pokemon" multiple="multiple"></select>
+              </div>
+              </label>
+			  <br>
+			  Damit dein Datenvolumen geschont wird, sind häufige Pokémon ausgeblendet.
+            </div>
+              {% endif %}
+			<h3><u> Anzeigen der Scanbereiche:</u></h3>
+            <div class="form-control switch-container">
+              <h3>Scangebiet</h3>
+              <div class="onoffswitch">
+                <input id="geofence-switch" type="checkbox" name="geofence-switch" class="onoffswitch-checkbox" checked>
+                <label class="onoffswitch-label" for="geofence-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-control switch-container">
+              <h3>IV-Only-Gebiet</h3>
+              <div class="onoffswitch">
+                <input id="geofence-switchIV" type="checkbox" name="geofence-switchIV" class="onoffswitch-checkbox" >
+                <label class="onoffswitch-label" for="geofence-switchIV">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+			<br>
+			Das IV-Only-Gebiet ist ledeglich für Spender relevant. In diesem Gebiet sind alle Pokemon für Spendermaps mit IV gescannt.
+			<br><br>
+            <div class="form-control switch-container">
+              <h3>Parkgebiete</h3>
+              <div class="onoffswitch">
+                <input id="geofence-switchPARK" type="checkbox" name="geofence-switchPARK" class="onoffswitch-checkbox" >
+                <label class="onoffswitch-label" for="geofence-switchPARK">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+			Parkgebiete sind jene Gebiete, welche wahrscheinlich eine Arena beinhalten, in der die Chance auf einen EX-Raid höher ist.
+          </div>
+
+          <h3><i class="fa fa-location-arrow fa-fw"></i>Location</h3>
+
+          <div>
+              {% if show.fixed_display %}
+            <div class="form-control switch-container">
+              <label for="next-location">
+              <h3>Change search location</h3>
+              <input id="next-location" type="text" name="next-location" placeholder="Change search location">
+              </label>
+            </div>
+            <div class="form-control switch-container">
+              <h3>Lock search marker</h3>
+              <div class="onoffswitch">
+                <input id="lock-marker-switch" type="checkbox" name="lock-marker-switch" class="onoffswitch-checkbox" checked/>
+                <label class="onoffswitch-label" for="lock-marker-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-control switch-container">
+              <h3>Search follows me</h3>
+              <div class="onoffswitch">
+                <input id="geoloc-switch" type="checkbox" name="geoloc-switch" class="onoffswitch-checkbox" checked/>
+                <label class="onoffswitch-label" for="geoloc-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+              {% endif %}
+            <div class="form-control switch-container" >
+              <h3>Bei mir starten</h3>
+              <div class="onoffswitch">
+                <input id="start-at-user-location-switch" type="checkbox" name="start-at-user-location-switch" class="onoffswitch-checkbox" checked/>
+                <label class="onoffswitch-label" for="start-at-user-location-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+              {% if show.search_display %}
+            <div class="form-control switch-container">
+              <h3>Search</h3>
+              <div class="onoffswitch">
+                <input id="search-switch" type="checkbox" name="search-switch" class="onoffswitch-checkbox" checked/>
+                <label class="onoffswitch-label" for="search-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+              {% endif %}
+            <div class="form-control switch-container">
+              <h3>Mir folgen</h3>
+              <div class="onoffswitch">
+                <input id="follow-my-location-switch" type="checkbox" name="follow-my-location-switch" class="onoffswitch-checkbox" checked/>
+                <label class="onoffswitch-label" for="follow-my-location-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+              {% if show.scan_display %}
+            <div class="form-control switch-container">
+              <h3>Scan here button</h3>
+              <div class="onoffswitch">
+                <input id="scan-here-switch" type="checkbox" name="scan-here-switch" class="onoffswitch-checkbox" checked/>
+                <label class="onoffswitch-label" for="scan-here-switch">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+              {% endif %}
+          </div>
+
+            {% if show.pokemons %}
+          <h3><i class="fa fa-bullhorn fa-fw"></i>Benachrichtigungen</h3>
+          <div>
+			Filtere hier, wann die Karte dich benachrichtigen soll:
+            <div class="form-control">
+              <label for="notify-pokemon">
+                <h3>Über Pokémon</h3>
+                <div style="max-height:165px;overflow-y:auto">
+                  <select id="notify-pokemon" multiple="multiple"></select>
+                </div>
+              </label>
+            </div>
+            <div class="form-control">
+              <label for="notify-rarity">
+                <h3>Nach Seltenheit</h3>
+                <div style="max-height:165px;overflow-y:auto">
+                  <select id="notify-rarity" multiple="multiple"></select>
+                </div>
+              </label>
+            </div>
+
+              {% if show.encounter %}
+            <div class="form-control">
+              <label for="notify-perfection">
+                <h3>Nach IVs</h3>
+                <input id="notify-perfection" type="text" name="notify-perfection" placeholder="Minimum IV %"/>
+              </label>
+            </div>
+              {% endif %}
+            <div class="form-control switch-container">
+              <h3>Push-Benachrichtigung</h3>
+              <div class="onoffswitch">
+                <input id="push-switch" type="checkbox" name="push-switch" class="onoffswitch-checkbox" checked>
+                <label class="onoffswitch-label" for="push-switch">
+                  <span class="switch-label" data-on="On" data-off="Off"></span>
+                  <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-control switch-container">
+              <h3>Ton abspielen</h3>
+              <div class="onoffswitch">
+                <input id="sound-switch" type="checkbox" name="sound-switch" class="onoffswitch-checkbox" checked>
+                <label class="onoffswitch-label" for="sound-switch">
+                  <span class="switch-label" data-on="On" data-off="Off"></span>
+                  <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+			<!--
+            <div class="form-control switch-container">
+              <h3>Pokémon cries</h3>
+              <div class="onoffswitch">
+              <input id="cries-switch" type="checkbox" name="cries-switch" class="onoffswitch-checkbox" checked>
+                <label class="onoffswitch-label" for="cries-switch">
+                  <span class="switch-label" data-on="On" data-off="Off"></span>
+                  <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+			-->
+          </div>
+            {% endif %}
+          <h3><i class="fa fa-map-o fa-fw"></i>Style Settings</h3>
+          <div>
+            <div class="form-control switch-container">
+              <h3>Map Style</h3>
+              <select id="map-style"></select>
+            </div>
+            <div class="form-control switch-container">
+              <h3>Kartendienst</h3>
+              <select name="map-service-provider" id="map-service-provider">
+                <option value="googlemaps">Google Maps</option>
+                <option value="applemaps">Apple Maps</option>
+              </select>
+            </div>
+            <div class="form-control switch-container">
+              <h3>Icon Größe</h3>
+              <select name="pokemon-icon-size" id="pokemon-icon-size">
+                <option value="-8">Small</option>
+                <option value="0">Normal</option>
+                <option value="10">Large</option>
+                <option value="20">X-Large</option>
+              </select>
+            </div>
+            <div class="form-control switch-container">
+              <h3>Dortmund Mitte Marker</h3>
+              <select name="iconmarker-style" id="iconmarker-style"></select>
+            </div>
+
+            <div class="form-control switch-container">
+              <h3>Location Markierung</h3>
+              <select name="locationmarker-style" id="locationmarker-style"></select>
+            </div>
+          </div>
+		  
+		  <h3><i class="fa fa-comments fa-fw" aria-hidden="true"></i>Chat &amp; Infos</h3>
+		  <div>
+			<b>Das Team von RocketMap-Dortmund hat einen offenen Discord-Chatserver, auf dem jeder Trainer herzlich willkommen ist. Ihr könnt dort chatten, Erfahrungen austauschen und euch gegenseitig helfen. Auch Fragen zur Map können dort beantwortet werden.<br>
+			<br></b>
+			<u> Über den Discord Server werden Map-News bekanntgegeben, ebenso gibt es dort einen Raidchannel sowie weitere Informationen zu Möglichkeiten des Supports unserer Arbeit.</u>
+			<br><br><b>
+			Für die Teilnahme am Chat ist Discord erforderlich:<br>
+			<a href="https://itunes.apple.com/de/app/discord-chat-for-gamers/id985746746?mt=8">► <u>Discord für iOS</u> ◄</a><br>
+			<a href="https://play.google.com/store/apps/details?id=com.discord&hl=de">► <u>Discord für Android</u> ◄</a><br>
+			<a href="https://discordapp.com/">► <u>Discord für PC</u> ◄</a><br>
+			<br>
+			Um dem Discord-Server von RocketMap-Dortmund beizutreten, <a href="https://discord.gg/zwsGCUS">klickt einfach hier</a>. Der Link führt direkt in unseren #rules-channel, bitte vor dem Schreiben gründlich lesen. Ihr könnt Discord problemlos parallel auf dem Handy und auf dem PC nutzen. Gerade für den Einstieg bietet sich der PC an.</b>
+		  </div>
+			<h3><i class="fa fa-clock-o fa-fw"></i>Scanzeiten</h3>
+			<div>
+					<center>Die Map scannt montags bis sonntags von 6:00&nbsp;Uhr morgens bis 5:00&nbsp;Uhr nachts/morgens.<br>
+					<br>
+					Somit scannt die Map von 5:00 bis 6:00&nbsp;Uhr <i><u>nicht</u></i>.</center>
+			</div>
+		  <h3><i class="fa fa-sliders fa-fw"></i>Save Settings</h3>
+			<div>
+			Du hast die Möglichkeit, deine Einstellungen der angezeigten Pokemon, Raids, Arenen etc zu speichern oder zuvor gespeicherte Einstellungen zu laden.<br><br>
+			Beachte, dass dieses Feature nicht für jedes Gerät/Browser kompatibel ist. Auf einem Gerät mit iOS ist das exportieren/importieren der Einstellungen beispielsweise nicht (oder nur eingeschränkt) möglich.
+			<br>
+			<br>
+			<center>
+			
+			<p>
+			<b>Einstellungen speichern:</b>
+					<button class="settings" onclick="download('RM-Do-conf', JSON.stringify(JSON.stringify(localStorage)))">
+						<i class="fa fa-download" aria-hidden="true"></i>
+						Download
+					</button><br>
+			</p>
+			<p>
+			<b>Einstellungen laden:</b><br>
+					<input id="fileInput" style="display:none" onchange="openFile(event)" type="file">
+						<button class="settings" onclick="document.getElementById('fileInput').click()">
+						<i class="fa fa-upload" aria-hidden="true"></i> 
+					Upload
+						</button>
+			</p>
+				</center>
+			</div>
+		  <h3><i class="fa fa-refresh fa-fw"></i>Zurücksetzen</h3>
+			<div>
+					Wenn du die Einstellungen zurücksetzt, dann werden deine Einstellungen komplett gelöscht und die Standardeinstellungen werden wieder hergestellt. <br><br>
+					Zum Zurücksetzen Benutze einfach den Button.<br>
+					<center>
+						<button class="settings" onclick="confirm('Sicher?') ? (localStorage.clear(), window.location.reload()) : false">
+							<i class="fa fa-refresh fa-fw"></i>
+								Reset
+						</button>
+					</center>
+			</div>
+        </div>
+
+	</div>
+
+      </nav>
+      <nav id="stats">
+        <div class="switch-container">
+          <div class="switch-container">
+            <div><center><a href="stats">Ganze Statistik</a></center></div>
+          </div>
+          <div class="switch-container">
+            <center><h1 id="stats-ldg-label">Lädt...</h1></center>
+          </div>
+          <div class="stats-label-container">
+            <center><h1 id="stats-pkmn-label"></h1></center>
+          </div>
+          <div id="pokemonList" style="color: black;">
+            <table id="pokemonList_table" class="display" cellspacing="0" width="100%">
+              <thead>
+                <tr>
+                  <th>Icon</th> <th>Name</th> <th>Anzahl</th> <th>%</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+            <div id="pokeStatStatus" style="color: black;"></div>
+          </div>
+          <div class="stats-label-container">
+            <center><h1 id="stats-gym-label"></h1></center>
+          </div>
+          <div id="arenaList" style="color: black;"></div>
+          <div class="stats-label-container">
+            <center><h1 id="stats-pkstop-label"></h1></center>
+          </div>
+          <div id="pokestopList" style="color: black;"></div>
+        </div>
+      </nav>
+      <nav id="gym-details">
+        <center><h1>Lädt...</h1></center>
+      </nav>
+      <div id="map"></div>
+      <div class="fab" id="scan-here" style="display:none"></div>
+    </div>
+    <!-- Load JS libs before custom scripts. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.4/push.min.js"></script>
+    <script src="{{ url_for('static', filename='dist/js/vendor/markerclusterer.min.js').lstrip('/') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script>
+      var centerLat = {{lat}};
+      var centerLng = {{lng}};
+      var showConfig = {{show|tojson|safe}};
+    </script>
+    <script src="{{ url_for('static', filename='dist/js/app.min.js').lstrip('/') }}"></script>
+    <script src="{{ url_for('static', filename='dist/js/map.common.min.js').lstrip('/') }}"></script>
+    <!-- Load custom JS before map.js so it can change Store defaults. -->
+      {% if show.custom_js %}
+    <script src="{{ url_for('static', filename='dist/js/custom.min.js').lstrip('/') }}"></script>
+      {% endif %}
+    <script src="{{ url_for('static', filename='dist/js/map.min.js').lstrip('/') }}"></script>
+    <script src="{{ url_for('static', filename='dist/js/stats.min.js').lstrip('/') }}"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key={{ gmaps_key }}&amp;callback=initMap&amp;libraries=places,geometry"></script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+  </body>
+</html>
