@@ -2,7 +2,7 @@
 <html lang="{{lang}}">
   <head>
     <meta charset="utf-8">
-    <title>RocketMap-Howi</title>
+    <title>RocketMap-Do</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -45,7 +45,7 @@
       <!-- Header -->
       <header id="header">
         <a href="#nav"><span class="label">Menü</span></a>
-        <h1><a href="./">RocketMap-Howi<img class='rocket icon' src='static/images/rocket.png'></a></h1>
+        <h1><a href="./">RocketMap-Do<img class='rocket icon' src='static/images/rocket.png'></a></h1>
         <a href="#stats" id="statsToggle" class="statsNav" style="float: right;"><span class="label">Stats</span></a>
 		<a href="https://www.patreon.com/rocketmapdo" style="float: right;">Support Us</a>
       </header>
@@ -250,8 +250,6 @@
 			  Damit dein Datenvolumen geschont wird, sind häufige Pokémon ausgeblendet.
             </div>
               {% endif %}
-<<<<<<< HEAD
-=======
 			<h3><u> Anzeigen der Scanbereiche:</u></h3>
             <div class="form-control switch-container">
               <h3>Scangebiet</h3>
@@ -287,7 +285,6 @@
               </div>
             </div>
 			Parkgebiete sind jene Gebiete, welche wahrscheinlich eine Arena beinhalten, in der die Chance auf einen EX-Raid höher ist.
->>>>>>> 2e1727a7d20d7767cba7d486b866076cfd7b0414
           </div>
 
           <h3><i class="fa fa-location-arrow fa-fw"></i>Location</h3>
@@ -462,8 +459,6 @@
               <select name="locationmarker-style" id="locationmarker-style"></select>
             </div>
           </div>
-<<<<<<< HEAD
-=======
 		  
 		  <h3><i class="fa fa-comments fa-fw" aria-hidden="true"></i>Chat &amp; Infos</h3>
 		  <div>
@@ -484,15 +479,46 @@
 					<br>
 					Somit scannt die Map von 5:00 bis 6:00&nbsp;Uhr <i><u>nicht</u></i>.</center>
 			</div>
->>>>>>> 2e1727a7d20d7767cba7d486b866076cfd7b0414
+		  <h3><i class="fa fa-sliders fa-fw"></i>Save Settings</h3>
+			<div>
+			Du hast die Möglichkeit, deine Einstellungen der angezeigten Pokemon, Raids, Arenen etc zu speichern oder zuvor gespeicherte Einstellungen zu laden.<br><br>
+			Beachte, dass dieses Feature nicht für jedes Gerät/Browser kompatibel ist. Auf einem Gerät mit iOS ist das exportieren/importieren der Einstellungen beispielsweise nicht (oder nur eingeschränkt) möglich.
+			<br>
+			<br>
+			<center>
+			
+			<p>
+			<b>Einstellungen speichern:</b>
+					<button class="settings" onclick="download('RM-Do-conf', JSON.stringify(JSON.stringify(localStorage)))">
+						<i class="fa fa-download" aria-hidden="true"></i>
+						Download
+					</button><br>
+			</p>
+			<p>
+			<b>Einstellungen laden:</b><br>
+					<input id="fileInput" style="display:none" onchange="openFile(event)" type="file">
+						<button class="settings" onclick="document.getElementById('fileInput').click()">
+						<i class="fa fa-upload" aria-hidden="true"></i> 
+					Upload
+						</button>
+			</p>
+				</center>
+			</div>
 		  <h3><i class="fa fa-refresh fa-fw"></i>Zurücksetzen</h3>
 			<div>
 					Wenn du die Einstellungen zurücksetzt, dann werden deine Einstellungen komplett gelöscht und die Standardeinstellungen werden wieder hergestellt. <br><br>
 					Zum Zurücksetzen Benutze einfach den Button.<br>
-					<center><button class="settings" onclick="confirm('Sicher?') ? (localStorage.clear(), window.location.reload()) : false"><i class="fa fa-refresh fa-fw"></i>Reset</button></center>
+					<center>
+						<button class="settings" onclick="confirm('Sicher?') ? (localStorage.clear(), window.location.reload()) : false">
+							<i class="fa fa-refresh fa-fw"></i>
+								Reset
+						</button>
+					</center>
 			</div>
         </div>
+
 	</div>
+
       </nav>
       <nav id="stats">
         <div class="switch-container">
