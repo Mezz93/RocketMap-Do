@@ -113,9 +113,12 @@
     body {
       padding-top: 44px;
     }
+  }
 
+  @include breakpoint(small) {
     #header {
-      height: 44px;
+      height: 2.80em;
+      line-height: 2.80em;
 
       > h1 {
         left: 1em;
@@ -127,9 +130,15 @@
     }
   }
 
-  @include breakpoint(xsmall) {
+  @media screen and (max-width: 360px) {
     #header {
       min-width: 320px;
+      height: 2.40em;
+      line-height: 2.40em;
+
+      a {
+        font-size: 0.8em;
+      }
     }
   }
 
@@ -142,4 +151,20 @@
     width: 32px;
     margin-left: 5px;
     vertical-align: middle;
+  }
+
+  @include breakpoint(small) {
+    .rocket.icon {
+      height: 28px;
+      width: 28px;
+      margin-left: 4px;
+    }
+  }
+
+  @include breakpoint(xsmall) {
+    .rocket.icon {
+      height: 24px;
+      width: 24px;
+      margin-left: 4px;
+    }
   }

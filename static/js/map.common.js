@@ -851,7 +851,7 @@ var StoreOptions = {
         type: StoreTypes.String
     },
     'remember_select_exclude': {
-        default: [10, 11, 13, 14, 16, 17, 19, 21, 22, 29, 32, 41, 43, 46, 48, 54, 69, 72, 90, 92, 96, 98, 116, 118, 120, 122, 124, 161, 162, 163, 165, 166, 167, 168, 177, 178, 183, 187, 190, 194, 198, 215, 220, 221],
+        default: [10, 11, 13, 14, 16, 17, 19, 21, 22, 29, 32, 41, 43, 46, 48, 54, 69, 72, 90, 92, 96, 98, 116, 118, 120, 122, 124, 161, 162, 163, 165, 166, 167, 168, 177, 178, 183, 187, 190, 194, 198, 215, 220, 353, 355, 200, 104, 302, 228],
         type: StoreTypes.JSON
     },
     'remember_select_notify': {
@@ -863,7 +863,7 @@ var StoreOptions = {
         type: StoreTypes.JSON
     },
     'remember_text_perfection_notify': {
-        default: '',
+        default: '100',
         type: StoreTypes.Number
     },
     'showRaids': {
@@ -914,6 +914,10 @@ var StoreOptions = {
         default: true,
         type: StoreTypes.Boolean
     },
+	'showGeofence': {
+		default: false,
+		type: StoreTypes.Boolean
+	},
     'showPokestops': {
         default: false,
         type: StoreTypes.Boolean
@@ -922,6 +926,14 @@ var StoreOptions = {
         default: 0,
         type: StoreTypes.Number
     },
+	'showGeofenceIV': {
+		default: false,
+		type: StoreTypes.Boolean
+	},
+	'showGeofencePARK': {
+		default: false,
+		type: StoreTypes.Boolean
+	},
     'showScanned': {
         default: false,
         type: StoreTypes.Boolean
@@ -932,6 +944,10 @@ var StoreOptions = {
     },
     'showRanges': {
         default: false,
+        type: StoreTypes.Boolean
+    },
+    'doPush': {
+        default: !isTouchDevice(),
         type: StoreTypes.Boolean
     },
     'playSound': {
@@ -1015,12 +1031,20 @@ var StoreOptions = {
         type: StoreTypes.Number
     },
     'processPokemonChunkSize': {
-        default: 100,
+        default: 250,
         type: StoreTypes.Number
     },
     'processPokemonIntervalMs': {
         default: 100,
         type: StoreTypes.Number
+    },
+    'mapServiceProvider': {
+        default: 'googlemaps',
+        type: StoreTypes.String
+    },
+    'isBounceDisabled': {
+        default: false,
+        type: StoreTypes.Boolean
     }
 }
 
@@ -1082,7 +1106,7 @@ function getGoogleSprite(index, sprite, displayHeight) {
     }
 }
 
-function setupPokemonMarkerDetails(item, map, scaleByRarity = true) {
+function setupPokemonMarkerDetails(item, map, scaleByRarity = true, isNotifyPkmn = false) {
     const pokemonIndex = item['pokemon_id'] - 1
     const sprite = pokemonSprites
 
@@ -1090,29 +1114,31 @@ function setupPokemonMarkerDetails(item, map, scaleByRarity = true) {
         sprite: sprite
     }
     var iconSize = (map.getZoom() - 3) * (map.getZoom() - 3) * 0.2 + Store.get('iconSizeModifier')
-    scaleByRarity = scaleByRarity && Store.get('scaleByRarity')
     rarityValue = 2
 
     if (Store.get('upscalePokemon')) {
         const upscaledPokemon = Store.get('upscaledPokemon')
-        var rarityValue = isNotifyPoke(item) || (upscaledPokemon.indexOf(item['pokemon_id']) !== -1) ? 29 : 2
+        var rarityValue = isNotifyPkmn || (upscaledPokemon.indexOf(item['pokemon_id']) !== -1) ? 29 : 2
     }
+	
+	if (scaleByRarity) {
+		const rarityValues = {
+			'sehr selten': 5,
+			'ultra selten': 10,
+			'legendär': 15
+		}
 
-    if (scaleByRarity) {
-        const rarityValues = {
-            'very rare': 30,
-            'ultra rare': 40,
-            'legendary': 50
-        }
+		if (item.hasOwnProperty('pokemon_rarity')) {
+			const pokemonRarity = item['pokemon_rarity'].toLowerCase()
 
-        if (item.hasOwnProperty('pokemon_rarity')) {
-            const pokemonRarity = item['pokemon_rarity'].toLowerCase()
-
-            if (rarityValues.hasOwnProperty(pokemonRarity)) {
-                rarityValue = rarityValues[pokemonRarity]
-            }
-        }
-    }
+			if (rarityValues.hasOwnProperty(pokemonRarity)) {
+				rarityValue = rarityValues[pokemonRarity]
+			}
+		}
+	}
+	if (isNotifyPkmn) {
+		rarityValue = 50
+	}
 
     iconSize += rarityValue
     markerDetails.rarityValue = rarityValue
@@ -1122,9 +1148,9 @@ function setupPokemonMarkerDetails(item, map, scaleByRarity = true) {
     return markerDetails
 }
 
-function setupPokemonMarker(item, map, isBounceDisabled, scaleByRarity = true) {
+function setupPokemonMarker(item, map, isBounceDisabled, scaleByRarity = true, isNotifyPkmn = false) {
     // Scale icon size up with the map exponentially, also size with rarity.
-    const markerDetails = setupPokemonMarkerDetails(item, map, scaleByRarity)
+    const markerDetails = setupPokemonMarkerDetails(item, map, scaleByRarity, isNotifyPkmn)
     const icon = markerDetails.icon
 
     var marker = new google.maps.Marker({
@@ -1140,9 +1166,9 @@ function setupPokemonMarker(item, map, isBounceDisabled, scaleByRarity = true) {
     return marker
 }
 
-function updatePokemonMarker(item, map, scaleByRarity = true) {
+function updatePokemonMarker(item, map, scaleByRarity = true, isNotifyPkmn = false) {
     // Scale icon size up with the map exponentially, also size with rarity.
-    const markerDetails = setupPokemonMarkerDetails(item, map, scaleByRarity)
+    const markerDetails = setupPokemonMarkerDetails(item, map, scaleByRarity, isNotifyPkmn)
     const icon = markerDetails.icon
     const marker = item.marker
 
