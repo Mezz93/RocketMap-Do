@@ -2980,8 +2980,8 @@ $(function () {
 					'<h3 style="margin:0;line-height:1.1;">Wir wünschen euch schöne Tage mit euren Familien/Freunden und einen guten Rutsch ins Jahr 2018!<br></h3><br>' +
 					'<h4 style="margin:0;line-height:1.1;">Bis zum 27.12 - 5:00 ist der Meldechannel für alle 100er und andere seltene Pokemon mit IV komplett zugänglich <br></h4>' +
 					'<span style="font-size:smaller;">(Den IV Bereich könnt ihr euch unter Menü - Anzeige - IV-Only anzeigen lassen)<br></span>' +			
-					'<span style="color:red;">Besuche unseren <a href="https://discord.gg/zwsGCUS">Discord</a> für mehr Infos</span><br>' +
-					'<span style="color:red;">oder schau dir auf <a href="https://www.patreon.com/rocketmapdo">Patreon</a> alle Belohnungen für Spender an</span>'
+					'<span style="color:red;">Besuche auch unseren <a href="https://discord.gg/zwsGCUS">Discord</a></span><br>' +
+					'<span style="color:red;">und schau dir auf <a href="https://www.patreon.com/rocketmapdo">Patreon</a> alle Belohnungen für Spender an</span>'
 					
 					
     //const motd = '<h3 style="margin:0;line-height:1.1;">Das System der Silber/GoldMap-Zugänge wurde geändert. Bitte wendet euch an einen Admin in Discord, wenn ihr einen Zugang hattet oder als Silber/Goldspender einen Zugang bekommen möchtet.</h3><br>' +
