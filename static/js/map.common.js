@@ -851,11 +851,11 @@ var StoreOptions = {
         type: StoreTypes.String
     },
     'remember_select_exclude': {
-        default: [10, 11, 13, 14, 16, 17, 19, 21, 22, 29, 32, 41, 43, 46, 48, 54, 69, 72, 90, 92, 96, 98, 116, 118, 120, 122, 124, 161, 162, 163, 165, 166, 167, 168, 177, 178, 183, 187, 190, 194, 198, 215, 220, 353, 355, 200, 104, 302, 228],
+        default: [],
         type: StoreTypes.JSON
     },
     'remember_select_notify': {
-        default: [59, 65, 76, 89, 130, 131, 134, 143, 147, 148, 149, 154, 157, 160, 241, 242, 246, 247, 248],
+        default: [],
         type: StoreTypes.JSON
     },
     'remember_select_rarity_notify': {
@@ -863,7 +863,7 @@ var StoreOptions = {
         type: StoreTypes.JSON
     },
     'remember_text_perfection_notify': {
-        default: '100',
+        default: '',
         type: StoreTypes.Number
     },
     'showRaids': {
@@ -914,26 +914,14 @@ var StoreOptions = {
         default: true,
         type: StoreTypes.Boolean
     },
-	'showGeofence': {
-		default: false,
-		type: StoreTypes.Boolean
-	},
     'showPokestops': {
-        default: false,
+        default: true,
         type: StoreTypes.Boolean
     },
     'showLuredPokestopsOnly': {
         default: 0,
         type: StoreTypes.Number
     },
-	'showGeofenceIV': {
-		default: false,
-		type: StoreTypes.Boolean
-	},
-	'showGeofencePARK': {
-		default: false,
-		type: StoreTypes.Boolean
-	},
     'showScanned': {
         default: false,
         type: StoreTypes.Boolean
@@ -944,10 +932,6 @@ var StoreOptions = {
     },
     'showRanges': {
         default: false,
-        type: StoreTypes.Boolean
-    },
-    'doPush': {
-        default: !isTouchDevice(),
         type: StoreTypes.Boolean
     },
     'playSound': {
@@ -991,7 +975,7 @@ var StoreOptions = {
         type: StoreTypes.String
     },
     'iconSizeModifier': {
-        default: 10,
+        default: 0,
         type: StoreTypes.Number
     },
     'scaleByRarity': {
@@ -1007,19 +991,19 @@ var StoreOptions = {
         type: StoreTypes.JSON
     },
     'searchMarkerStyle': {
-        default: 'none',
+        default: 'pokesition',
         type: StoreTypes.String
     },
     'locationMarkerStyle': {
-        default: 'none',
+        default: 'mobile',
         type: StoreTypes.String
     },
     'zoomLevel': {
-        default: 15,
+        default: 16,
         type: StoreTypes.Number
     },
     'maxClusterZoomLevel': {
-        default: 11,
+        default: 14,
         type: StoreTypes.Number
     },
     'clusterZoomOnClick': {
@@ -1031,7 +1015,7 @@ var StoreOptions = {
         type: StoreTypes.Number
     },
     'processPokemonChunkSize': {
-        default: 250,
+        default: 100,
         type: StoreTypes.Number
     },
     'processPokemonIntervalMs': {
@@ -1120,25 +1104,22 @@ function setupPokemonMarkerDetails(item, map, scaleByRarity = true, isNotifyPkmn
         const upscaledPokemon = Store.get('upscaledPokemon')
         var rarityValue = isNotifyPkmn || (upscaledPokemon.indexOf(item['pokemon_id']) !== -1) ? 29 : 2
     }
-	
-	if (scaleByRarity) {
-		const rarityValues = {
-			'sehr selten': 5,
-			'ultra selten': 10,
-			'legendär': 15
-		}
 
-		if (item.hasOwnProperty('pokemon_rarity')) {
-			const pokemonRarity = item['pokemon_rarity'].toLowerCase()
+    if (scaleByRarity) {
+        const rarityValues = {
+            'very rare': 30,
+            'ultra rare': 40,
+            'legendary': 50
+        }
 
-			if (rarityValues.hasOwnProperty(pokemonRarity)) {
-				rarityValue = rarityValues[pokemonRarity]
-			}
-		}
-	}
-	if (isNotifyPkmn) {
-		rarityValue = 50
-	}
+        if (item.hasOwnProperty('pokemon_rarity')) {
+            const pokemonRarity = item['pokemon_rarity'].toLowerCase()
+
+            if (rarityValues.hasOwnProperty(pokemonRarity)) {
+                rarityValue = rarityValues[pokemonRarity]
+            }
+        }
+    }
 
     iconSize += rarityValue
     markerDetails.rarityValue = rarityValue

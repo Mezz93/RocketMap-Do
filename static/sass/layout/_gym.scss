@@ -47,15 +47,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-	&.meeting:before {
-	  content: '\f08e';
-      display: inline-block;
-      font-family: FontAwesome;
-      height: 16px;
-      width: 16px;
-      -webkit-font-smoothing: antialiased;
-    }
-
     &.navigate:before {
       content: '\f018';
       display: inline-block;

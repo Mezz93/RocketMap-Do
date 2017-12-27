@@ -40,7 +40,7 @@ var reincludedPokemon = []
 var reids = []
 
 var map
-var markerCluster
+var markerCluster = window.markerCluster = {}
 var rawDataIsLoading = false
 var locationMarker
 const rangeMarkers = ['pokemon', 'pokestop', 'gym']
@@ -73,8 +73,7 @@ const cryFileTypes = ['wav', 'mp3']
 const genderType = ['♂', '♀', '⚲']
 const unownForm = ['unset', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '!', '?']
 const pokemonWithImages = [
-    2, 3, 5, 6, 8, 9, 11, 28, 31, 34, 38, 59, 62, 65, 68, 71, 73, 76, 82, 89, 91, 94, 103, 105, 110, 112, 123, 125, 126, 129, 131, 134,
-    135, 136, 137, 139, 143, 144, 145, 146, 150, 153, 156, 159, 243, 244, 245, 248, 249, 250, 302
+    2, 3, 5, 6, 8, 9, 11, 28, 31, 34, 38, 59, 62, 65, 68, 71, 73, 76, 82, 89, 91, 94, 103, 105, 110, 112, 123, 125, 126, 129, 131, 134, 135, 136, 137, 139, 143, 144, 145, 146, 150, 153, 156, 159, 243, 244, 245, 248, 249, 250, 302, 303, 359, 382, 383, 384
 ]
 
 
@@ -86,7 +85,7 @@ const pokemonWithImages = [
  <def> - defense as number
  <sta> - stamnia as number
  */
-var notifyIvTitle = '<pkm> <prc>'
+var notifyIvTitle = '<pkm> <prc>% (<atk>/<def>/<sta>)'
 var notifyNoIvTitle = '<pkm>'
 
 /*
@@ -94,7 +93,7 @@ var notifyNoIvTitle = '<pkm>'
  <dist>  - disappear time
  <udist> - time until disappear
  */
-var notifyText = '<udist> bis <dist>'
+var notifyText = 'disappears at <dist> (<udist>)'
 
 //
 // Functions
@@ -110,19 +109,6 @@ function notifyAboutPokemon(id) { // eslint-disable-line no-unused-vars
     $selectPokemonNotify.val(
         $selectPokemonNotify.val().concat(id)
     ).trigger('change')
-}
-
-
-function removeNotifyAboutPokemon (id) { // eslint-disable-line no-unused-vars
-	var arr = $selectPokemonNotify.val()
-	var index = arr.indexOf(id.toString())
-	if(index && index >= 0) {
-		arr.splice(index, 1)
-		
-		$selectPokemonNotify.val(
-			arr
-		).trigger('change')
-	}
 }
 
 function removePokemonMarker(encounterId) { // eslint-disable-line no-unused-vars
@@ -423,7 +409,7 @@ function updateSearchStatus() {
 function initSidebar() {
     $('#gyms-switch').prop('checked', Store.get('showGyms'))
     $('#gym-sidebar-switch').prop('checked', Store.get('useGymSidebar'))
-    $('#gym-sidebar-wrapper').toggle(Store.get('showGyms'))
+    $('#gym-sidebar-wrapper').toggle(Store.get('showGyms') || Store.get('showRaids'))
     $('#gyms-filter-wrapper').toggle(Store.get('showGyms'))
     $('#team-gyms-only-switch').val(Store.get('showTeamGymsOnly'))
     $('#raids-switch').prop('checked', Store.get('showRaids'))
@@ -448,7 +434,6 @@ function initSidebar() {
     $('#scanned-switch').prop('checked', Store.get('showScanned'))
     $('#spawnpoints-switch').prop('checked', Store.get('showSpawnpoints'))
     $('#ranges-switch').prop('checked', Store.get('showRanges'))
-    $('#push-switch').prop('checked', Store.get('doPush'))
     $('#sound-switch').prop('checked', Store.get('playSound'))
     $('#pokemoncries').toggle(Store.get('playSound'))
     $('#cries-switch').prop('checked', Store.get('playCries'))
@@ -542,47 +527,85 @@ function pokemonLabel(item) {
     <div class='pokemon name'>
       ${name} <span class='pokemon name pokedex'><a href='http://pokemon.gameinfo.io/en/pokemon/${id}' target='_blank' title='View in Pokédex'>#${id}</a></span> ${formString} <span class='pokemon gender rarity'>${genderType[gender - 1]} ${rarityDisplay}</span> ${typesDisplay}
     </div>`
-	
-	contentstring += `
+
+    if (cp !== null && cpMultiplier !== null) {
+        var pokemonLevel = getPokemonLevel(cpMultiplier)
+
+        if (atk !== null && def !== null && sta !== null) {
+            var iv = getIv(atk, def, sta)
+        }
+
+        contentstring += `
+          <div class='pokemon container'>
+            <div class='pokemon container content-left'>
+              <div>
+                <img class='pokemon sprite' src='static/icons/${id}.png'>
+                <span class='pokemon'>Level: </span><span class='pokemon'>${pokemonLevel}</span>
+                <span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Exclude</a></span>
+                <span class='pokemon links notify'><a href='javascript:notifyAboutPokemon(${id})'>Notify</a></span>
+                <span class='pokemon links remove'><a href='javascript:removePokemonMarker("${encounterId}")'>Remove</a></span>
+              </div>
+          </div>
+          <div class='pokemon container content-right'>
+            <div>
+              <div class='pokemon disappear'>
+                <span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> left (${moment(disappearTime).format('HH:mm')})
+              </div>
+              <div class='pokemon'>
+                CP: <span class='pokemon encounter'>${cp}/${iv.toFixed(1)}%</span> (A${atk}/D${def}/S${sta})
+              </div>
+              <div class='pokemon'>
+                Moveset: <span class='pokemon encounter'>${pMove1}/${pMove2}</span>
+              </div>
+              <div class='pokemon'>
+                Weight: ${weight.toFixed(2)}kg | Height: ${height.toFixed(2)}m
+              </div>
+              <div>
+                <span class='pokemon navigate'><a href='javascript:void(0);' onclick='javascript:openMapDirections(${latitude},${longitude});' title='Open in Google Maps'>${latitude.toFixed(6)}, ${longitude.toFixed(7)}</a></span>
+              </div>
+          </div>
+        </div>
+      </div>`
+    } else {
+        contentstring += `
       <div class='pokemon container'>
         <div class='pokemon container content-left'>
           <div>
             <img class='pokemon sprite' src='static/icons/${id}.png'>
-            <span class='pokemon'>Level: </span><span class='pokemon no-encounter'>n/a</span><br>
-			<span class='pokemon navigate'><a href='javascript:void(0);' onclick='javascript:openMapDirections(${latitude},${longitude});' title='Google Maps'>Route</a></span>
-
+            <span class='pokemon'>Level: </span><span class='pokemon no-encounter'>n/a</span>
+            <span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Exclude</a></span>
+            <span class='pokemon links notify'><a href='javascript:notifyAboutPokemon(${id})'>Notify</a></span>
+            <span class='pokemon links remove'><a href='javascript:removePokemonMarker("${encounterId}")'>Remove</a></span>
           </div>
       </div>
       <div class='pokemon container content-right'>
         <div>
           <div class='pokemon disappear'>
-            <span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> übrig(bis ${moment(disappearTime).format('HH:mm')} Uhr)
-          </div>
-		  <div class='pokemon'>
-            <span class='pokemon links exclude'><a href='javascript:excludePokemon(${id})'>Alle ${name} ausblenden</a></span>
+            <span class='label-countdown' disappears-at='${disappearTime}'>00m00s</span> left (${moment(disappearTime).format('HH:mm')})
           </div>
           <div class='pokemon'>
-            <span class='pokemon links notify'><a href='javascript:notifyAboutPokemon(${id})'>Alle ${name} hüpfen</a></span>
+            CP: <span class='pokemon no-encounter'>No information</span>
           </div>
           <div class='pokemon'>
-            <span class='pokemon links stop'><a href='javascript:removeNotifyAboutPokemon(${id})'>Hüpfen von ${name} stoppen</a></span>
+            Moveset: <span class='pokemon no-encounter'>No information</span>
           </div>
           <div class='pokemon'>
-            <span class='pokemon links remove'><a href='javascript:removePokemonMarker("${encounterId}")'>Dieses ${name} ausblenden</a></span>
+            Weight: <span class='pokemon no-encounter'>n/a</span> | Height: <span class='pokemon no-encounter'>n/a</span>
           </div>
           <div>
-            
+            <span class='pokemon navigate'><a href='javascript:void(0);' onclick='javascript:openMapDirections(${latitude},${longitude});' title='Open in Google Maps'>${latitude.toFixed(6)}, ${longitude.toFixed(7)}</a></span>
           </div>
       </div>
     </div>
   </div>`
-    
+    }
 
     contentstring += `
       ${details}`
 
     return contentstring
 }
+
 function isOngoingRaid(raid) {
     return raid && Date.now() < raid.end && Date.now() > raid.start
 }
@@ -618,7 +641,7 @@ function gymLabel(gym, includeMembers = true) {
     }
     const lastScannedStr = getDateStr(gym.last_scanned)
     const lastModifiedStr = getDateStr(gym.last_modified)
-    const slotsString = gym.slots_available ? (gym.slots_available === 1 ? '1 freier Platz' : `${gym.slots_available} freie Plätze`) : 'Kein freier Platz'
+    const slotsString = gym.slots_available ? (gym.slots_available === 1 ? '1 Free Slot' : `${gym.slots_available} Free Slots`) : 'No Free Slots'
     const teamColor = ['85,85,85,1', '0,134,255,1', '255,26,26,1', '255,159,25,1']
     const teamName = gymTypes[gym.team_id]
     const isUpcomingRaid = raid != null && Date.now() < raid.start
@@ -643,7 +666,7 @@ function gymLabel(gym, includeMembers = true) {
         <div>
             <img class='gym info strength' src='static/images/gym/Strength.png'>
             <span class='gym info strength'>
-              Insg. Motivation: ${gymPoints} (${slotsString})
+              Strength: ${gymPoints} (${slotsString})
             </span>
         </div>`
     }
@@ -655,19 +678,17 @@ function gymLabel(gym, includeMembers = true) {
         if (isRaidStarted) {
             // Set default image.
             image = `
-				${levelStr}<br>
                 <img class='gym sprite' src='static/images/raid/${gymTypes[gym.team_id]}_${raid.level}_unknown.png'>
                 <div class='raid'>
                 <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
+                ${levelStr}
                 </span>
-				Verbleibende Zeit:<br>
-                <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span> übrig(bis ${moment(raid.end).format('HH:mm')} Uhr)
+                <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span> left (${moment(raid.end).format('HH:mm')})
                 </div>
             `
             // Use Pokémon-specific image if we have one.
             if (raid.pokemon_id !== null && pokemonWithImages.indexOf(raid.pokemon_id) !== -1) {
                 image = `
-					${levelStr}<br>
                     <div class='raid container'>
                     <div class='raid container content-left'>
                         <div>
@@ -677,7 +698,7 @@ function gymLabel(gym, includeMembers = true) {
                     <div class='raid container content-right'>
                         <div>
                         <div class='raid pokemon'>
-                            ${raid['pokemon_name']} <a href='http://pokemon.gameinfo.io/en/pokemon/${raid['pokemon_id']}' target='_blank' title='View in Pokédex'>#${raid['pokemon_id']}</a> | WP: ${raid['cp']}
+                            ${raid['pokemon_name']} <a href='http://pokemon.gameinfo.io/en/pokemon/${raid['pokemon_id']}' target='_blank' title='View in Pokédex'>#${raid['pokemon_id']}</a> | CP: ${raid['cp']}
                     </div>
                         ${raidStr}
                     </div>
@@ -685,9 +706,9 @@ function gymLabel(gym, includeMembers = true) {
                 </div>
                     <div class='raid'>
                     <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
+                    ${levelStr}
                     </span>
-					Verbleibende Zeit:<br>
-                    <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span> übrig(bis ${moment(raid.end).format('HH:mm')} Uhr)
+                    <span class='raid countdown label-countdown' disappears-at='${raid.end}'></span> left (${moment(raid.end).format('HH:mm')})
                     </div>
                 `
             }
@@ -697,33 +718,32 @@ function gymLabel(gym, includeMembers = true) {
 
         if (isUpcomingRaid) {
             imageLbl = `
-				${levelStr}<br>
                 <div class='raid'>
                   <span style='color:rgb(${raidColor[Math.floor((raid.level - 1) / 2)]})'>
+                  ${levelStr}
                   </span>
-                  Raidstart in <span class='raid countdown label-countdown' disappears-at='${raid.start}'>00m00s</span>(um ${moment(raid.start).format('HH:mm')})
+                  Raid in <span class='raid countdown label-countdown' disappears-at='${raid.start}'> (${moment(raid.start).format('HH:mm')})</span>
                 </div>`
         }
     } else {
         image = `<img class='gym sprite' src='static/images/gym/${teamName}_${getGymLevel(gym)}.png'>`
     }
-	
-	var b64_gym_id = Base64.encode( gym.gym_id )
+
 
     navInfo = `
             <div class='gym container'>
                 <div>
                   <span class='gym info navigate'>
-                    <a href='javascript:void(0);' onclick='javascript:openMapDirections(${gym.latitude},${gym.longitude});' title='Google Maps'>
-                      Route - Wegbeschreibung
+                    <a href='javascript:void(0);' onclick='javascript:openMapDirections(${gym.latitude},${gym.longitude});' title='Open in Google Maps'>
+                      ${gym.latitude.toFixed(6)}, ${gym.longitude.toFixed(7)}
                     </a>
                   </span>
                 </div>
                 <div class='gym info last-scanned'>
-                    Letzter Scan: ${lastScannedStr}
+                    Last Scanned: ${lastScannedStr}
                 </div>
                 <div class='gym info last-modified'>
-                    Letzte Änderung: ${lastModifiedStr}<br>
+                    Last Modified: ${lastModifiedStr}
                 </div>
             </div>
         </div>`
@@ -769,151 +789,6 @@ function gymLabel(gym, includeMembers = true) {
         </div>`
 }
 
-/**
-*
-*  Base64 encode / decode
-*  http://www.webtoolkit.info/
-*
-**/
-var Base64 = {
-
-// private property
-_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-
-// public method for encoding
-encode : function (input) {
-    var output = "";
-    var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
-    var i = 0;
-
-    input = Base64._utf8_encode(input);
-
-    while (i < input.length) {
-
-        chr1 = input.charCodeAt(i++);
-        chr2 = input.charCodeAt(i++);
-        chr3 = input.charCodeAt(i++);
-
-        enc1 = chr1 >> 2;
-        enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-        enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-        enc4 = chr3 & 63;
-
-        if (isNaN(chr2)) {
-            enc3 = enc4 = 64;
-        } else if (isNaN(chr3)) {
-            enc4 = 64;
-        }
-
-        output = output +
-        this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) +
-        this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
-
-    }
-
-    return output;
-},
-
-// public method for decoding
-decode : function (input) {
-    var output = "";
-    var chr1, chr2, chr3;
-    var enc1, enc2, enc3, enc4;
-    var i = 0;
-
-    input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-
-    while (i < input.length) {
-
-        enc1 = this._keyStr.indexOf(input.charAt(i++));
-        enc2 = this._keyStr.indexOf(input.charAt(i++));
-        enc3 = this._keyStr.indexOf(input.charAt(i++));
-        enc4 = this._keyStr.indexOf(input.charAt(i++));
-
-        chr1 = (enc1 << 2) | (enc2 >> 4);
-        chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
-        chr3 = ((enc3 & 3) << 6) | enc4;
-
-        output = output + String.fromCharCode(chr1);
-
-        if (enc3 != 64) {
-            output = output + String.fromCharCode(chr2);
-        }
-        if (enc4 != 64) {
-            output = output + String.fromCharCode(chr3);
-        }
-
-    }
-
-    output = Base64._utf8_decode(output);
-
-    return output;
-
-},
-
-// private method for UTF-8 encoding
-_utf8_encode : function (string) {
-    string = string.replace(/\r\n/g,"\n");
-    var utftext = "";
-
-    for (var n = 0; n < string.length; n++) {
-
-        var c = string.charCodeAt(n);
-
-        if (c < 128) {
-            utftext += String.fromCharCode(c);
-        }
-        else if((c > 127) && (c < 2048)) {
-            utftext += String.fromCharCode((c >> 6) | 192);
-            utftext += String.fromCharCode((c & 63) | 128);
-        }
-        else {
-            utftext += String.fromCharCode((c >> 12) | 224);
-            utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-            utftext += String.fromCharCode((c & 63) | 128);
-        }
-
-    }
-
-    return utftext;
-},
-
-// private method for UTF-8 decoding
-_utf8_decode : function (utftext) {
-    var string = "";
-    var i = 0;
-    var c = 0;
-	var c1 = 0;
-	var c2 = 0;
-	var c3 = 0;
-
-    while ( i < utftext.length ) {
-
-        c = utftext.charCodeAt(i);
-
-        if (c < 128) {
-            string += String.fromCharCode(c);
-            i++;
-        }
-        else if((c > 191) && (c < 224)) {
-            c2 = utftext.charCodeAt(i+1);
-            string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
-            i += 2;
-        }
-        else {
-            c2 = utftext.charCodeAt(i+1);
-            c3 = utftext.charCodeAt(i+2);
-            string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
-            i += 3;
-        }
-
-    }
-
-    return string;
-}
-
-}
-
 function pokestopLabel(expireTime, latitude, longitude) {
     var str
     if (expireTime) {
@@ -923,7 +798,7 @@ function pokestopLabel(expireTime, latitude, longitude) {
                 Lured Pokéstop
               </div>
               <div class='pokestop-expire'>
-                  <span class='label-countdown' disappears-at='${expireTime}'>00m00s</span> übrig(bis ${moment(expireTime).format('HH:mm')} Uhr)
+                  <span class='label-countdown' disappears-at='${expireTime}'>00m00s</span> left (${moment(expireTime).format('HH:mm')})
               </div>
               <div>
                 <img class='pokestop sprite' src='static/images/pokestop//PokestopLured.png'>
@@ -972,7 +847,7 @@ function spawnpointLabel(item) {
     } else {
         str += `
             <div>
-                Stündlich von ${formatSpawnTime(item.appear_time)} bis ${formatSpawnTime(item.disappear_time)}
+                Every hour from ${formatSpawnTime(item.appear_time)} to ${formatSpawnTime(item.disappear_time)}
             </div>`
     }
     return str
@@ -1093,18 +968,18 @@ function getNotifyText(item) {
     var replace = [((iv) ? iv.toFixed(1) : ''), item['pokemon_name'], item['individual_attack'],
         item['individual_defense'], item['individual_stamina']]
     var ntitle = repArray(((iv) ? notifyIvTitle : notifyNoIvTitle), find, replace)
-    var dist = moment(item['disappear_time']).format('HH:mm')
+    var dist = moment(item['disappear_time']).format('HH:mm:ss')
     var until = getTimeUntil(item['disappear_time'])
     var udist = (until.hour > 0) ? until.hour + ':' : ''
     udist += lpad(until.min, 2, 0) + 'm' + lpad(until.sec, 2, 0) + 's'
     find = ['<dist>', '<udist>']
     replace = [dist, udist]
     var ntext = repArray(notifyText, find, replace)
-	
-	return {
-		'fav_title': ntitle,
-		'fav_text': ntext
-	}
+
+    return {
+        'fav_title': ntitle,
+        'fav_text': ntext
+    }
 }
 
 function playPokemonSound(pokemonID, cryFileTypes) {
@@ -1240,7 +1115,7 @@ function updateGymMarker(item, marker) {
         }
         marker.setIcon({
             url: markerImage,
-            scaledSize: new google.maps.Size(60, 60)
+            scaledSize: new google.maps.Size(48, 48)
         })
         marker.setZIndex(google.maps.Marker.MAX_ZINDEX + 1)
     } else if (item.raid && item.raid.end > Date.now() && Store.get('showRaids') && !Store.get('showActiveRaidsOnly') && raidLevel >= Store.get('showRaidMinLevel') && raidLevel <= Store.get('showRaidMaxLevel')) {
@@ -1249,18 +1124,10 @@ function updateGymMarker(item, marker) {
             scaledSize: new google.maps.Size(48, 48)
         })
     } else {
-		if(gymTypes[item.team_id] == 'Instinct'){
-			marker.setIcon({
-				url: 'static/images/gym/' + gymTypes[item.team_id] + '_' + getGymLevel(item) + '.png',
-				scaledSize: new google.maps.Size(42,42)
-				})
-        }
-		else{
         marker.setIcon({
             url: 'static/images/gym/' + gymTypes[item.team_id] + '_' + getGymLevel(item) + '.png',
-            scaledSize: new google.maps.Size(36,36)
-			})
-        }
+            scaledSize: new google.maps.Size(48, 48)
+        })
         marker.setZIndex(1)
     }
     marker.infoWindow.setContent(gymLabel(item))
@@ -1460,9 +1327,8 @@ function clearStaleMarkers() {
     $.each(mapData.pokemons, function (key, value) {
         const isPokeExpired = mapData.pokemons[key]['disappear_time'] < Date.now()
         const isPokeExcluded = excludedPokemon.indexOf(mapData.pokemons[key]['pokemon_id']) !== -1
-        const isNotifyPkmn = isNotifyPoke(mapData.pokemons[key])
 
-        if (isPokeExpired || (isPokeExcluded && !(isNotifyPkmn))) {
+        if (isPokeExpired || isPokeExcluded) {
             const oldMarker = mapData.pokemons[key].marker
 
             if (oldMarker.rangeCircle) {
@@ -1593,8 +1459,8 @@ function loadRawData() {
             'oSwLng': oSwLng,
             'oNeLat': oNeLat,
             'oNeLng': oNeLng,
-            'reids': String(reincludedPokemon)/*,
-            'eids': String(excludedPokemon)*/
+            'reids': String(reincludedPokemon),
+            'eids': String(excludedPokemon)
         },
         dataType: 'json',
         cache: false,
@@ -1702,13 +1568,12 @@ function processPokemonChunked(pokemon, chunkSize) {
 function processPokemon(item) {
     const isExcludedPoke = excludedPokemon.indexOf(item['pokemon_id']) !== -1
     const isPokeAlive = item['disappear_time'] > Date.now()
-	const isNotifyPkmn = isNotifyPoke(item)
 
     var oldMarker = null
     var newMarker = null
-	
+
     if (!(item['encounter_id'] in mapData.pokemons) &&
-         ((!(isExcludedPoke && !(isNotifyPkmn)) && isPokeAlive))) {
+         !isExcludedPoke && isPokeAlive) {
         // Add marker to map and item to dict.
         if (!item.hidden) {
             const isBounceDisabled = Store.get('isBounceDisabled')
@@ -2014,11 +1879,7 @@ var updateLabelDiffTime = function () {
         if (disappearsAt.ttime < disappearsAt.now) {
             timestring = '(expired)'
         } else {
-			timestring = ''
-			if(hours > 0) {
-				timestring += lpad(hours, 2, 0) + ':';
-			}
-            timestring += lpad(minutes, 2, 0) + ':' + lpad(seconds, 2, 0)
+            timestring = lpad(hours, 2, 0) + ':' + lpad(minutes, 2, 0) + ':' + lpad(seconds, 2, 0)
         }
 
         $(element).text(timestring)
@@ -2065,7 +1926,7 @@ function sendToastrPokemonNotification(title, text, icon, lat, lon) {
     var notification = toastr.info(text, title, {
         closeButton: true,
         positionClass: 'toast-top-right',
-        preventDuplicates: false,
+        preventDuplicates: true,
         onclick: function () {
             centerMap(lat, lon, 20)
         },
@@ -2079,12 +1940,12 @@ function sendToastrPokemonNotification(title, text, icon, lat, lon) {
         hideMethod: 'fadeOut'
     })
     notification.removeClass('toast-info')
-	notification.css({
-		'padding-left': '74px',
-		'background-image': `url('./${icon}')`,
-		'background-size': '48px',
-		'background-color': '#283747'
-	})
+    notification.css({
+        'padding-left': '74px',
+        'background-image': `url('./${icon}')`,
+        'background-size': '48px',
+        'background-color': '#0c5952'
+    })
 }
 
 function createMyLocationButton() {
@@ -2886,21 +2747,19 @@ $(function () {
             'duration': 500
         }
         resetGymFilter()
-        var wrapper = $('#gym-sidebar-wrapper')
+        var wrapperGyms = $('#gyms-filter-wrapper')
+        var switchRaids = $('#raids-switch')
+        var wrapperSidebar = $('#gym-sidebar-wrapper')
         if (this.checked) {
             lastgyms = false
-            wrapper.show(options)
+            wrapperGyms.show(options)
+            wrapperSidebar.show(options)
         } else {
             lastgyms = false
-            wrapper.hide(options)
-        }
-        var wrapper2 = $('#gyms-filter-wrapper')
-        if (this.checked) {
-            lastgyms = false
-            wrapper2.show(options)
-        } else {
-            lastgyms = false
-            wrapper2.hide(options)
+            wrapperGyms.hide(options)
+            if (!switchRaids.prop('checked')) {
+                wrapperSidebar.hide(options)
+            }
         }
         buildSwitchChangeListener(mapData, ['gyms'], 'showGyms').bind(this)()
     })
@@ -2908,13 +2767,19 @@ $(function () {
         var options = {
             'duration': 500
         }
-        var wrapper = $('#raids-filter-wrapper')
+        var wrapperRaids = $('#raids-filter-wrapper')
+        var switchGyms = $('#gyms-switch')
+        var wrapperSidebar = $('#gym-sidebar-wrapper')
         if (this.checked) {
             lastgyms = false
-            wrapper.show(options)
+            wrapperRaids.show(options)
+            wrapperSidebar.show(options)
         } else {
             lastgyms = false
-            wrapper.hide(options)
+            wrapperRaids.hide(options)
+            if (!switchGyms.prop('checked')) {
+                wrapperSidebar.hide(options)
+            }
         }
         buildSwitchChangeListener(mapData, ['gyms'], 'showRaids').bind(this)()
     })
@@ -2943,10 +2808,6 @@ $(function () {
             wrapper.hide(options)
         }
         return buildSwitchChangeListener(mapData, ['pokestops'], 'showPokestops').bind(this)()
-    })
-
-    $('#push-switch').change(function () {
-        Store.set('doPush', this.checked)
     })
 
     $('#sound-switch').change(function () {

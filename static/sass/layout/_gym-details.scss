@@ -388,15 +388,6 @@
           -webkit-font-smoothing: antialiased;
         }
 
-        &.meeting:before {
-          content: '\f08e';
-          display: inline-block;
-          font-family: FontAwesome;
-          height: 16px;
-          width: 16px;
-          -webkit-font-smoothing: antialiased;
-        }
-
         &.strength {
           @media screen and (max-width: 480px) {
             height: 12px !important;

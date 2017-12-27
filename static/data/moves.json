@@ -1,6 +1,6 @@
 {
     "1": {
-        "name": "Donnerschock",
+        "name": "Thunder Shock",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -16,7 +16,7 @@
         "dps": 0
     },
     "3": {
-        "name": "Kratzer",
+        "name": "Scratch",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -24,7 +24,7 @@
         "dps": 0
     },
     "4": {
-        "name": "Glut",
+        "name": "Ember",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -32,7 +32,7 @@
         "dps": 0
     },
     "5": {
-        "name": "Rankenhieb",
+        "name": "Vine Whip",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -48,7 +48,7 @@
         "dps": 0
     },
     "7": {
-        "name": "Rasierblatt",
+        "name": "Razor Leaf",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -64,7 +64,7 @@
         "dps": 0
     },
     "9": {
-        "name": "Aquaknarre",
+        "name": "Water Gun",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -72,7 +72,7 @@
         "dps": 0
     },
     "10": {
-        "name": "Biss",
+        "name": "Bite",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -104,7 +104,7 @@
         "dps": 20.69
     },
     "14": {
-        "name": "Hyperstrahl",
+        "name": "Hyper Beam",
         "type": "Normal",
         "damage": 150,
         "duration": 3800,
@@ -112,7 +112,7 @@
         "dps": 39.47
     },
     "15": {
-        "name": "Schlecker",
+        "name": "Lick",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -120,7 +120,7 @@
         "dps": 0
     },
     "16": {
-        "name": "Finsteraura",
+        "name": "Dark Pulse",
         "type": "Dark",
         "damage": 80,
         "duration": 3000,
@@ -168,7 +168,7 @@
         "dps": 22.22
     },
     "22": {
-        "name": "Vielender",
+        "name": "Megahorn",
         "type": "Bug",
         "damage": 90,
         "duration": 2200,
@@ -184,7 +184,7 @@
         "dps": 0
     },
     "24": {
-        "name": "Flammenwurf",
+        "name": "Flamethrower",
         "type": "Fire",
         "damage": 70,
         "duration": 2200,
@@ -192,7 +192,7 @@
         "dps": 31.82
     },
     "25": {
-        "name": "Tiefschlag",
+        "name": "Sucker Punch",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -200,7 +200,7 @@
         "dps": 0
     },
     "26": {
-        "name": "Schaufler",
+        "name": "Dig",
         "type": "Ground",
         "damage": 100,
         "duration": 4700,
@@ -208,7 +208,7 @@
         "dps": 21.28
     },
     "27": {
-        "name": "Fußkick",
+        "name": "Low Kick",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -224,7 +224,7 @@
         "dps": 33.33
     },
     "29": {
-        "name": "Psychoklinge",
+        "name": "Psycho Cut",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -240,7 +240,7 @@
         "dps": 21.88
     },
     "31": {
-        "name": "Erdbeben",
+        "name": "Earthquake",
         "type": "Ground",
         "damage": 120,
         "duration": 3600,
@@ -248,7 +248,7 @@
         "dps": 33.33
     },
     "32": {
-        "name": "Steinkante",
+        "name": "Stone Edge",
         "type": "Rock",
         "damage": 100,
         "duration": 2300,
@@ -256,7 +256,7 @@
         "dps": 43.48
     },
     "33": {
-        "name": "Eishieb",
+        "name": "Ice Punch",
         "type": "Ice",
         "damage": 50,
         "duration": 1900,
@@ -272,7 +272,7 @@
         "dps": 21.05
     },
     "35": {
-        "name": "Ladungsstoß",
+        "name": "Discharge",
         "type": "Electric",
         "damage": 65,
         "duration": 2500,
@@ -280,7 +280,7 @@
         "dps": 26
     },
     "36": {
-        "name": "Lichtkanone",
+        "name": "Flash Cannon",
         "type": "Steel",
         "damage": 100,
         "duration": 2700,
@@ -304,7 +304,7 @@
         "dps": 26.09
     },
     "39": {
-        "name": "Eisstrahl",
+        "name": "Ice Beam",
         "type": "Ice",
         "damage": 90,
         "duration": 3300,
@@ -320,7 +320,7 @@
         "dps": 41.94
     },
     "41": {
-        "name": "Luftschnitt",
+        "name": "Air Slash",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -328,7 +328,7 @@
         "dps": 0
     },
     "42": {
-        "name": "Hitzewelle",
+        "name": "Heat Wave",
         "type": "Fire",
         "damage": 95,
         "duration": 3000,
@@ -344,7 +344,7 @@
         "dps": 0
     },
     "44": {
-        "name": "Gifthieb",
+        "name": "Poison Jab",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -368,7 +368,7 @@
         "dps": 28.57
     },
     "47": {
-        "name": "Blütenwirbel",
+        "name": "Petal Blizzard",
         "type": "Grass",
         "damage": 110,
         "duration": 2600,
@@ -432,7 +432,7 @@
         "dps": 27.27
     },
     "55": {
-        "name": "Karateschlag",
+        "name": "Karate Chop",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -456,7 +456,7 @@
         "dps": 17.31
     },
     "58": {
-        "name": "Nassschweif",
+        "name": "Aqua Tail",
         "type": "Water",
         "damage": 50,
         "duration": 1900,
@@ -464,7 +464,7 @@
         "dps": 26.32
     },
     "59": {
-        "name": "Samenbomben",
+        "name": "Seed Bomb",
         "type": "Grass",
         "damage": 55,
         "duration": 2100,
@@ -488,7 +488,7 @@
         "dps": 0
     },
     "62": {
-        "name": "Antik-Kraft",
+        "name": "Ancient Power",
         "type": "Rock",
         "damage": 70,
         "duration": 3500,
@@ -552,7 +552,7 @@
         "dps": 21.74
     },
     "70": {
-        "name": "Spukball",
+        "name": "Shadow Ball",
         "type": "Ghost",
         "damage": 100,
         "duration": 3000,
@@ -560,7 +560,7 @@
         "dps": 33.33
     },
     "71": {
-        "name": "Patronenhieb",
+        "name": "Bullet Punch",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -608,7 +608,7 @@
         "dps": 0
     },
     "77": {
-        "name": "Donnerschlag",
+        "name": "Thunder Punch",
         "type": "Electric",
         "damage": 45,
         "duration": 1800,
@@ -616,7 +616,7 @@
         "dps": 25
     },
     "78": {
-        "name": "Donner",
+        "name": "Thunder",
         "type": "Electric",
         "damage": 100,
         "duration": 2400,
@@ -624,7 +624,7 @@
         "dps": 41.67
     },
     "79": {
-        "name": "Donnerblitz",
+        "name": "Thunderbolt",
         "type": "Electric",
         "damage": 80,
         "duration": 2500,
@@ -656,7 +656,7 @@
         "dps": 25
     },
     "83": {
-        "name": "Drachenklaue",
+        "name": "Dragon Claw",
         "type": "Dragon",
         "damage": 50,
         "duration": 1700,
@@ -712,7 +712,7 @@
         "dps": 26.67
     },
     "90": {
-        "name": "Matschbombe",
+        "name": "Sludge Bomb",
         "type": "Poison",
         "damage": 80,
         "duration": 2300,
@@ -720,7 +720,7 @@
         "dps": 34.78
     },
     "91": {
-        "name": "Schlammwoge",
+        "name": "Sludge Wave",
         "type": "Poison",
         "damage": 110,
         "duration": 3200,
@@ -728,7 +728,7 @@
         "dps": 34.38
     },
     "92": {
-        "name": "Mülltreffer",
+        "name": "Gunk Shot",
         "type": "Poison",
         "damage": 130,
         "duration": 3100,
@@ -800,7 +800,7 @@
         "dps": 28.13
     },
     "101": {
-        "name": "Nitroladung",
+        "name": "Flame Charge",
         "type": "Fire",
         "damage": 70,
         "duration": 3800,
@@ -816,7 +816,7 @@
         "dps": 26.92
     },
     "103": {
-        "name": "Feuersturm",
+        "name": "Fire Blast",
         "type": "Fire",
         "damage": 140,
         "duration": 4200,
@@ -832,7 +832,7 @@
         "dps": 26.09
     },
     "105": {
-        "name": "Aquawelle",
+        "name": "Water Pulse",
         "type": "Water",
         "damage": 70,
         "duration": 3200,
@@ -848,7 +848,7 @@
         "dps": 21.62
     },
     "107": {
-        "name": "Hydropumpe",
+        "name": "Hydro Pump",
         "type": "Water",
         "damage": 130,
         "duration": 3300,
@@ -856,7 +856,7 @@
         "dps": 39.39
     },
     "108": {
-        "name": "Psychokinese",
+        "name": "Psychic",
         "type": "Psychic",
         "damage": 100,
         "duration": 2800,
@@ -880,7 +880,7 @@
         "dps": 0
     },
     "111": {
-        "name": "Eissturm",
+        "name": "Icy Wind",
         "type": "Ice",
         "damage": 60,
         "duration": 3300,
@@ -888,7 +888,7 @@
         "dps": 18.18
     },
     "112": {
-        "name": "Eisesodem",
+        "name": "Frost Breath",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -912,7 +912,7 @@
         "dps": 12.82
     },
     "115": {
-        "name": "Feuerschlag",
+        "name": "Fire Punch",
         "type": "Fire",
         "damage": 55,
         "duration": 2200,
@@ -920,7 +920,7 @@
         "dps": 25
     },
     "116": {
-        "name": "Solarstrahl",
+        "name": "Solar Beam",
         "type": "Grass",
         "damage": 180,
         "duration": 4900,
@@ -944,7 +944,7 @@
         "dps": 34.62
     },
     "119": {
-        "name": "Platscher",
+        "name": "Splash",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -1056,7 +1056,7 @@
         "dps": 26.32
     },
     "133": {
-        "name": "Verzweifler",
+        "name": "Struggle",
         "type": "Normal",
         "damage": 35,
         "duration": 2200,
@@ -1072,7 +1072,7 @@
         "dps": 0
     },
     "135": {
-        "name": "Hydropumpe (Turtok)",
+        "name": "Hydro Pump (Blastoise)",
         "type": "Water",
         "damage": 0,
         "duration": 0,
@@ -1112,7 +1112,7 @@
         "dps": 10
     },
     "202": {
-        "name": "Biss",
+        "name": "Bite",
         "type": "Dark",
         "damage": 6,
         "duration": 500,
@@ -1120,7 +1120,7 @@
         "dps": 12
     },
     "203": {
-        "name": "Tiefschlag",
+        "name": "Sucker Punch",
         "type": "Dark",
         "damage": 7,
         "duration": 700,
@@ -1136,7 +1136,7 @@
         "dps": 12
     },
     "205": {
-        "name": "Donnerschock",
+        "name": "Thunder Shock",
         "type": "Electric",
         "damage": 5,
         "duration": 600,
@@ -1152,7 +1152,7 @@
         "dps": 8.57
     },
     "207": {
-        "name": "Fußkick",
+        "name": "Low Kick",
         "type": "Fighting",
         "damage": 6,
         "duration": 600,
@@ -1168,7 +1168,7 @@
         "dps": 10
     },
     "209": {
-        "name": "Glut",
+        "name": "Ember",
         "type": "Fire",
         "damage": 10,
         "duration": 1000,
@@ -1192,7 +1192,7 @@
         "dps": 10
     },
     "212": {
-        "name": "Schlecker",
+        "name": "Lick",
         "type": "Ghost",
         "damage": 5,
         "duration": 500,
@@ -1208,7 +1208,7 @@
         "dps": 12.86
     },
     "214": {
-        "name": "Rankenhieb",
+        "name": "Vine Whip",
         "type": "Grass",
         "damage": 7,
         "duration": 600,
@@ -1216,7 +1216,7 @@
         "dps": 11.67
     },
     "215": {
-        "name": "Rasierblatt",
+        "name": "Razor Leaf",
         "type": "Grass",
         "damage": 13,
         "duration": 1000,
@@ -1240,7 +1240,7 @@
         "dps": 10
     },
     "218": {
-        "name": "Eisesodem",
+        "name": "Frost Breath",
         "type": "Ice",
         "damage": 10,
         "duration": 900,
@@ -1256,7 +1256,7 @@
         "dps": 10
     },
     "220": {
-        "name": "Kratzer",
+        "name": "Scratch",
         "type": "Normal",
         "damage": 6,
         "duration": 500,
@@ -1288,7 +1288,7 @@
         "dps": 10
     },
     "224": {
-        "name": "Gifthieb",
+        "name": "Poison Jab",
         "type": "Poison",
         "damage": 10,
         "duration": 800,
@@ -1304,7 +1304,7 @@
         "dps": 11.25
     },
     "226": {
-        "name": "Psychoklinge",
+        "name": "Psycho Cut",
         "type": "Psychic",
         "damage": 5,
         "duration": 600,
@@ -1328,7 +1328,7 @@
         "dps": 11.43
     },
     "229": {
-        "name": "Patronenhieb",
+        "name": "Bullet Punch",
         "type": "Steel",
         "damage": 9,
         "duration": 900,
@@ -1336,7 +1336,7 @@
         "dps": 10
     },
     "230": {
-        "name": "Aquaknarre",
+        "name": "Water Gun",
         "type": "Water",
         "damage": 5,
         "duration": 500,
@@ -1344,7 +1344,7 @@
         "dps": 10
     },
     "231": {
-        "name": "Platscher",
+        "name": "Splash",
         "type": "Water",
         "damage": 0,
         "duration": 1730,
@@ -1352,7 +1352,7 @@
         "dps": 0
     },
     "232": {
-        "name": "Aquaknarre (Turtok)",
+        "name": "Water Gun (Blastoise)",
         "type": "",
         "damage": 0,
         "duration": 0,
@@ -1360,7 +1360,7 @@
         "dps": 0
     },
     "233": {
-        "name": "Lehmschelle",
+        "name": "Mud Slap",
         "type": "Ground",
         "damage": 15,
         "duration": 1400,
@@ -1368,7 +1368,7 @@
         "dps": 10.71
     },
     "234": {
-        "name": "Zen-Kopfstoß",
+        "name": "Zen Headbutt",
         "type": "Psychic",
         "damage": 12,
         "duration": 1100,
@@ -1376,7 +1376,7 @@
         "dps": 10.91
     },
     "235": {
-        "name": "Konfusion",
+        "name": "Confusion",
         "type": "Psychic",
         "damage": 20,
         "duration": 1600,
@@ -1416,7 +1416,7 @@
         "dps": 13.75
     },
     "240": {
-        "name": "Feuerzahn",
+        "name": "Fire Fang",
         "type": "Fire",
         "damage": 11,
         "duration": 900,
@@ -1424,7 +1424,7 @@
         "dps": 12.22
     },
     "241": {
-        "name": "Zertrümmerer",
+        "name": "Rock Smash",
         "type": "Fighting",
         "damage": 15,
         "duration": 1300,
@@ -1440,7 +1440,7 @@
         "dps": 0
     },
     "243": {
-        "name": "Konter",
+        "name": "Counter",
         "type": "Fighting",
         "damage": 8,
         "duration": 900,
@@ -1456,7 +1456,7 @@
         "dps": 6
     },
     "245": {
-        "name": "Nahkampf",
+        "name": "Close Combat",
         "type": "Fighting",
         "damage": 100,
         "duration": 2300,
@@ -1464,7 +1464,7 @@
         "dps": 43.48
     },
     "246": {
-        "name": "Wuchtschlag",
+        "name": "Dynamic Punch",
         "type": "Fighting",
         "damage": 90,
         "duration": 2700,
@@ -1472,7 +1472,7 @@
         "dps": 33.33
     },
     "247": {
-        "name": "Fokusstoß",
+        "name": "Focus Blast",
         "type": "Fighting",
         "damage": 140,
         "duration": 3500,
@@ -1488,7 +1488,7 @@
         "dps": 22.54
     },
     "249": {
-        "name": "Ladestrahl",
+        "name": "Charge Beam",
         "type": "Electric",
         "damage": 8,
         "duration": 1100,
@@ -1496,7 +1496,7 @@
         "dps": 7.27
     },
     "250": {
-        "name": "Voltwechsel",
+        "name": "Volt Switch",
         "type": "Electric",
         "damage": 20,
         "duration": 2300,
@@ -1504,7 +1504,7 @@
         "dps": 8.7
     },
     "251": {
-        "name": "Stromstoß",
+        "name": "Wild Charge",
         "type": "Electric",
         "damage": 90,
         "duration": 2600,
@@ -1512,7 +1512,7 @@
         "dps": 34.62
     },
     "252": {
-        "name": "Blitzkanone",
+        "name": "Zap Cannon",
         "type": "Electric",
         "damage": 140,
         "duration": 3700,
@@ -1520,7 +1520,7 @@
         "dps": 37.84
     },
     "253": {
-        "name": "Drachenrute",
+        "name": "Dragon Tail",
         "type": "Dragon",
         "damage": 15,
         "duration": 1100,
@@ -1536,7 +1536,7 @@
         "dps": 33.33
     },
     "255": {
-        "name": "Luftschnitt",
+        "name": "Air Slash",
         "type": "Flying",
         "damage": 14,
         "duration": 1200,
@@ -1552,7 +1552,7 @@
         "dps": 45
     },
     "257": {
-        "name": "Himmelsfeger",
+        "name": "Sky Attack",
         "type": "Flying",
         "damage": 70,
         "duration": 2000,
@@ -1576,7 +1576,7 @@
         "dps": 23.81
     },
     "260": {
-        "name": "Plage",
+        "name": "Infestation",
         "type": "Bug",
         "damage": 10,
         "duration": 1100,
@@ -1608,7 +1608,7 @@
         "dps": 7.27
     },
     "264": {
-        "name": "Bürde",
+        "name": "Hex",
         "type": "Ghost",
         "damage": 10,
         "duration": 1200,
@@ -1624,7 +1624,7 @@
         "dps": 23.08
     },
     "266": {
-        "name": "Eisenschweif",
+        "name": "Iron Tail",
         "type": "Steel",
         "damage": 15,
         "duration": 1100,
@@ -1640,7 +1640,7 @@
         "dps": 24.24
     },
     "268": {
-        "name": "Ramboss",
+        "name": "Heavy Slam",
         "type": "Steel",
         "damage": 70,
         "duration": 2100,
@@ -1648,7 +1648,7 @@
         "dps": 33.33
     },
     "269": {
-        "name": "​Feuerwirbel​",
+        "name": "Fire Spin",
         "type": "Fire",
         "damage": 14,
         "duration": 1100,
@@ -1656,7 +1656,7 @@
         "dps": 12.73
     },
     "270": {
-        "name": "Hitzekoller",
+        "name": "Overheat",
         "type": "Fire",
         "damage": 160,
         "duration": 4000,
@@ -1664,7 +1664,7 @@
         "dps": 40
     },
     "271": {
-        "name": "Kugelsaat",
+        "name": "Bullet Seed",
         "type": "Grass",
         "damage": 8,
         "duration": 1100,
@@ -1672,7 +1672,7 @@
         "dps": 7.27
     },
     "272": {
-        "name": "​Strauchler​",
+        "name": "Grass Knot",
         "type": "Grass",
         "damage": 90,
         "duration": 2600,
@@ -1680,7 +1680,7 @@
         "dps": 34.62
     },
     "273": {
-        "name": "​Energieball​",
+        "name": "Energy Ball",
         "type": "Grass",
         "damage": 90,
         "duration": 3900,
@@ -1688,7 +1688,7 @@
         "dps": 23.08
     },
     "274": {
-        "name": "Sondersensor",
+        "name": "Extrasensory",
         "type": "Psychic",
         "damage": 12,
         "duration": 1100,
@@ -1696,7 +1696,7 @@
         "dps": 10.91
     },
     "275": {
-        "name": "Seher",
+        "name": "Future Sight",
         "type": "Psychic",
         "damage": 120,
         "duration": 2700,
@@ -1720,7 +1720,7 @@
         "dps": 28.21
     },
     "278": {
-        "name": "Standpauke",
+        "name": "Snarl",
         "type": "Dark",
         "damage": 12,
         "duration": 1100,
@@ -1728,7 +1728,7 @@
         "dps": 10.91
     },
     "279": {
-        "name": "Knirscher",
+        "name": "Crunch",
         "type": "Dark",
         "damage": 70,
         "duration": 3200,
@@ -1750,5 +1750,85 @@
         "duration": 1500,
         "energy": 15,
         "dps": 10
+    },
+    "282": {
+        "name": "Take Down",
+        "type": "Normal",
+        "damage": 8,
+        "duration": 1200,
+        "energy": 10,
+        "dps": 6.7
+    },
+    "283": {
+        "name": "Waterfall",
+        "type": "Water",
+        "damage": 16,
+        "duration": 1200,
+        "energy": 8,
+        "dps": 13.33
+    },
+    "284": {
+        "name": "Surf",
+        "type": "Water",
+        "damage": 65,
+        "duration": 1700,
+        "energy": 50,
+        "dps": 29.5
+    },
+    "285": {
+        "name": "Draco Meteor",
+        "type": "Dragon",
+        "damage": 150,
+        "duration": 3600,
+        "energy": 100,
+        "dps": 36.6
+    },
+    "286": {
+        "name": "Doom Desire",
+        "type": "Steel",
+        "damage": 80,
+        "duration": 1700,
+        "energy": 50,
+        "dps": 36.4
+    },
+    "287": {
+        "name": "Yawn",
+        "type": "Normal",
+        "damage": 0,
+        "duration": 1700,
+        "energy": 15,
+        "dps": 0
+    },
+    "288": {
+        "name": "Psycho Boost",
+        "type": "Psychic",
+        "damage": 70,
+        "duration": 4000,
+        "energy": 50,
+        "dps": 15.6
+    },
+    "289": {
+        "name": "Origin Pulse",
+        "type": "Water",
+        "damage": 130,
+        "duration": 1700,
+        "energy": 100,
+        "dps": 59.1
+    },
+    "290": {
+        "name": "Precipice Blades",
+        "type": "Ground",
+        "damage": 130,
+        "duration": 1700,
+        "energy": 100,
+        "dps": 59.1
+    },
+    "291": {
+        "name": "Present",
+        "type": "Normal",
+        "damage": 5,
+        "duration": 1300,
+        "energy": 20,
+        "dps": 3.8
     }
 }
